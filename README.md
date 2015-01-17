@@ -1,5 +1,5 @@
 # Perl6
-将为知笔记中记录的笔记转移到这里来, 因为 Github 的 Markdown 语法更友好. 
+将为知笔记中记录的笔记转移到这里来, 因为 Github 的 Markdown 语法更友好. 另外还会翻译一些 Perl 6 的文章,顺便记点单词.
 # 目录
 * Perl6 Calendar2014
 * Perl6 Calendar2013
