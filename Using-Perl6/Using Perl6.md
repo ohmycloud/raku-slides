@@ -1,6 +1,6 @@
 ﻿# Using Perl6
 
-### 第二章 基础
+## 第二章 基础
  
 假设有一场乒乓球比赛，比赛结果以这种格式记录：
 Player1 Player2 | 3:2
@@ -28,18 +28,18 @@ Player1 Player2 | 3:2
  my %sets;         # 赢得比赛局数
 
  for $file.lines -> $line {    # .lines 是惰性的
- my ($pairing, $result) = $line.split(' | ');      # 对剩下的每一行调用split操作
- my ($p1, $p2)              = $pairing.words;    # 提取选手1和选手2的名字
- my ($r1, $r2)                = $result.split(':');    # 提取比赛比分
+     my ($pairing, $result) = $line.split(' | ');      # 对剩下的每一行调用split操作
+     my ($p1, $p2)              = $pairing.words;    # 提取选手1和选手2的名字
+     my ($r1, $r2)                = $result.split(':');    # 提取比赛比分
+     
+     %sets{$p1} += $r1;  # 选手1赢得的比赛局数
+     %sets{$p2} += $r2;  # 选手2赢得的比赛局数
 
- %sets{$p1} += $r1;  # 选手1赢得的比赛局数
- %sets{$p2} += $r2;  # 选手2赢得的比赛局数
-
- if $r1 > $r2 { # 如果每场比赛中，选手1赢的局数多于选手2，则选手1赢得的比赛数+1，反之选手2的+1
-     %matches{$p1}++;
- } else {
-     %matches{$p2}++;
- }
+     if $r1 > $r2 { # 如果每场比赛中，选手1赢的局数多于选手2，则选手1赢得的比赛数+1，反之选手2的+1
+         %matches{$p1}++;
+     } else {
+         %matches{$p2}++;
+     }
  }
 
  my @sorted = @names.sort( { %sets{$_} } ).sort({ %matches{$_} } ).reverse;
@@ -51,8 +51,11 @@ Player1 Player2 | 3:2
 
 输出如下：
 > Ana has won 2 matches and 8 sets
+
 > Dave has won 2 matches and 6 sets
+
 > Charlie has won 1 matches and 4 sets
+
 > Beth has won 1 matches and 4 sets
  
 每个 Perl 6程序应该以 use v6;作为开始，它告诉编译器程序期望的是哪个版本的Perl。
@@ -65,6 +68,7 @@ Player1 Player2 | 3:2
  上边这句的右侧对存储在 $file 中的文件句柄调用了 get 方法， get 方法从文件中读取并返回一行，并去掉行的末尾。. words  也是一个方法，用于从get 方法返回的字符串上。.words 方法将它的组件--它操作的字符串，分解成一组单词，这里即意味着不含空格的字符串。它把单个字符串 'Beth Ana Charlie Dave' 转换成一组字符串 'Beth', 'Ana', 'Charlie', 'Dave'.最后，这组字符串存储在数组@names中。
  
 > my %matches;
+
 > my %sets;
  
  
@@ -110,8 +114,11 @@ $r2              '0'
 在双引号括起的字符串中，标量和花括号中的变量能进行变量插值。
  
 > my $names = 'things';
+
 > say 'Do not call me $names';   # Do not call me $names
+
 > say "Do not call me $names"; # Do not call me things
+
  
 花括号中的数组进行插值后会变成用空格分隔的条目。花括号中的散列插值后每个散列键值对单独成为一行，每行包含一个健，随后是一个tab符号，然后是键值，最后是一个新行符。
  
@@ -188,7 +195,7 @@ TODO: explain <...> quote-words
  }
 ```
  
-### 第三章 操作符
+## 第三章 操作符
 
 ```perl 
 use v6;
@@ -209,6 +216,7 @@ for @scores {
  
 在这个例子中，我们计算一下每位选手在竞标赛中赢得比赛的局数。
 > my @scores = 'Ana' => 8, 'Dave' => 6, 'Charlie' => 4, 'Beth' => 4;  
+
 这一句局包含了三个不同的操作符=和 =>和 ,
 以字符串连接操作符~为例， $string ~= "text" 等价于 $string = $string ~"text".
  
@@ -303,63 +311,80 @@ Perl 6 中的优先级可以用圆括号改变，但是如果圆括号直接跟�
  
 
  
-3.2 比较和智能匹配
+### 3.2 比较和智能匹配
  
- my @a = 1, 2, 3;
- my @b = 1, 2, 3;
+> my @a = 1, 2, 3;
 
- say @a === @a; # Bool::True
- say @a === @b; # Bool::False
+> my @b = 1, 2, 3;
 
- # these use identity for value
+> say @a === @a; # Bool::True
 
- say 3 === 3 # Bool::True
- say 'a' === 'a'; # Bool::True
+> say @a === @b; # Bool::False
 
- my $a = 'a';
- say $a === 'a'; # Bool::True
+> # these use identity for value
+
+> say 3 === 3 # Bool::True
+
+> say 'a' === 'a'; # Bool::True
+
+> my $a = 'a';
+
+> say $a === 'a'; # Bool::True
+
 > @b===@a
+
 False
 > @a eqv @b
+
 True
 > '2' eqv 2
+
 False
  
 只有当两个对象有相同的类型和相同的结构时， eqv 操作符才返回 True。在前面定义的例子中，@a  eqv  @b 结果为 True， 因为 @a 和 @b 各自包含相同的值，另一方面， '2' eqv 2 返回 'False' ,因为一个参数是字符串，另一个是整数，类型不相同。
  
-.2.1 数字比较
+### 3.2.1 数字比较
  
 使用 == 中缀操作符查看两个对象是否有相同的数字值。如果某个对象不是数字，Perl 会在比较之前尽力使其数字化。如果没有更好的方式将对象转换为数字，Perl 会使用默认的数字 0 。
  
- say 1 == 1.0; # Bool::True
- say 1 == '1'; # Bool::True
- say 1 == '2'; # Bool::False
- say 3 == '3b'; # fails
+>  say 1 == 1.0; # Bool::True
+
+>  say 1 == '1'; # Bool::True
+
+>  say 1 == '2'; # Bool::False
+
+>  say 3 == '3b'; # fails
  
 跟数字比较相关的还有 <,<=,>,>= 。如果两个对象的数字值不同，使用 != 会返回 True 。
  
 如果你将数组或列表作为数字，它会计算列表中项的个数。
+```perl
 my @colors = <red blue green>;
-
  if @colors == 3 {
- say "It's true, @colors contains 3 items";
+     say "It's true, @colors contains 3 items";
  }
- 
-.2.2  字符串比较
+```
+
+### 3.2.2  字符串比较
+
 Perl 6 中使用 eq 比较字符串，必要时会将其参数转换为字符串。
+
+```perl
  if $greeting eq 'hello' {
- say 'welcome';
+    say 'welcome';
  }
+```
  
 Table 3.2: Operators and Comparisons
-数字比较	字符串比较	意思
-==	eq	等于
-!=	ne	不等于
-!==	!eq	不等于
-<	lt	小于
-<=	le	小于或等于
->	gt	大于
->=	ge	大于或等于
+
+> 数字比较	字符串比较	意思
+> ==	      eq	    等于
+> !=	      ne	    不等于
+> !==	      !eq	    不等于
+> <	          lt	    小于
+> <=	      le	    小于或等于
+> >	          gt	    大于
+> >=	      ge	    大于或等于
  
 例如，'a' lt 'b' 为 true，'a' lt 'aa' 也为 true。 != 是 !==的便捷形式，它实际是 ! 元操作符加在 中缀操作符 ==之前。同样地， ne 和 !eq 是一样的。
  
@@ -367,47 +392,53 @@ Table 3.2: Operators and Comparisons
  
 三路操作符有两个操作数，如果左侧较小，返回 Order::Increase ，两侧相等则返回 Order::Same，如果右侧较小则返回 Order::Decrease。对于数字使用 三路操作符 <=> ,对于字符串，使用三路操作符 leg （取自 lesser，equal，greater）。中缀操作符 cmp 是一个对类型敏感的三路操作符，它像 <=> 一样比较数字，像 leg 一样比较字符串，（举例来说）并且比较键值对儿时，先比较键，如果键相同再比较键值：
  
- say 10 <=> 5; # +1
- say 10 leg 5; # because '1' lt '5'
- say 'ab' leg 'a'; # +1, lexicographic comparison
+> say 10 <=> 5; # +1
+
+> say 10 leg 5; # because '1' lt '5'
+
+> say 'ab' leg 'a'; # +1, lexicographic comparison
  
 三路操作符的典型用处就是用在排序中。列表中的.sort 方法能使用一个含有两个值的块或一个函数，比较它们，并返回一个小于，等于或大于 0 的值。 sort  方法根据该返回值进行排序：
- 
+```perl 
  say ~<abstract Concrete>.sort;
  # output: Concrete abstract
 
  say ~<abstract Concrete>.sort:  -> $a, $b { uc($a) leg uc($b) };
  # output: abstract Concrete
+```
  
 默认的，比较是大小写敏感的，通过比较它们的大写变形，而不是比较它们的值，这个例子使用了大小写敏感排序。
  
-.2.3智能匹配
+### 3.2.3智能匹配
  
 使用 ~~ 做正确的事情。
- 
+
+```perl 
  if $pints-drunk ~~ 8 {
- say "Go home, you've had enough!";
+    say "Go home, you've had enough!";
  }
 
  if $country ~~ 'Sweden' {
- say "Meatballs with lingonberries and potato moose, please."
+     say "Meatballs with lingonberries and potato moose, please."
  }
 
  unless $group-size ~~ 2..4 {
- say "You must have between 2 and 4 people to book this tour.";
+     say "You must have between 2 and 4 people to book this tour.";
  }
+```
  
 智能匹配总是根据 ~~右侧值的类型来决定使用哪种比较。上个例子中，比较的是数字、字符串和范围。
 智能匹配的工作方式 $answer ~~ 42 等价于 42.ACCPETS( $answer ).对 ~~ 操作符右侧的操作数调用 ACCEPTS 方法，并将左操作数作为参数传入。
  
  
  
-第四章 子例程和签名
+## 第四章 子例程和签名
  
  
 一个子例程就是一段执行特殊任务的代码片段。它可以对提供的数据（实参）操作，并产生结果（返回值）。子例程的签名是它所含的参数和它产生的返回值的描述。从某一意义上来说，第三章描述的操作符也是Perl 6用特殊方式解释的子例程。
  
-.1 申明子例程
+### 4.1 申明子例程
+
  一个子例程申明由几部分组成。首先， sub 表明你在申明一个子例程，然后是可选的子例程的名称和可选的签名。子例程的主体是一个用花括号扩起来的代码块。
 默认的，子例程是本地作用域的，就像任何使用 my 申明的变量一样。这意味着，一个子例程只能在它被申明的作用域内被调用。使用 our 来申明子例程可以使其在当前包中可见。
  
