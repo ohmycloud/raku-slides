@@ -482,8 +482,8 @@ our 也能让子例程从包或模块的外部是可见的：
  # TODO: find a better example
  # TODO: explain modules, search paths
  module Math::Trivial {
- sub double($x) is export {
- return 2 * $x;
+     sub double($x) is export {
+     return 2 * $x;
  }
 ```
 然后在其它程序或模块中你可以这样写:
@@ -775,10 +775,10 @@ Required 位置参数要在可选的位置参数之前。然而，命名参数�
 你可以选择将某些参数捕获到位置参数中，并让其它参数被吸进数组参数里。这种情况下， slupy 因该放到最后。相似地， *%hash slurps 所有剩下的未绑定的命名参数到散列 %hash中。Slurpy 数组和散列允许你传递所有的位置参数和命名参数到另一个子例程中。
 ```perl 
  sub debug-wrapper(&code, *@positional, *%named) {
- warn "Calling '&code.name()' with arguments "
- ~ "@positional.perl(), %named.perl()\n";
- code(|@positional, |%named);
- warn "... back from '&code.name()'\n";
+     warn "Calling '&code.name()' with arguments "
+     ~ "@positional.perl(), %named.perl()\n";
+     code(|@positional, |%named);
+     warn "... back from '&code.name()'\n";
  }
 
  debug-wrapper(&order-shrimps, 4, from => 'Atlantic Ocean');
@@ -1362,7 +1362,7 @@ Table 9.1: 反斜线序列和它们的意思
  if $str ~~ /'[' <-[ \[ \] ]> ']'/ ) {  #  \[ \] 匹配一个 非[和非]字符
      say "Found a non-bracket character inside square brackets';
  }
- 
+``` 
 量词 跟Perl5 中的用法相似：如 ? 表示重复前面的东西0次或一次； *表示重复前面的东西0次或多次，+ 号表示重复前面的东西 1次或多次。
  
 最普遍的量词是 ** ，当它后面接一个数字number时，表示匹配前面的东西number 次。Perl 5 中用 {m,n}

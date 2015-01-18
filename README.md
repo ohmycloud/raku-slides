@@ -10,5 +10,5 @@
 * Perl6 Calendar2009
 * Perl6 专家指南翻译
 * R 的 Perl6 实现
-* Using Perl 6 笔记
+* Using Perl 6 
 * Perl 6 documents
