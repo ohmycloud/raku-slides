@@ -329,25 +329,17 @@ Perl 6 中的优先级可以用圆括号改变，但是如果圆括号直接跟�
 
  
 ### 3.2 比较和智能匹配
- 
-> my @a = 1, 2, 3;
-
-> my @b = 1, 2, 3;
-
-> say @a === @a; # Bool::True
-
-> say @a === @b; # Bool::False
-
-> # these use identity for value
-
-> say 3 === 3 # Bool::True
-
-> say 'a' === 'a'; # Bool::True
-
-> my $a = 'a';
-
-> say $a === 'a'; # Bool::True
-
+```perl 
+ my @a = 1, 2, 3;
+ my @b = 1, 2, 3;
+ say @a === @a; # Bool::True
+ say @a === @b; # Bool::False
+ # these use identity for value
+ say 3 === 3 # Bool::True
+ say 'a' === 'a'; # Bool::True
+ my $a = 'a';
+ say $a === 'a'; # Bool::True
+```
 > @b===@a
 
 False
@@ -363,15 +355,12 @@ False
 ### 3.2.1 数字比较
  
 使用 == 中缀操作符查看两个对象是否有相同的数字值。如果某个对象不是数字，Perl 会在比较之前尽力使其数字化。如果没有更好的方式将对象转换为数字，Perl 会使用默认的数字 0 。
- 
->  say 1 == 1.0; # Bool::True
-
->  say 1 == '1'; # Bool::True
-
->  say 1 == '2'; # Bool::False
-
->  say 3 == '3b'; # fails
- 
+```perl 
+ say 1 == 1.0; # Bool::True
+ say 1 == '1'; # Bool::True
+ say 1 == '2'; # Bool::False
+ say 3 == '3b'; # fails
+``` 
 跟数字比较相关的还有 <,<=,>,>= 。如果两个对象的数字值不同，使用 != 会返回 True 。
  
 如果你将数组或列表作为数字，它会计算列表中项的个数。
@@ -393,28 +382,27 @@ Perl 6 中使用 eq 比较字符串，必要时会将其参数转换为字符串
 ```
  
 Table 3.2: Operators and Comparisons
-
-> 数字比较	字符串比较	意思
-> ==	      eq	    等于
-> !=	      ne	    不等于
-> !==	      !eq	    不等于
-> <	          lt	    小于
-> <=	      le	    小于或等于
-> >	          gt	    大于
-> >=	      ge	    大于或等于
+```perl
+ 数字比较	字符串比较	意思
+ ==	      eq	    等于
+ !=	      ne	    不等于
+ !==	      !eq	    不等于
+ <	          lt	    小于
+ <=	      le	    小于或等于
+ >	          gt	    大于
+ >=	      ge	    大于或等于
+```
  
 例如，'a' lt 'b' 为 true，'a' lt 'aa' 也为 true。 != 是 !==的便捷形式，它实际是 ! 元操作符加在 中缀操作符 ==之前。同样地， ne 和 !eq 是一样的。
  
 三路操作符
  
 三路操作符有两个操作数，如果左侧较小，返回 Order::Increase ，两侧相等则返回 Order::Same，如果右侧较小则返回 Order::Decrease。对于数字使用 三路操作符 <=> ,对于字符串，使用三路操作符 leg （取自 lesser，equal，greater）。中缀操作符 cmp 是一个对类型敏感的三路操作符，它像 <=> 一样比较数字，像 leg 一样比较字符串，（举例来说）并且比较键值对儿时，先比较键，如果键相同再比较键值：
- 
-> say 10 <=> 5; # +1
-
-> say 10 leg 5; # because '1' lt '5'
-
-> say 'ab' leg 'a'; # +1, lexicographic comparison
- 
+```perl 
+ say 10 <=> 5; # +1
+ say 10 leg 5; # because '1' lt '5'
+ say 'ab' leg 'a'; # +1, lexicographic comparison
+``` 
 三路操作符的典型用处就是用在排序中。列表中的.sort 方法能使用一个含有两个值的块或一个函数，比较它们，并返回一个小于，等于或大于 0 的值。 sort  方法根据该返回值进行排序：
 ```perl 
  say ~<abstract Concrete>.sort;
@@ -459,37 +447,37 @@ Table 3.2: Operators and Comparisons
  一个子例程申明由几部分组成。首先， sub 表明你在申明一个子例程，然后是可选的子例程的名称和可选的签名。子例程的主体是一个用花括号扩起来的代码块。
 默认的，子例程是本地作用域的，就像任何使用 my 申明的变量一样。这意味着，一个子例程只能在它被申明的作用域内被调用。使用 our 来申明子例程可以使其在当前包中可见。
  
- 
-  
+```perl 
  {
  our sub eat() {
- say "om nom nom";
+     say "om nom nom";
  }
 
  sub drink() {
- say "glug glug";
+     say "glug glug";
  }
  }
  our &eat; # makes the package-scoped sub eat available in this lexical scope
 
  eat(); # om nom nom
  drink(); # 失败, can't drink outside of the block
+``` 
 our 也能让子例程从包或模块的外部是可见的：
- 
+```perl 
  module EatAndDrink {
- our sub eat() {
- say "om nom nom";
+     our sub eat() {
+     say "om nom nom";
  }
 
  sub drink() {
- say "glug glug";
+     say "glug glug";
  }
  }
  EatAndDrink::eat(); # om nom nom
  EatAndDrink::drink(); # fails, not declared with "our"
- 
+ ```
 你也可以导出一个子例程，让它在另外的作用域内可见。
- 
+```perl
  # in file Math/Trivial.pm
  # TODO: find a better example
  # TODO: explain modules, search paths
@@ -497,26 +485,27 @@ our 也能让子例程从包或模块的外部是可见的：
  sub double($x) is export {
  return 2 * $x;
  }
- 
+```
 然后在其它程序或模块中你可以这样写:
+```perl
  use Math::Trivial; # imports sub double
  say double(21); # 21 is only half the truth
- 
+``` 
 Perl 6的子例程都是对象。你可以将它们随意传递并存储在数据结构中。编程语言设计者常常将它们称之为first-class 子例程；它们就像数组和散列一样作为语言的基础。 
  
 First-class 子例程能帮助你解决复杂的问题。例如，为了做出一个微型的ASCII艺术舞蹈图，你可能要建立一个散列，键是舞蹈动作的名称，键值是匿名散列。假使使用者能键入一系列舞蹈动作（可能是站在舞蹈平台上或其它外部输入设备）。 你怎么保持一个变量清单中都是合法的行为，允许使用者输入，并限制输入是一系列安全的行为呢？
- 
+```perl 
  my %moves =
- hands-over-head => sub { say '/o\ '  },
- bird-arms             => sub { say '|/o\| ' },
- left                        => sub { say '>o '   },
- right                     => sub { say 'o< '   },
+ hands-over-head       => sub { say '/o\ '  },
+ bird-arms             => sub { say '|/o\| '},
+ left                  => sub { say '>o '   },
+ right                 => sub { say 'o< '   },
  arms-up               => sub { say '\o/ '  };
 
  my @awesome-dance = <arms-up bird-arms right hands-over-head>;
 
  for @awesome-dance -> $move {
- %moves{$move}.();  # 在散列上调用方法
+     %moves{$move}.();  # 在散列上调用方法
  }
 
  
@@ -525,124 +514,129 @@ First-class 子例程能帮助你解决复杂的问题。例如，为了做出�
  # |/o\|
  # o<
  # /o\
+```
  
-.2 添加签名
+### 4.2 添加签名
  
 子例程的签名执行两个任务。首先，它申明哪个调用者可能或必须将参数传递给子例程。第二，它申明子例程中的变量被绑定到哪些参数上。这些变量叫做参数。Perl 6的签名更深入，它们允许你限制参数的类型，值和参数的定义，并准确匹配复杂数据结构的某一部分。此外，它们也允许你显式地指定子例程返回值的类型。
  
-.2.1 基础
+### 4.2.1 基础
 签名最简单的形式是，绑定到输入参数上的用逗号分隔的一列变量的名字。
- 
+```perl 
  sub order-beer($type, $pints) {
- say ($pints == 1 ?? 'A pint' !! "$pints pints") ~ " of $type, please."
+    say ($pints == 1 ?? 'A pint' !! "$pints pints") ~ " of $type, please."
  }
 
  order-beer('Hobgoblin', 1);    # A pint of Hobgoblin, please.
  order-beer('Zlatý Bažant', 3);  # 3 pints of Zlatý Bažant, please.
-
+```
 这里使用的关系绑定而非赋值就是签名。默认地，在Perl6 中，子例程中引用到传入参数的签名的变量是只读的。这意味着你不能从子例程内部修改它们。
 如果只读绑定太受限制了，你可以将 is rw (rw是read/write的缩写) 特性应用到参数上以降低这种限制。这个特性说明参数是可读可写的，这允许你从子例程内部修改参数。使用的时候必须小心，因为它会修改传入的原始对象。如果你试图传入一个字面值，一个常量，或其它类型的不可变对象到一个有 is rw  特性的参数中，绑定会在调用时失败并抛出异常:
- 
+ ```perl
  sub make-it-more-so($it is rw) {
- $it ~= substr($it, $it.chars - 1) x 5;
+     $it ~= substr($it, $it.chars - 1) x 5;
  }
 
  my $happy = "yay!";
  make-it-more-so($happy);
  say $happy; # yay!!!!!!  #原始传入对象被修改了
  make-it-more-so("uh-oh"); # 失败，不能修改一个常量
- 
+ ```
 如果你想将参数的本地副本用在子例程内部而不改变调用者的变量，----使用 is copy 特性：
- 
+ ```perl
  sub say-it-one-higher($it is copy) {
- $it++;
- say $it;
+     $it++;
+     say $it;
  }
 
  my $unanswer = 41;
  say-it-one-higher($unanswer); # 42
  say-it-one-higher(41); # 42
  $unanswer;  #41
- 
+ ```
 在诸如C/C++ and Scheme等其它类型的编程语言中,这种广为人知的求值策略就是“按值传递”。当使用 is copy 特性时，只有本地副本被赋值。其它任何传递给子例程的参数在调用者的作用域内保持不变。（一个不可变对象是当这个对象被创建后，它的状态不会改变，作为比较，一个可变对象的状态在创建后是会被改变的）
  
-.2.2 传递数组、散列和代码
+### 4.2.2 传递数组、散列和代码
  
 一个变量的魔符表明它的本意用途。在签名中，变量的魔符也起着限制传入的参数类型的作用。例如， @ 符号检查传入的对象行使位置角色（一个角色包含像数组和列表的类型）。如果传递的东西不能匹配这样的限制，会引起调用失败：
- 
+```perl 
  sub shout-them(@words) {
- for @words -> $w {
- print uc("$w ");
- }
+     for @words -> $w {
+         print uc("$w ");
+     }
  }
 
  my @last_words = <do not want>;
 
  shout-them(@last_words); # DO NOT WANT
  shout-them('help'); # Fails; a string is not Positional  字符串不是位置参数
- 
+ ```
  
 类似地， % 符号表明调用者必须传递一个行使关系角色的对象；即允许通过<...>或{...} 进行索引的东西。 & 符号要求调用者传递一个诸如匿名散列之类的行使能调用的角色的对象。在那种情况下，你也可以不用 & 符号调用可调用的参数：
- 
+```perl 
  sub do-it-lots(&it, $how-many-times) {
- for 1..$how-many-times {
- it();
- }
+     for 1..$how-many-times {
+         it();
+     }
  }
 
  do-it-lots(sub { say "Eating a stroopwafel" }, 10);   #此处是一个匿名子例程
+ ```
  
 标量使用 $符号，并表明没有限制。什么都可以绑定在它上面，即使它使用另外的符号绑定到一个对象上。
  
-.2.3 插值、数组和散列
+### 4.2.3 插值、数组和散列
  
 有时你想从数组中填充占位参数。你可以通过在数组前添加一个垂直竖条或管道字符 ( | ): eat(|@food)    而不是写作eat(@food[0],@food[1], @food[2], ...) 等将它们吸进参数列表。
  
 同样地，你可以将散列插值进具名参数:
- 
+```perl 
  sub order-shrimps($count, :$from) {
- say "I'd like $count pieces of shrimp from the $from, please";
+     say "I'd like $count pieces of shrimp from the $from, please";
  }
 
  my %user-preferences = from => 'Northern Sea';
 
  order-shrimps(3, |%user-preferences);
  # I'd like 3 pieces of shrimp from the Northern Sea, please
- 
-.2.4 可选参数
+``` 
+### 4.2.4 可选参数
 为使参数可选，要么给签名的参数赋值为默认值：
+```perl
  sub order-steak($how = 'medium') {
- say "I'd like a steak, $how";
+     say "I'd like a steak, $how";
  }
 
  order-steak();
  order-steak('well done');
- 
+```
 或者在参数名字的后面添加一个问号(?):
+```perl
  sub order-burger($type, $side?) {
- say "I'd like a $type burger" ~
- ( defined($side) ?? " with a side of $side" !! "" );
+     say "I'd like a $type burger" ~
+     ( defined($side) ?? " with a side of $side" !! "" );
  }
 
  order-burger("triple bacon", "deep fried onion rings");
+```
 如果没有参数被传递，参数会被绑定成一个未定义的值。 defined(...) 函数用来检查是否有值。
  
-.2.5 必不可少的参数
+### 4.2.5 必不可少的参数
 默认地，位置参数是必不可少的。然而，你可以通过在参数后面追加一个感叹号来显式地指定该参数是必须的：
- 
+```perl 
  sub order-drink($size, $flavor!) {
- say "$size $flavor, coming right up!";
- }
+     say "$size $flavor, coming right up!";
+ } 
 
  order-drink('Large', 'Mountain Dew'); # OK
  order-drink('Small'); # Error
- 
-.2.6 具名实参和形参
+``` 
+### 4.2.6 具名实参和形参
  
 当一个子例程有很多参数时，调用者很难记清传递参数的顺序。这种情况下，通过名字传递参数往往更容易。这样，参数出现的顺序就无关紧要了:
- 
+```perl 
  sub order-beer($type, $pints) {
- say ($pints == 1 ?? 'A pint' !! "$pints pints") ~ " of $type, please."
+     say ($pints == 1 ?? 'A pint' !! "$pints pints") ~ " of $type, please."
  }
 
  order-beer(type => 'Hobgoblin', pints => 1);
@@ -650,49 +644,51 @@ First-class 子例程能帮助你解决复杂的问题。例如，为了做出�
 
  order-beer(pints => 3, type => 'Zlatý Bažant');
  # 3 pints of Zlatý Bažant, please.
- 
+``` 
 你也可以指定参数只能按名字被传递（这意味着它不允许按位置传递）。这样的话，在参数名字前加一个冒号：
- 
+```perl 
  sub order-shrimps($count, :$from = 'Northern Sea') {
- say "I'd like $count pieces of shrimp from the $from, please";
+     say "I'd like $count pieces of shrimp from the $from, please";
  }
 
  order-shrimps(6);    # takes 'Northern Sea'
  order-shrimps(4, from => 'Atlantic Ocean');
  order-shrimps(22, 'Mediterranean Sea');   # 不允许, :$from is named only
+``` 
 不像位置参数，命名参数默认是可选的。在命名参数后面追加一个 ! 号使命名参数强制性存在。
- 
+```perl 
  sub design-ice-cream-mixture($base = 'Vanilla', :$name!) {
- say "Creating a new recipe named $name!"
+     say "Creating a new recipe named $name!"
  }
 
  design-ice-cream-mixture(name => 'Plain');
  design-ice-cream-mixture(base => 'Strawberry chip'); # 错误,没有指定 $name
- 
+``` 
 重命名参数
  
 Since it is possible to pass arguments to parameters by name, the parameter names should
 be considered as part of a subroutine’s public API. Choose them carefully! Sometimes it
 may be convenient to expose a parameter with one name while binding to a variable of a
 different name:
+```perl
  sub announce-time(:dinner($supper) = '8pm') {
- say "We eat dinner at $supper";
+     say "We eat dinner at $supper";
  }
 
  announce-time(dinner => '9pm'); # We eat dinner at 9pm
- 
+``` 
 参数可以有多个名字，如果你的用户有些是英国人，有些是美国人，你可能这样写：
- 
+```perl 
  sub paint-rectangle(
- :$x = 0,
- :$y = 0,
- :$width = 100,
- :$height = 50,
- :color(:colour($c))) {
+     :$x = 0,
+     :$y = 0,
+     :$width = 100,
+     :$height = 50,
+     :color(:colour($c))) {
 
- # print a piece of SVG that represents a rectangle
- say qq[<rect x="$x" y="$y" width="$width" height="$height"
- style="fill: $c" />]
+     # print a piece of SVG that represents a rectangle
+     say qq[<rect x="$x" y="$y" width="$width" height="$height"
+     style="fill: $c" />]
  }
 
  # both calls work the same
@@ -701,32 +697,34 @@ different name:
 
  # of course you can still fill the other options
  paint-rectangle :width(30), :height(10), :colour<Blue>;
+```
  
 Alternative Named Argument Syntaxes
 命名变量通常是成对的（键值对）。有多种方式可以写成一对儿。各种方法的不同之处就是清晰性，因为每种选择提供不同的引用机制。下面的三种调用是一样的意思：
- 
+```perl 
  announce-time(dinner => '9pm');
  announce-time(:dinner('9pm'));
  announce-time(:dinner<9pm>);
+``` 
 如果传递的是布尔值，你可以省略键值对的键值：
- 
+```perl 
  toggle-blender( :enabled); # enables the blender
  toggle-blender(:!enabled); # disables the blender
- 
+``` 
 A named argument of the form :name with no value has an implicit value of Bool::True.
 e negated form of this, :!name, has an implicit value of Bool::False.
 If you use a variable to create a pair, you can reuse the variable name as the key of the
 pair.
- 
+```perl 
  my $dinner = '9pm';
  announce-dinner :$dinner; # same as dinner => $dinner;
- 
+``` 
 pairForms on page 37 lists possible Pair forms and their meanings.
 
  
 You can use any of these forms in any context where you can use a Pair object. For
 example, when populating a hash:
- 
+```perl 
  # TODO: better example
  my $black = 12;
  my %color-popularities = :$black, :blue(8),
@@ -737,43 +735,45 @@ example, when populating a hash:
  # blue => 8,
  # red => 18,
  # white => 0;
+``` 
 Finally, to pass an existing Pair object to a subroutine by position, not name, either put
 it in parentheses (like (:$thing)), or use the => operator with a quoted string on the
 le-hand side: "thing" => $thing.
  
 参数的顺序
 当位置参数和命名参数都出现在签字中时，所有的位置参数都要出现在命名参数之前：
- 
+```perl 
  sub mix(@ingredients, :$name) { ... } # OK
  sub notmix(:$name, @ingredients) { ... } # Error
- 
+``` 
 Required 位置参数要在可选的位置参数之前。然而，命名参数没有这种限制。
- 
+```perl 
  sub copy-machine($amount, $size = 'A4', :$color!, :$quality) { ... } # OK
  sub fax-machine($amount = 1, $number) { ... } # Error
- 
+``` 
  
 .2.7 Slurpy 参数
 有时候，你会希望让子例程接受任何数量的参数，并且将所有这些参数收集到一个数组中。为了达到这个目的，给签字添加一个数组参数，就是在数组前添加一个 * 号前缀：
- 
+```perl 
  sub shout-them(*@words) {
- for @words -> $w {
- print uc("$w ");
- }
+     for @words -> $w {
+         print uc("$w ");
+     }
  }
 
   #现在你可以传递项
  shout-them('go'); # GO
  shout-them('go', 'home'); # GO HOME
- 
+``` 
 除了集合所有的值之外，slurpy 参数会展平任何它收到的数组，最后你只会得到一个展平的列表，因此：
- 
+```perl 
  my @words = ('go', 'home');
  shout-them(@words);
+``` 
 会导致 *@words 参数有两个字符串元素，而非只有单个数组元素。
  
 你可以选择将某些参数捕获到位置参数中，并让其它参数被吸进数组参数里。这种情况下， slupy 因该放到最后。相似地， *%hash slurps 所有剩下的未绑定的命名参数到散列 %hash中。Slurpy 数组和散列允许你传递所有的位置参数和命名参数到另一个子例程中。
- 
+```perl 
  sub debug-wrapper(&code, *@positional, *%named) {
  warn "Calling '&code.name()' with arguments "
  ~ "@positional.perl(), %named.perl()\n";
@@ -782,112 +782,119 @@ Required 位置参数要在可选的位置参数之前。然而，命名参数�
  }
 
  debug-wrapper(&order-shrimps, 4, from => 'Atlantic Ocean');
- 
-.3 返回结果
+``` 
+### 4.3 返回结果
 子例程也能返回值。之前本章中的 ASCII 艺术舞蹈例子会更简单当每个子例程返回一个新字符串：
- 
+```perl 
  my %moves =
- hands-over-head => sub { return '/o\ ' },
- bird-arms => sub { return '|/o\| ' },
- left => sub { return '>o ' },
- right => sub { return 'o< ' },
- arms-up => sub { return '\o/ ' };
+ hands-over-head => sub { return '/o\ '   },
+ bird-arms       => sub { return '|/o\| ' },
+ left            => sub { return '>o '    },
+ right           => sub { return 'o< '    },
+ arms-up         => sub { return '\o/ '   };
 
  my @awesome-dance = <arms-up bird-arms right hands-over-head>;
 
  for @awesome-dance -> $move {
- print %moves{$move}.();
+     print %moves{$move}.();
  }
 
  print "\n";
+ ```
 子例程也能返回多个值（译者注：那不就是返回一个列表嘛）：
- 
+```perl 
  sub menu {
- if rand < 0.5 {
- return ('fish', 'white wine')
- } else {
- return ('steak', 'red wine');
- }
+     if rand < 0.5 {
+         return ('fish', 'white wine')
+     } else {
+         return ('steak', 'red wine');
+     }
  }
 
  my ($food, $beverage) = menu();
-如果你把 return 语句排除在外，则在子例程内部运行的最后一个语句产生的值被返回。这意味着前一个例子可以简化为：
- 
+```
+ 如果你把 return 语句排除在外，则在子例程内部运行的最后一个语句产生的值被返回。这意味着前一个例子可以简化为：
+```perl 
  sub menu {
- if rand < 0.5 {
- 'fish', 'white wine'
- } else {
- 'steak', 'red wine';
- }
+     if rand < 0.5 {
+         'fish', 'white wine'
+     } else {
+         'steak', 'red wine';
+     }
  }
 
  my ($food, $beverage) = menu();
- 
+``` 
 记得：当子例程中的控制流极其复杂时，添加一个显式的 return 会让代码更清晰，所以 return 还是加上的好。
 return 另外的副作用就是执行后立即退出子例程：
- 
+```perl 
  sub create-world(*%characteristics) {
- my $world = World.new(%characteristics);
- return $world if %characteristics<temporary>;
+     my $world = World.new(%characteristics);
+     return $world if %characteristics<temporary>;
 
- save-world($world);
+     save-world($world);
  }
+``` 
 ...并且你最好别放错你的新单词 $word 如果它是临时的。因为这是你要获取的仅有的一个。
  
  
-.4 返回值的类型
+### 4.4 返回值的类型
  
 像其它现代语言一样，Perl 6 允许你显式地指定子例程返回值的类型。这允许你限制从子例程中返回的值的类型。使用 returns 特性可以做到这样： 
- 
+```perl 
  sub double-up($i) returns Int {
- return $i * 2;
+     return $i * 2;
  }
 
  my Int $ultimate-answer = double-up(21);  # 42
-当然，使用这个 returns 特性是可选的
+```
+ 当然，使用这个 returns 特性是可选的
  
-.5 Working With Types
+### 4.5 Working With Types
  
 很多子例程不能完整意义上使用任意参数工作，但是要求参数支持确定的方法或有其它属性。这种情况下，限制参数类型就有意义了，诸如传递不正确值作为参数，当调用子例程时，这会引起Perl 发出错误，或者甚至在编译时，如果编译器足够聪明来捕捉错误。
  
-.5.1 基本类型
+### 4.5.1 基本类型
 最简单的限制子例程接收可能的值的方法是在参数前写上类型名。例如，一个子例程对其参数执行数值计算，这要求它的参数类型是 Numeric：
- 
+```perl 
  sub mean(Numeric $a, Numeric $b) {
- return ($a + $b) / 2;
+    return ($a + $b) / 2;
  }
 
  say mean 2.5, 1.5;
  say mean 'some', 'strings';
-产生输出：
-
+```
+ 产生输出：
+```perl
 Nominal type check failed for parameter '$a';
 expected Numeric but got Str instead
+```
 nominal 类型是一个人实际类型的名字，这里是 Numeric。
 如果多个参数有类型限制，每个参数必须填充它绑定的参数限制的类型
  
  
-.5.2  添加限制
+### 4.5.2  添加限制
  
 有时，类型的名字不足以描述参数的要求。这种情况下，你可能使用 where 代码块添加一个额外的限制：
- 
+```perl 
  sub circle-radius-from-area(Real $area where { $area >= 0 }) {
- ($area / pi).sqrt
+     ($area / pi).sqrt
  }
 
  say circle-radius-from-area(3); # OK
  say circle-radius-from-area(-3); # Error
-因为这种计算只对非负面积值有意义，该子例程的参数包含了一个限制，对于非负值它会返回真。如果这个限制返回一个假的值，类型检查会失败，当有些东西调用该子例程时。
+```
+ 因为这种计算只对非负面积值有意义，该子例程的参数包含了一个限制，对于非负值它会返回真。如果这个限制返回一个假的值，类型检查会失败，当有些东西调用该子例程时。
  
 where 之后的代码块是可选的。Perl 通过通过智能匹配where后面的参数来执行检查。 就
 例如，它可能接受在某一确定范围中的参数：
- 
+```perl 
  sub set-volume(Numeric $volume where 0..11) {
- say "Turning it up to $volume";
+     say "Turning it up to $volume";
  }
- 
+``` 
 或者你可以将参数限制为散列的键：
- 
+```perl 
  my %in-stock = 'Staropramen' => 8, 'Mori' => 5, 'La Trappe' => 9;
 
  sub order-beer(Str $name where %in-stock) {
@@ -898,74 +905,81 @@ where 之后的代码块是可选的。Perl 通过通过智能匹配where后面�
            %in-stock.delete($name);
       }
  }
-.6 抽象参数和具体参数
+``` 
+### 4.6 抽象参数和具体参数
  
 下面检测变量是否定义。
 例如，下面是Perl5 代码:
+```perl
  sub foo {
- my $arg = shift;
- die "Argument is undefined" unless defined $arg;
+     my $arg = shift;
+     die "Argument is undefined" unless defined $arg;
 
- # Do something
+     # Do something
  }
-在Perl 6 中这样写:
+ ```
  
+在Perl 6 中这样写:
+```perl  
  sub foo(Int:D $arg) {
- # Do something
+     # Do something
  }
+``` 
 留意附加在参数类型后面的 :D 笑脸。这个动词表明给定的参数必须被绑定到一个具体的对象上。如果不是的话，会抛出一个运行时异常。这就是为什么它那么高兴！作为对比， 动词 :U 用于表明该参数需要一个未定义的或抽象的对象。此外， 动词:_ 允许定义或未定义的值。实际上，使用 :_ 有点多余。
  
 最后，动词 :T 能用于表明参数只能是类型对象，例如
- 
+```perl 
  sub say-foobar(Int:T $arg) {
- say 'FOOBAR!';
+     say 'FOOBAR!';
  }
 
  say-foobar(Int);
  # FOOBAR!
- 
-.7 捕获
+``` 
+### 4.7 捕获
 签字不仅仅是语法，它们是  first-class 含有一列参数对象的对象。同样地，有一种含有参数集的数据结构,叫捕获。捕获有位置和命名两个部分，表现的就像列表和散列。像列表的那部分含有位置参数，而像散列的那部分含有命名参数。
  
  
-.7.1 创建和使用一个捕获
+### 4.7.1 创建和使用一个捕获
  
 无论你什么时间写下一个子例程调用，你就隐式地创建了一个捕获。然而，它随即被调用消耗了。有时，你想做一个捕获，存储它，然后将一个或多个子例程应用到它包含的一系列参数上。为了这，使用 n(...) 语法。
- 
+```perl 
  my @tasks = n(39, 3, action => { say $^a + $^b }),
  n(6, 7, action => { say $^a * $^b });
- 
+``` 
 这里，@tasks数组最后会包含两个捕获，每个捕获各含有两个位置参数和一个命名参数。捕获中的命名参数出现在哪并没有关系，因为他们是按名字传递，而非按位置。就像数组和散列，使用 | ，捕获也能被展平到参数列表中去:
- 
+```perl 
  sub act($left, $right, :$action) {
- $action($left, $right);
+     $action($left, $right);
  }
 
  for @tasks -> $task-args {
- act(|$task-args);
+     act(|$task-args);
  }
- 
+``` 
 However, in this case it is specifying the full set of arguments for the call, including both
 named and positional arguments.
 Unlike signatures, captures work like references. Any variable mentioned in a capture
 exists in the capture as a reference to the variable. us rw parameters still work with
 captures involved.
+```perl 
  my $value = 7;
  my $to-change = n($value);
 
  sub double($x is rw) {
- $x *= 2;
+     $x *= 2;
  }
 
  sub triple($x is rw) {
- $x *= 3;
+     $x *= 3;
  }
 
  triple(|$to-change);
  double(|$to-change);
 
  say $value; # 42
-Perl types with both positional and named parts also show up in various other situations. For example, regex matches have both positional and named matches–Match objects themselves are a type of capture. It’s also possible to conceive of an XML node type
+```
+ Perl types with both positional and named parts also show up in various other situations. For example, regex matches have both positional and named matches–Match objects themselves are a type of capture. It’s also possible to conceive of an XML node type
 that is a type of capture, with named attributes and positional children. Binding this node
 to a function could use the appropriate parameter syntax to work with various children
 and attributes.
@@ -978,11 +992,13 @@ the callee side
 . It is also possible to write a signature that binds the capture itself into a
 variable. is is especially useful for writing routines that delegate to other routines with
 the same arguments.
+```perl
  sub visit-czechoslovakia(|$plan) {
- warn "Sorry, this country has been deprecated.";
- visit-slovakia(|$plan);
- visit-czech-republic(|$plan);
+     warn "Sorry, this country has been deprecated.";
+     visit-slovakia(|$plan);
+     visit-czech-republic(|$plan);
  }
+``` 
 e benefit of using this over a signature like :(*@pos, *%named) is that these both enforce
 some context on the arguments, which may be premature. For example, if the caller
 passes two arrays, they would Ęatten into @pos. is means that the two nested arrays
@@ -993,94 +1009,107 @@ An optimizing Perl 6 compiler may, of course, be able to optimize away part or a
 depending on what it knows at compilation time.
 
  
-.8 Unpacking
+### 4.8 Unpacking
  
 有时候，你只需要使用一个数组或散列的一部分。你可以使用常规的切片获取，或使用签名绑定：
- 
+```perl 
  sub first-is-largest(@a) {
- my $first = @a.shift;
- # TODO: either explain junctions, or find a concise way to write without them
- return $first >= all(@a);
+     my $first = @a.shift;
+     # TODO: either explain junctions, or find a concise way to write without them
+     return $first >= all(@a);
  }
 
  # same thing:
  sub first-is-largest(@a) {
- my :($first, *@rest) := \(|@a)
- return $first >= all(@rest);
+     my :($first, *@rest) := \(|@a)
+     return $first >= all(@rest);
  }
+``` 
 the signature binding approach might seem clumsy, but when you use it in the main
 signature of a subroutine, you get tremendous power:
+```perl 
  sub first-is-largest([$first, *@rest]) {
- return $first >= all(@rest);
+     return $first >= all(@rest);
  }
-th e brackets in the signature tell the compiler to expect a list-like argument. Instead
+ ```
+the brackets in the signature tell the compiler to expect a list-like argument. Instead
 of binding to an array parameter, it instead unpacks its arguments into several parameters–in this case, a scalar for the first element and an array for the rest. is subsignature
 also acts as a constraint on the array parameter: the signature binding will fail unless the
 list in the capture contains at least one item.
 Likewise you can unpack a hash by using %(...) instead of square brackets, but you must
 access named parameters instead of positional.
+```perl 
  sub create-world(%(:$temporary, *%characteristics)) {
- my $world = World.new(%characteristics);
- return $world if $temporary;
+     my $world = World.new(%characteristics);
+     return $world if $temporary;
 
- save-world($world);
+     save-world($world);
  }
  
 # TODO: come up with a good example # maybe steal something from http://jnthn.net/papers/2010-yapc-eu-signatures.pdf
 # TODO: generic object unpacking
- 
-.9 Currying
+``` 
+### 4.9 柯里化
  
 Consider a module that provided the example from the \Optional Parameters" section:
+```perl 
  sub order-burger( $type, $side? ) { ... };
-If you used order-burger repeatedly, but oen with a side of french fries, you might wish
+```
+ If you used order-burger repeatedly, but oen with a side of french fries, you might wish
 that the author had also provided a order-burger-and-fries sub. You could easily write
 it yourself:
+```perl
  sub order-burger-and-fries ( $type ) {
- order-burger( $type, side => 'french fries' );
+     order-burger( $type, side => 'french fries' );
  }
+``` 
 If your personal order is always vegetarian, you might instead wish for a order-the-usual
 sub. is is less concise to write, due to the optional second  parameter:
+```perl 
  sub order-the-usual ( $side? ) {
- if ( $side.defined ) {
- order-burger( 'veggie', $side );
+     if ( $side.defined ) {
+         order-burger( 'veggie', $side );
+     } else {
+         order-burger( 'veggie' );
+     }
  }
- else {
- order-burger( 'veggie' );
- }
- }
+```
 Currying gives you a shortcut for these exact cases; it creates a new sub from an existing
 sub, with parameters already filled in. In Perl 6, curry with the .assuming method:
+```perl
  &order-the-usual := &order-burger.assuming( 'veggie' );
  &order-burger-and-fries := &order-burger.assuming( side =>  'french fries' );
-
+```
 e new sub is like any other sub, and works with all the various parameter-passing
 schemes already described.
+```perl 
  order-the-usual( 'salsa' );
  order-the-usual( side => 'broccoli' );
 
  order-burger-and-fries( 'plain' );
  order-burger-and-fries( :type<<double-beef>> );
- 
-.10 自省
+``` 
+### 4.10 自省
  
 子例程和他们的签名都是对象。除了调用它们，你可以学习它们的东西，包括它们的参数的细节：
- 
+```perl 
  sub logarithm(Numeric $x, Numeric :$base = exp(1)) {
         log($x) / log($base);
-        }
+     }
 
  my @params = &logarithm.signature.params;
  say @params.elems, ' parameters';
 
-       for @params {
-            say "Name: ", .name;
-          say " Type: ", .type;
-          say " named? ",     .named ?? 'yes' !! 'no';
-          say " slurpy? ",        .slurpy ?? 'yes' !! 'no';
-          say " optional? ", .optional ?? 'yes' !! 'no';
+ for @params {
+     say "Name: ",      .name;
+     say " Type: ",      .type;
+     say " named? ",     .named ?? 'yes' !! 'no';
+     say " slurpy? ",    .slurpy ?? 'yes' !! 'no';
+     say " optional? ",  .optional ?? 'yes' !! 'no';
   }
+```  
 输出：
+```perl
  parameters
  
 Name: $x
@@ -1093,7 +1122,7 @@ Name: $base
    named? yes
    slurpy? no
    optional? yes
- 
+``` 
 
 &logarithm.signature 返回这个子例程的签名，并对签名调用.params 方法，返回一个参数对象的列表。这些对象中的每个对象都详细描述一个参数。
 Table 4.2: Methods in the Parameter class
@@ -1110,26 +1139,25 @@ information obtained through introspection. A similar approach might generate a 
 Beyond this, traits (traits) allow you to associate extra data with parameters. is metadata can go far beyond that which subroutines, signatures, and parameters normally provide.
  
  
-.11   MAIN 子例程
+### 4.11   MAIN 子例程
  
 Frequent users of the UNIX shells might have noticed a symmetry between postional
 and named arguments to routines on the one hand, and argument and options on the
 command line on the other hand.
 is symmetry can be exploited by declaring a subroutine called MAIN. It is called every time the script is run, and its signature counts as a specification for command line
 arguments.
- 
+```perl 
  # script roll-dice.pl
  sub MAIN($count = 1, Numeric :$sides = 6, Bool :$sum) {
-       my @numbers = (1..$sides).roll($count);
-       say @numbers.join(' ');
-       say "sum: ", [+] @numbers if $sum;
-      }
+     my @numbers = (1..$sides).roll($count);
+     say @numbers.join(' ');
+     say "sum: ", [+] @numbers if $sum;
+     }
  # TODO: explain ranges, .pick and [+]
- 
+``` 
 执行该脚本时可以带参数也可以不带参数：
- 
+```perl 
 $ perl6 roll-dice.pl
-
 $ perl6 roll-dice.pl 4
  4 2 4
 $ perl6 roll-dice.pl --sides=20 3
@@ -1140,7 +1168,7 @@ sum: 35
 $ perl6 roll-dice.pl --unknown-option
 Usage:
 roll-dice.pl [--sides=<Numeric>] [--sum] [<count>]
- 
+``` 
 命名参数可以跟很多GNU工具一样，使用 --name=value 语法提供，而位置参数使用它们的值就好了。
  
 如果选项没有要求参数，MAIN 签字里的参数需要被标记为 Bool 类型。
@@ -1152,8 +1180,8 @@ roll-dice.pl [--sides=<Numeric>] [--sum] [<count>]
     }
  
  
-第八章 子类
- 
+## 第八章 子类
+```perl 
  enum Suit <spades hearts diamonds clubs>;
  enum Rank (2, 3, 4, 5, 6, 7, 8, 9, 10,
                      'jack', 'queen', 'king', 'ace');
@@ -1164,7 +1192,7 @@ roll-dice.pl [--sides=<Numeric>] [--sum] [<count>]
 
  method Str {
        $.rank.name ~ ' of ' ~ $.suit.name;
-      }
+     }
  }
 
  subset PokerHand of List where { .elems == 5 && all(|$_) ~~ Card }
@@ -1176,9 +1204,9 @@ roll-dice.pl [--sides=<Numeric>] [--sum] [<count>]
  return False;
  }
 
- subset Quad of PokerHand where               { n-of-a-kind(4, $_) }
+ subset Quad of PokerHand where         { n-of-a-kind(4, $_) }
  subset ThreeOfAKind of PokerHand where { n-of-a-kind(3, $_) }
- subset OnePair of PokerHand where           { n-of-a-kind(2, $_) }
+ subset OnePair of PokerHand where      { n-of-a-kind(2, $_) }
 
  subset FullHouse of PokerHand where OnePair & ThreeOfAKind;
 
@@ -1188,8 +1216,8 @@ roll-dice.pl [--sides=<Numeric>] [--sum] [<count>]
            my @sorted-cards = @cards.sort({ .rank });
            my ($head, @tail) = @sorted-cards;
            for @tail -> $card {
-                   return False if $card.rank != $head.rank + 1;
-                  $head = $card;
+                return False if $card.rank != $head.rank + 1;
+                $head = $card;
              }
   return True;
  }
@@ -1205,20 +1233,19 @@ roll-dice.pl [--sides=<Numeric>] [--sum] [<count>]
  }
 
  sub classify(PokerHand $_) {
-      when StraightFlush    { 'straight flush', 8    }
-      when Quad                { 'four of a kind', 7    }
-      when FullHouse         { 'full house', 6         }
-      when Flush                 { 'flush', 5                  }
-      when Straight             { 'straight', 4              }
-      when ThreeOfAKind   { 'three of a kind', 3 }
-      when TwoPair             { 'two pair', 2            }
-      when OnePair             { 'one pair', 1            }
-      when *                        { 'high cards', 0         }
+      when StraightFlush    { 'straight flush',  8  }
+      when Quad             { 'four of a kind',  7  }
+      when FullHouse        { 'full house',      6  }
+      when Flush            { 'flush',           5  }
+      when Straight         { 'straight',        4  }
+      when ThreeOfAKind     { 'three of a kind', 3  }
+      when TwoPair          { 'two pair',        2  }
+      when OnePair          { 'one pair',        1  }
+      when *                { 'high cards',      0  }
  }
 
  my @deck = map -> $suit, $rank { Card.new(:$suit, :$rank) },
                         (Suit.pick(*) X Rank.pick(*));
-
 
  @deck .= pick(*);
 
@@ -1240,58 +1267,58 @@ roll-dice.pl [--sides=<Numeric>] [--sum] [<count>]
          !! $hand2-value > $hand1-value
                     ?? 'the second hand wins'
                     !! "the hands are of equal value"; # XXX: this is wrong
- 
-第九章 模式匹配
+``` 
+## 第九章 模式匹配
  
  
  
 尽管 Perl 6 中描述的语法跟 PCRE 和 POSIX 已经不一样了，我们还是叫它们regex.
  
 eg：查找连续重复2次的单词
+```perl
 my $s = 'the quick brown fox jumped over the the lazy dog';
 if $s ~~ m/ << (\w+) \W+ $0 >> / {say "Found '$0' twice in a  row";}
 Found 'the' twice in a row
- 
+``` 
 << 和 >> 是单词边界。
- 
+```perl 
  if 'properly' ~~ m/ perl / {
- say "'properly' contains 'perl'";
+     say "'properly' contains 'perl'";
  }
- 
+``` 
 m/ ... / 结构创建了一个正则表达式。默认地，正则表达式中的空格是无关紧要的，你可以写成 m/perl/, m/ perl /,甚至 m/p e rl/。
  
 只有单词字符，数字和下划线在正则表达式中代表字面值。其它所有的字符可能有特殊的意思。如果你想搜索逗号，星号或其它非单词字符，你必须引起或转义它：
- 
+```perl 
  my $str = "I'm *very* happy";
-
+ 
  # quoting
  if $str ~~ m/ '*very*' / { say '\o/' }
 
  # escaping
  if $str ~~ m/ \* very \* / { say '\o/' }
- 
+``` 
 正则表达式支持特殊字符，点( . ) 匹配任意一个字符。
- 
+```perl 
  my @words = <spell superlative openly stuff>;
 
  for @words -> $w {
- if $w ~~ m/ pe.l / {
- say "$w contains $/";
- } else {
- say "no match for $w";
+      if $w ~~ m/ pe.l / {
+          say "$w contains $/";
+      } else {
+          say "no match for $w";
+      }
  }
- }
- 
+``` 
 这打印：
+```perl
 spell contains pell
 superlative contains perl
 openly contains penl
 no match for stuff
- 
+``` 
 点匹配了l,r和n，但是在句子 the spectroscope lacks resolution 中正则表达式默认忽略单词边界。
 特殊变量 $/ 存储匹配到的对象，这允许你检测匹配到的文本。
- 
- 
  
 Table 9.1: 反斜线序列和它们的意思
  
@@ -1301,140 +1328,148 @@ Table 9.1: 反斜线序列和它们的意思
 这些匹配超越了ASCII表的范围—— \d 匹配拉丁数字、阿拉伯数字和梵文数字和其它数字， \s 匹配非中断空白，等等。这些字符类遵守Unicode关于什么是字母、数字等的定义。
  
 你可以自定义你的字符类，将合适的字符列在嵌套的尖括号和方括号中： <[ ... ]>
- 
+```perl 
  if $str ~~ / <[aeiou]> / {
- say "'$str' contains a vowel";
+     say "'$str' contains a vowel";
  }
 
  # negation with a -
  if $str ~~ / <-[aeiou]> / {
- say "'$str' contains something that's not a vowel";
+     say "'$str' contains something that's not a vowel";
  }
- 
+``` 
 也可以在字符类中使用范围操作符：
- 
+```perl 
  # match a, b, c, d, ..., y, z
  if $str ~~ / <[a..z]> / {
- say "'$str' contains a lower case Latin letter";
+     say "'$str' contains a lower case Latin letter";
  }
+``` 
 你也可以使用 + 和 - 操作符将字符添加到字符类 或 从字符类中减去字符：
- 
+```perl 
  if $str ~~ / <[a..z]+[0..9]> / {
- say "'$str' contains a letter or number";
+     say "'$str' contains a letter or number";
  }
 
  if $str ~~ / <[a..z]-[aeiou]> / {
- say "'$str' contains a consonant（辅音）";
+     say "'$str' contains a consonant（辅音）";
  }
- 
+``` 
  
 在字符类里面，非单词字符不需要被转义，一般使用它们的特殊意义。所以 /<[+.*]>/匹配一个加号，或一个点或一个星号。需要转义的就是反斜线 / 和破折号 -  。
- 
+```perl 
  my $str = 'A character [b] inside brackets';
  if $str ~~ /'[' <-[ \[ \] ]> ']'/ ) {  #  \[ \] 匹配一个 非[和非]字符
- say "Found a non-bracket character inside square brackets';
+     say "Found a non-bracket character inside square brackets';
  }
  
 量词 跟Perl5 中的用法相似：如 ? 表示重复前面的东西0次或一次； *表示重复前面的东西0次或多次，+ 号表示重复前面的东西 1次或多次。
  
 最普遍的量词是 ** ，当它后面接一个数字number时，表示匹配前面的东西number 次。Perl 5 中用 {m,n}
 当 ** 后面跟着 一个范围时，它能匹配范围中的任何数字次数的东西
- 
+```perl 
  # match a date of the form 2009-10-24:
  m/ \d**4 '-' \d\d '-' \d\d /
 
  # match at least three 'a's in a row:
  m/ a ** 3..* /
  
-可以使用 % 号在量词后面指定一个分隔符：
+# 可以使用 % 号在量词后面指定一个分隔符：
   '1,2,3' ~~ / \d+ % ',' /
-分隔符也可以是一个正则表达式。
+```
+  分隔符也可以是一个正则表达式。
  
 贪婪匹配和非贪婪匹配：
- 
+```perl 
  my $html = '<p>A paragraph</p> <p>And a second one</p>';
 
  if $html ~~ m/ '<p>' .* '</p>' / {
- say 'Matches the complete string!';
+     say 'Matches the complete string!';
  }
 
  if $html ~~ m/ '<p>' .*? '</p>' / {
- say 'Matches only <p>A paragraph</p>!';
+     say 'Matches only <p>A paragraph</p>!';
  }
- 
  
  my $ingredients = 'milk, flour, eggs and sugar';
  # prints "milk, flour, eggs"
  $ingredients ~~ m/ [\w+]+ % [\,\s*] / && say "|$/|";
-# |milk, flour, eggs|
-这里 \w 匹配一个单词，并且 [\w+]+ % [\,\s*]  匹配至少一个单词，并且单词之间用逗号和任意数量的空白分隔。
-> '1,2,3' ~~ / \d+ % ',' / && say "|$/|";
+ # |milk, flour, eggs|
+```
+ 这里 \w 匹配一个单词，并且 [\w+]+ % [\,\s*]  匹配至少一个单词，并且单词之间用逗号和任意数量的空白分隔。
+```perl
+ > '1,2,3' ~~ / \d+ % ',' / && say "|$/|";
 |1,2,3|
+```
 %必须要跟在量词后面，否则报错。
  
 选择分支：
+```perl
 $string ~~ m/ \d**4 '-' \d\d '-' \d\d | 'today' | 'yesterday' /
+```
  一个竖直条意味着分支是并行匹配的，并且最长匹配的分支胜出。两个竖直条会让正则引擎按顺序尝试匹配每个分支，并且第一个匹配的分支胜出。
  
-.1 锚
+### 9.1 锚
  
  
  
-.2 捕获
+### 9.2 捕获
  
 圆括号里的匹配被捕获到特殊数组 $/ 中，第一个捕获分组存储在 $/[0]中，第二个存储在  $/[1]中，以此类推。
- 
+```perl 
 use v6;
 my $str = 'Germany was reunited on 1990-10-03, peacefully';
  
 if $str ~~ m/ (\d**4) \- (\d\d) \- (\d\d) / {
-say 'Year: ',"$/[0]";
-say 'Month: ',"$/[1]";
-say 'Day: ',"$/[2]";
-# usage as an array:
-say $/.join('-'); # prints 1990-10-03
+    say 'Year: ',"$/[0]";
+    say 'Month: ',"$/[1]";
+    say 'Day: ',"$/[2]";
+    # usage as an array:
+    say $/.join('-'); # prints 1990-10-03
 }
  
 Year: 1990
 Month: 10
 Day: 03
--10-03
- 
+1990-10-03
+``` 
 如果你在捕获后面加上量词，匹配对象中的对应的项是一列其它对象：
  
- 
+```perl 
 use v6;
 my $ingredients = 'eggs, milk, sugar and flour';
  
 if $ingredients ~~ m/(\w+)+ % [\,\s*] \s* 'and' \s* (\w+)/ {
-say 'list: ', $/[0].join(' | ');
-say 'end: ', "$/[1]";
+    say 'list: ', $/[0].join(' | ');
+    say 'end: ', "$/[1]";
 }
- 
+``` 
 这打印:
+```perl
 list: eggs | milk | sugar
 end: flour
- 
+``` 
 第一个捕获(\w+)被量词化了，所以$/[0]包含一列单词。代码调用 .join方法将它转换为字符串。 不管第一个捕获匹配了多少次（并且有$/[0]中有多少元素），第二个捕获$/[1]始终可以访问。
  
 作为一种便捷的方式，$/[0] 可以写为 $0, $/[1] 可以写为 $1,等等。这些别名在正则表达式内部也可使用。这允许你写一个正则表达式检测普通的单词重复错误，就像本章开头的例子：
- 
+```perl 
 my $s = 'the quick brown fox jumped over the the lazy dog';
 if $s ~~ m/ << (\w+) \W+ $0 >> / {say "Found '$0' twice in a  row";}
 Found 'the' twice in a row
- 
+``` 
 如果没有第一个单词边界锚点，它会匹配  strand and
 beach or lathe the table leg. 没有最后的单词边界锚点，它会匹配the theory.
  
-.3 命名正则
+### 9.3 命名正则
  
 你可以像申明子例程一样申明正则表达式——甚至给它们起名字。假设你发现之前的例子很有用，你想让它更容易被访问。假设你想扩展这个正则让它处理诸如  doesn't 或 isn't 的缩写：
+```perl
 my regex word { \w+ [ \' \w+]? }
 my regex dup { « <word=&word> \W+ $<word> » }
 if $s ~~ m/ <dup=&dup> / {
-say "Found '{$<dup><word>}' twice in a row";
+    say "Found '{$<dup><word>}' twice in a row";
 }
- 
+``` 
 这段代码引入了一个名为 word 的正则表达式，它至少匹配一个单词字符，后面跟着一个可选的单引号和更多的单词字符。另外一个名为 dup （duplcate的缩写，副本的意思）的正则包含一个单词边界锚点。
 在正则里面，语法 <&word> 在当前词法作用域内查找名为word的正则并匹配这个正则表达式。 <name=&regex> 语法创建了一个叫做 name的捕获，它记录了 &regex 匹配的内容。
  
@@ -1444,29 +1479,29 @@ say "Found '{$<dup><word>}' twice in a row";
  
 命名捕获让组织复杂正则更容易。
  
-.4 修饰符
+### 9.4 修饰符
  
 s修饰符是 :sigspace  的缩写，该修饰符允许可选的空白出现在文本中无论哪里有一个或更多空白字符出现在模式中。它甚至比那更聪明：在两个单词字符之间，空白字符是任意的。该 regex 不匹配字符串 eggs,milk, sugarandflour.
- 
+```perl 
 use v6;
 my $ingredients = 'eggs, milk, sugar and flour';
  
 if $ingredients ~~ m/:s ( \w+ )+ % \,'and' (\w+)/ {
-say 'list: ', $/[0].join(' | ');
-say 'end: ', "$/[1]";
+    say 'list: ', $/[0].join(' | ');
+    say 'end: ', "$/[1]";
 }
  
 list: eggs |  milk |  sugar
 end: flour
- 
-.5 回溯控制
+``` 
+### 9.5 回溯控制
  
 当用 m/\w+ 'en'/ 匹配字符串 oxen时，\w+ 首先匹配全部字符串oxen，因为 +是贪婪的，然后 'en' 不能匹配任何东西。 \w+ 丢弃一个字符，匹配了 oxe，但是 ‘en'还是不能匹配，\w+ 继续丢弃一个字符，匹配 ox, 然后 'en'匹配成功。
  
 一个冒号开关（ : ） 可以为之前的量词或分支关闭回溯。 所以 m / \w+: 'en'/不会匹配任何字符串，因为 \w+ 总是吃光所有的单词字符，从不回退。
  
  :ratchet（防止倒转的制轮装置） 修饰符让整个 正则的回溯功能失效，禁止回溯让 \w+ 总是匹配一个完整的单词:
- 
+```perl 
  # XXX: does actually match, because m/<&dup>/
  # searches for a starting position where the
  # whole regex matches. Find an example that
@@ -1478,49 +1513,54 @@ end: flour
  # no match, doesn't match the 'and'
  # in 'strand' without backtracking
  'strand and beach' ~~ m/<&dup>/
- 
+ ```
  :ratchet 只影响它出现的正则中。外围的正则依然会回溯，所以它能在不同的起始位置重新尝试匹配 正则 word 。正则 { :ratchet ... } 模式太常用了，它有它自己的快捷方式：token { ... } .惯用的重复单词搜索可能是这样的：
- 
+```perl 
  my token word { \w+ [ \' \w+]? }
  my regex dup { <word> \W+ $<word> }
- 
+ ```
 带有 :sigspace 修饰符的令牌是一个 rule:
+```perl 
  # TODO: check if it works
  my rule wordlist { <word>+ % \, 'and' <word> }
- 
-.6 替换
+``` 
+### 9.6 替换
  
 正则表达式对于数据操作很好用。 subst 方法用一个正则跟一个字符串匹配。
  当subst 匹配的时候，它用它的第二个操作数替换掉匹配到的部分字符串：
- 
+```perl 
  my $spacey = 'with    many     superfluous      spaces';
 
  say $spacey.subst(rx/ \s+ /, ' ', :g);
  # output: with many superfluous spaces
- 
+``` 
 默认地，subst执行一个单个替换然后停止。 :g 告诉替换是全局的，它替换每个可能的匹配。
 注意  这里使用 rx/ ... / 而不是 m/ ... / 来构建这个正则。前者构建一个正则表达式对象。后者构建一个正则对象然后立即用它匹配主题变量 $_ 。调用subst时使用 m/ ... / 会创建一个匹配对象并且将它作为第一个参数传递，而不是传递正则表达式本身。 
  
-.7其它正则表达式特性
+### 9.7其它正则表达式特性
  
 有时候你需要调用其它正则，但是不想让它们捕获匹配的文本。当解析编程语言的时候，你可能想删除空白字符和注释。你可以调用 <.otherrule> 完成。如果你用 :sigspace 修饰符，每个连续的空白块调用内建的规则 <.ws> 。使用这个规则而不是使用字符类允许你定义你自己的空白字符版本。
 有些时候你仅仅想前视一下以查看下面的字符是否满足某些属性而不消耗这些字符。这在替换中很有用。在一般的英文文本中，你总是在逗号后面添加一个空格。如果某些人忘记了添加空格，正则能够在慵懒的写完之后整理：
- 
+```perl 
  my $str = 'milk,flour,sugar and eggs';
  say $str.subst(/',' <?before \w>/, ', ', :g);  #向前查看
  # output: milk, flour, sugar and eggs
- 
+``` 
 内建的 token <alpha> 匹配一个字母表字符，所以你可以重写这个例子：
+```perl 
  say $str.subst(/',' <?alpha>/, ', ', :g);
+``` 
 前置感叹号反转上面的意思，否定前视:
+```perl
 say $str.subst(/',' <!space>/, ', ', :g);
+```
 向后环视<?after>.
 Table 9.3: 用环视断言模拟锚点
  
 
  
-.8 匹配对象
- 
+### 9.8 匹配对象
+```perl 
  sub line-and-column(Match $m) {
         my $line = ($m.orig.substr(0, $m.from).split("\n")).elems;
         # RAKUDO workaround for RT #70003, $m.orig.rindex(...) directly fails
@@ -1528,7 +1568,7 @@ Table 9.3: 用环视断言模拟锚点
        $line, $column;
  }
 
-    my $s = "the quick\nbrown fox jumped\nover the the lazy dog";
+ my $s = "the quick\nbrown fox jumped\nover the the lazy dog";
 
  my token word { \w+ [ \' nw+]? }
  my regex dup { <word> \W+ $<word> }
@@ -1542,7 +1582,7 @@ Table 9.3: 用环视断言模拟锚点
  # 输出:
  # Found 'the' twice in a row
  # at line 3, column 6
- 
+``` 
 每个正则匹配返回一个类型为 Match 的对象。在布尔上下文中，匹配对象在匹配成功时返回真，匹配失败时返回假。
  
 orig 方法返回它匹配的字符串，from 和 to 方法返回匹配的开始位置和结束点。
@@ -1553,24 +1593,23 @@ Using a match object as an array yields access to the positional captures. Using
 reveals the named captures. 在前面的例子中, $<dup> 是 $/<dup> 或 $/{ 'dup' } 的快捷写法。这些捕获又是 Match 对象，所以匹配对象实际是匹配树。
  
  caps 方法返回所有的捕获，命名的和位置的，按照它们匹配的文本在原始字符串中出现的顺序返回。返回的值是一个 Pair 对象列表。键值是捕获的名字或数量，键值是对应的 Match 对象。
- 
+ ```perl
  if 'abc' ~~ m/(.) <alpha> (.) / {
-            for $/.caps {
-                    say .key, ' => ', .value;
-
-             }
+     for $/.caps {
+         say .key, ' => ', .value;
+        }
  }
 
  # Output:
- #          0 => a
+ # 0 => a
  # alpha => b
- #        1 => c
- 
+ # 1 => c
+``` 
 在这种情况下，捕获以它们在正则中的顺序出现，但是量词可以改变这种情况。即使如此， $/.caps 后面跟着有顺序的字符串，而不是一个正则。
 字符串的某一部分匹配但是不是捕获的一部分不会出现在caps 方法返回的值中。
  
 为了访问非捕获部分，用 $/. 代替。它返回匹配字符串的捕获和非捕获两部分，跟  caps 的格式相同但是带有一个 ~ 符号作为键。如果没有重叠的捕获（出现在环视断言中）,所有返回的 pair 值连接与匹配部分的字符串相同。
-第十章 语法
+## 第十章 语法
  
  
  
@@ -1587,11 +1626,11 @@ reveals the named captures. 在前面的例子中, $<dup> 是 $/<dup> 或 $/{ 'd
  
  
  
-第11章 内建类型、操作符和方法
+## 第11章 内建类型、操作符和方法
  
 很多操作符需要特别的数据类型才能工作。如果操作数的类型与要求的不同，Perl 会复制一份操作数，并加盖它们转换为需要的类型。例如， $a + $b 会将$a和 $b的副本转换为数字（除非它们已经是数字了）。这种隐式的转换叫做强制变换。除了操作符之外，其它句法元素也强制转换它们的元素： if 和 while 会强制值为真（布尔）， for 会把东西看作列表，等等。
  
-.1 数字
+### 11.1 数字
  
 最重要的类型是整数型:
 Int
@@ -1606,7 +1645,7 @@ Num 是浮点型，它存储固定宽度的符号、尾数和指数。包含 Num
 Rat 有理数
 Rat, 有理数的简称, 存储分数，不损失精度。它将跟踪它的分子和分母作为整数，所以使用大量的针对对有理数的数学运算会相当慢。因为这，含有大分母的有理数会自动降级为 Num。
  
-.14是有理数。
+### 11.14是有理数。
  
 Complex
  
@@ -1623,40 +1662,41 @@ acosec, acotan, sinh, cosh, tanh, asinh, acosh, atanh, sech, cosech, cotanh, ase
      
  
 Table 11.2: 一元数字操作符
+```perl
 操作符      描述
-            +             转换为数字
--              负
- 
++           转换为数字
+-           负
+```
  
 数学函数和方法
  
  
-.2 字符串
+11.2 字符串
  
 根据字符编码，字符串存储为 Str，它是字符序列。 Buf 类型用作存储二进制数据，  encode 方法将 Str  转换为 Buf. decode 相反。
- 
+```perl 
 字符串操作：
 Table 11.4: 二元字符串操作符
-操作符 描述
-                       ~         连接: 'a' ~'b' 是 'ab'
-                    x         重复: 'a' x 2 is 'aa'
+操作符    描述
+~         连接: 'a' ~'b' 是 'ab'
+x         重复: 'a' x 2 is 'aa'
  
 Table 11.5: 一元字符串操作符
 操作符  描述
-                                     ~    转换为字符串: ~1 变成 '1'
+ ~      转换为字符串: ~1 变成 '1'
  
 Table 11.6: 字符串方法/函数
 方法/函数                                  描述
-                       .chomp                                         移除末尾的新行符
-                                                                                        .substr($start,$length)                 提取字符串的一部分。默认的，$length是字符串的剩余部分
-                               .chars                                    字符串中的字符数
-                .uc                                    大写
-              .lc                                       小写
-                         .ucfirst                      首字符转换为大写
-                      .lcfirst                                            首字符转换为小写
-                                                                       .capitalize                                将每个单词的首字符转换为大写，其余字符转换为小写
- 
-.3 布尔
+.chomp                                     移除末尾的新行符
+.substr($start,$length)                    提取字符串的一部分。默认的，$length是字符串的剩余部分
+.chars                                     字符串中的字符数
+.uc                                        大写
+.lc                                        小写
+.ucfirst                                   首字符转换为大写
+.lcfirst                                   首字符转换为小写
+.capitalize                                将每个单词的首字符转换为大写，其余字符转换为小写
+``` 
+11.3 布尔
  
 布尔值要么为真，要么为假。在布尔上下文中，任何值都可以转化为布尔值。决定一个值是真是假要根据值的类型：
  
@@ -1672,7 +1712,7 @@ Table 11.6: 字符串方法/函数
 诸如列表和散列等容器类型的值为假，如果它们是空的话，如果至少包含一个值，则为真。
  
 诸如 if 之类的结构会自动在布尔上下文中求值。你可以在表达式前面放一个问号 ? 来强制一个显式的布尔上下文。用前缀符号   ! 反转布尔值。
- 
+```perl 
  my $num = 5;
 
  # 隐式的布尔上下文
@@ -1683,5 +1723,5 @@ Table 11.6: 字符串方法/函数
 
  # negated boolean context
  my $not_num = !$num;
- 
+ ```
  
