@@ -36,24 +36,24 @@ Player1 Player2 | 3:2
  %sets{$p2} += $r2;  # 选手2赢得的比赛局数
 
  if $r1 > $r2 { # 如果每场比赛中，选手1赢的局数多于选手2，则选手1赢得的比赛数+1，反之选手2的+1
- %matches{$p1}++;
+     %matches{$p1}++;
  } else {
- %matches{$p2}++;
+     %matches{$p2}++;
  }
  }
 
  my @sorted = @names.sort( { %sets{$_} } ).sort({ %matches{$_} } ).reverse;
 
  for @sorted -> $n {
- say "$n has won %matches{$n} matches and %sets{$n} sets";
+     say "$n has won %matches{$n} matches and %sets{$n} sets";
  }
 ```
 
 输出如下：
-Ana has won 2 matches and 8 sets
-Dave has won 2 matches and 6 sets
-Charlie has won 1 matches and 4 sets
-Beth has won 1 matches and 4 sets
+> Ana has won 2 matches and 8 sets
+> Dave has won 2 matches and 6 sets
+> Charlie has won 1 matches and 4 sets
+> Beth has won 1 matches and 4 sets
  
 每个 Perl 6程序应该以 use v6;作为开始，它告诉编译器程序期望的是哪个版本的Perl。
  
@@ -86,12 +86,12 @@ split此处是一个方法，字符串 '|' 是它的参数。
 第一次循环结束：
 ```perl
 Variable       Contents
-$line             'Ana Dave | 3:0'
+$line           'Ana Dave | 3:0'
 $pairing        'Ana Dave'
-$result          '3:0'
-$p1               'Ana'
-$p2              'Dave'
-$r1               '3'
+$result         '3:0'
+$p1             'Ana'
+$p2             'Dave'
+$r1              '3'
 $r2              '0'
 ```
  
@@ -153,8 +153,10 @@ TODO: explain <...> quote-words
  
 答案: 移除此行： 
 > my @names = $file.get.words; 
+
 并且将
 > my @sorted = @names.sort({ %sets{$_} }).sort({ %matches{$_} }).reverse;
+
 变成:
 > my @sorted = %sets.keys.sort({ %sets{$_} }).sort({ %matches{$_} }).reverse;
  
@@ -230,17 +232,23 @@ for @scores {
 @scores».key».chars
  
 > my @scores = Ana => 8, Dave => 6, Charlie => 4, Beth => 4;
+
 Ana     8 Dave  6 Charlie       4 Beth  4
 > @scores.key
+
 Method 'key' not found for invocant of class 'Array'
 > @scores>>.key
+
 Ana Dave Charlie Beth
+
 就像@variable.method 在@variable上调用一个方法一样，@array».method 对@array中的每一项调用method方法，并且返回一个返回值的列表。即@scores>>.key返回一个列表。
  
 > @scores>>.key>>.chars  #每个名字含有几个字符
+
  4 7 4
  
 表达式 [max] @scores».key».chars 给出(3,4,7,4)中的最大值。它与下面的表达式相同：
+
 ```perl
  @scores[0].key.chars
  max @scores[1].key.chars
@@ -249,8 +257,10 @@ Ana Dave Charlie Beth
 ``` 
  
 > @scores[0]
+
 "Ana" => 8
 >  @scores[0].key
+
 Ana
 
 ```perl 
@@ -268,6 +278,7 @@ Ana
  
 等号右侧产生一个列表（因为逗号，操作符），这个列表由对儿组成（因为 =>）,并且结果赋值给数组变量。
 在Perl5中会这样解释:
+
 > (my @scores = 'Ana') => 8, 'Dave' => 6, 'Charlie' => 4, 'Beth' => 4;
 
 以至于数组@scores中只有一个项，表达式的其余部分被计算后丢弃。
@@ -278,9 +289,11 @@ Ana
 比较 $a = 1, $b = 2 和@a = 1, 2，前者是在一个列表中赋值给两个变量，后者是将含有两个项的一个列表赋值给一个变量。
  
 > say 5 - 7 / 2; # 5 - 3.5 = 1.5
+
 > say (5 - 7) / 2; # (-2) / 2 = -1
  
 Perl 6 中的优先级可以用圆括号改变，但是如果圆括号直接跟在标识符的后面而不加空格的话，则会被解释为参数列表。例如：
+
 > say(5 - 7) / 2; # -2
 
 只打印出了 5-7 的值。
