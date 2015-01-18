@@ -50,27 +50,26 @@ Player1 Player2 | 3:2
 ```
 
 输出如下：
-> Ana has won 2 matches and 8 sets
-
-> Dave has won 2 matches and 6 sets
-
-> Charlie has won 1 matches and 4 sets
-
-> Beth has won 1 matches and 4 sets
- 
+```perl
+ Ana has won 2 matches and 8 sets
+ Dave has won 2 matches and 6 sets
+ Charlie has won 1 matches and 4 sets
+ Beth has won 1 matches and 4 sets
+``` 
 每个 Perl 6程序应该以 use v6;作为开始，它告诉编译器程序期望的是哪个版本的Perl。
  
 在Perl6中，一个变量名以一个魔符打头，这个魔符是一个非字母数字符号，诸如$,@,%或者 &,还有更少见的双冒号 ::
 内置函数 open 打开了一个名叫 scores 的文件，并返回一个文件句柄，即一个代表该文件的对象。赋值符号=将句柄赋值给左边的变量，这意味着 $file 现在存储着该文件句柄。
- 
-> my @names = $file.get.words;
+
+```perl 
+ my @names = $file.get.words;
+```
  
  上边这句的右侧对存储在 $file 中的文件句柄调用了 get 方法， get 方法从文件中读取并返回一行，并去掉行的末尾。. words  也是一个方法，用于从get 方法返回的字符串上。.words 方法将它的组件--它操作的字符串，分解成一组单词，这里即意味着不含空格的字符串。它把单个字符串 'Beth Ana Charlie Dave' 转换成一组字符串 'Beth', 'Ana', 'Charlie', 'Dave'.最后，这组字符串存储在数组@names中。
- 
-> my %matches;
-
-> my %sets;
- 
+```perl
+ my %matches;
+ my %sets;
+``` 
  
 在比分计数程序中，%matches 存储每位选手赢得的比赛数。 %sets 存储每位选手赢得的比赛局数。 
 
@@ -82,9 +81,11 @@ Player1 Player2 | 3:2
 
 for循环中 $file.lines 产生一组从文件 scores 读取的行，从上次 $file.lines 离开的地方开始，一直到文件末尾结束。
 在第一次循环中， $line 会包含字符串 Ana Dave | 3:0; 在第二次循环中，$line 会包含 Charlie Beth | 3:1,以此类推。
- 
-> my ($pairing, $result) = $line.split(' | ');
- 
+
+``` perl 
+ my ($pairing, $result) = $line.split(' | ');
+``` 
+
 split此处是一个方法，字符串 '|' 是它的参数。
  
 第一次循环结束：
@@ -98,27 +99,29 @@ $p2             'Dave'
 $r1              '3'
 $r2              '0'
 ```
- 
-> my @sorted = @names.sort({ %sets{$_} }).sort({ %matches{$_} }).reverse;
- 
+
+```perl 
+ my @sorted = @names.sort({ %sets{$_} }).sort({ %matches{$_} }).reverse;
+```
  
 这一句是排序，先按比赛局数多少排序，再按赢得的比赛数排序，然后反转。
 打印选手名字的时候以胜负次序排序，代码必须使用选手的分数，而非他们的名字来进行排序。sort 方法的参数是一个代码块，用于将数组元素（选手的名字）转换成用于排序的数据。数组的元素通过变量 $_ 传递到代码块中。
  
 最简单的使用分数排序选手的方法应该是
 
-> @names.sort( { %matches{$_} } )
+```perl
+ @names.sort( { %matches{$_} } )
+```
 
 这是通过使用赢得比赛的次数来进行排序。然而，Ana和Dave都赢了两场比赛。还需要比较谁赢的的比赛局数多，才能决定比赛的排名。
  
 在双引号括起的字符串中，标量和花括号中的变量能进行变量插值。
- 
-> my $names = 'things';
 
-> say 'Do not call me $names';   # Do not call me $names
-
-> say "Do not call me $names"; # Do not call me things
-
+```perl
+my $names = 'things';
+say 'Do not call me $names';   # Do not call me $names
+say "Do not call me $names"; # Do not call me things
+```
  
 花括号中的数组进行插值后会变成用空格分隔的条目。花括号中的散列插值后每个散列键值对单独成为一行，每行包含一个健，随后是一个tab符号，然后是键值，最后是一个新行符。
  
@@ -159,14 +162,17 @@ TODO: explain <...> quote-words
 例子中的第一行选手的名字是多余的，你可以在参加比赛的选手中找出所有选手的名字！ 如果例子中的第一行被省略了，你如何更改程序？提示：%hash.keys 返回散列 %hash中的所有键。
  
 答案: 移除此行： 
-> my @names = $file.get.words; 
-
+```perl
+my @names = $file.get.words; 
+```
 并且将
-> my @sorted = @names.sort({ %sets{$_} }).sort({ %matches{$_} }).reverse;
-
+```perl
+my @sorted = @names.sort({ %sets{$_} }).sort({ %matches{$_} }).reverse;
+```
 变成:
-> my @sorted = %sets.keys.sort({ %sets{$_} }).sort({ %matches{$_} }).reverse;
- 
+```perl
+my @sorted = %sets.keys.sort({ %sets{$_} }).sort({ %matches{$_} }).reverse;
+``` 
  
 . 除了移除冗余，你也可以用它来提醒我们，如果一个选手没有在第一行的名字清单中被提到，例如因为输入错误，你该怎样修改你的程序？
  
@@ -201,7 +207,6 @@ TODO: explain <...> quote-words
 use v6;
  
 my @scores = 'Ana' => 8, 'Dave' => 6, 'Charlie' => 4, 'Beth' => 4;
- 
 my $screen-width = 30;
  
 my $label-area-width = 1 + [max] @scores».key».chars;
@@ -215,45 +220,51 @@ for @scores {
 ```
  
 在这个例子中，我们计算一下每位选手在竞标赛中赢得比赛的局数。
-> my @scores = 'Ana' => 8, 'Dave' => 6, 'Charlie' => 4, 'Beth' => 4;  
-
+```perl
+ my @scores = 'Ana' => 8, 'Dave' => 6, 'Charlie' => 4, 'Beth' => 4;  
+```
 这一句局包含了三个不同的操作符=和 =>和 ,
 以字符串连接操作符~为例， $string ~= "text" 等价于 $string = $string ~"text".
  
 => 操作符（大键号）创建了一个键值对对象，一个键值对存储着键和值；键在 => 操作符的左侧，值在右侧。这个操作符有一个特殊的特性：编译器会把 =>操作符左侧的任何裸标识符解释为一个字符串。你也可以这样写：
  
-> my @scores = Ana => 8, Dave => 6, Charlie => 4, Beth => 4;
- 
+```perl
+my @scores = Ana => 8, Dave => 6, Charlie => 4, Beth => 4;
+``` 
 最后逗号操作符 , 构建了一个对象序列，在该情况下，所谓的对象就是键值对。
  
 这三个操作符都是中缀操作符，这意味着它在两个条目之间。
  
 一个项前面可以有0个或多个前缀操作符，所以你可以写比如 4 + -5。+ 号（一个中缀操作符）的后面，编译器期望一个项，为了将 - 号解释为项 5 的一个前缀。
  
-> my $label-area-width = 1 + [max] @scores».key».chars;
- 
+```perl
+my $label-area-width = 1 + [max] @scores».key».chars;
+``` 
 » 是一个特殊的符号，打印不出来可以用两个大于号>>代替。
 中缀操作符 max 返回两个值中的较大者，所以 2 max 3 返回 3。方括号包裹着一个中缀操作符让Perl将该中缀操作符应用到列表中的元素之间。[max] 1,5,3,7 和 1 max 5 max 3 max 7 一样，结果都为7.
  
 同样地，[+]用来计算列表元素的和，[*]用来计算列表元素的积，[<=]用来检查一个列表的值是否按递增排序。
- 
-@scores».key».chars
- 
-> my @scores = Ana => 8, Dave => 6, Charlie => 4, Beth => 4;
+```perl
+@scores».key».chars 
+my @scores = Ana => 8, Dave => 6, Charlie => 4, Beth => 4;
+```
+> Ana     8 Dave  6 Charlie       4 Beth  4
 
-Ana     8 Dave  6 Charlie       4 Beth  4
-> @scores.key
+```perl
+@scores.key
+```
+> Method 'key' not found for invocant of class 'Array'
 
-Method 'key' not found for invocant of class 'Array'
-> @scores>>.key
-
-Ana Dave Charlie Beth
+```perl
+ @scores>>.key
+```
+> Ana Dave Charlie Beth
 
 就像@variable.method 在@variable上调用一个方法一样，@array».method 对@array中的每一项调用method方法，并且返回一个返回值的列表。即@scores>>.key返回一个列表。
- 
-> @scores>>.key>>.chars  #每个名字含有几个字符
-
- 4 7 4
+```perl 
+ @scores>>.key>>.chars  #每个名字含有几个字符
+```
+> 4 7 4
  
 表达式 [max] @scores».key».chars 给出(3,4,7,4)中的最大值。它与下面的表达式相同：
 
@@ -263,13 +274,16 @@ Ana Dave Charlie Beth
  max @scores[2].key.chars
  max ...
 ``` 
- 
-> @scores[0]
 
-"Ana" => 8
->  @scores[0].key
+```perl 
+ @scores[0]
+```
+> "Ana" => 8
 
-Ana
+```perl
+ @scores[0].key
+```
+> Ana
 
 ```perl 
  my $format = '%- ' ~ $label-area-width ~ "s%s\n";
@@ -281,29 +295,32 @@ Ana
 定义一个格式，%-表示左对齐，~是字符串连接操作符.for循环中，@scores中的每一项被绑定给特殊变量$_, .key是每项的键，即名字， .value是每项的键值，即得分。小 x 是字符串重复操作符。
  
 #### 3.1 关于优先级的的一句话
- 
-> my @scores = 'Ana' => 8, 'Dave' => 6, 'Charlie' => 4, 'Beth' => 4;
+
+```perl 
+ my @scores = 'Ana' => 8, 'Dave' => 6, 'Charlie' => 4, 'Beth' => 4;
+```
  
 等号右侧产生一个列表（因为逗号，操作符），这个列表由对儿组成（因为 =>）,并且结果赋值给数组变量。
 在Perl5中会这样解释:
-
-> (my @scores = 'Ana') => 8, 'Dave' => 6, 'Charlie' => 4, 'Beth' => 4;
-
+```perl
+ (my @scores = 'Ana') => 8, 'Dave' => 6, 'Charlie' => 4, 'Beth' => 4;
+```
 以至于数组@scores中只有一个项，表达式的其余部分被计算后丢弃。
  
 优先级规则控制着编译器如何解释这一行。Perl 6的优先级规则申明 中缀操作符 => 比 , 中缀操作符对于参数的绑定更紧，而逗号操作符比 等号赋值操作符绑定的更紧。
  
 实际上有两种不同优先级的赋值操作符。当赋值操作符右侧是一个标量时，使用较紧优先级的项赋值操作符，否则使用较松优先级的列表赋值操作符。（如同螺丝的松紧）
 比较 $a = 1, $b = 2 和@a = 1, 2，前者是在一个列表中赋值给两个变量，后者是将含有两个项的一个列表赋值给一个变量。
- 
-> say 5 - 7 / 2; # 5 - 3.5 = 1.5
 
-> say (5 - 7) / 2; # (-2) / 2 = -1
- 
+```perl 
+ say 5 - 7 / 2; # 5 - 3.5 = 1.5
+ say (5 - 7) / 2; # (-2) / 2 = -1
+``` 
 Perl 6 中的优先级可以用圆括号改变，但是如果圆括号直接跟在标识符的后面而不加空格的话，则会被解释为参数列表。例如：
 
-> say(5 - 7) / 2; # -2
-
+```perl
+ say(5 - 7) / 2; # -2
+```
 只打印出了 5-7 的值。
  
 ##  优先级表
