@@ -1,0 +1,74 @@
+Day 15: .pick your game December 15, 2009
+
+
+又一个大学学期结束了，或者快要结束了，对于身在美国的大多数来说。这个礼物会有些乐趣，他可以  .pick  东西。
+
+.pick  允许从一个列表中选择随机的元素，先来看看Perl5 的语法：
+
+ my @dice = (1, 2, 3, 4, 5, 6);
+ my $index = int (rand() * scalar @dice);
+ print $dice[$index] . "\n";
+ > 5
+
+
+Perl 6 可以简化这，同时能选择多个元素.
+
+ my @dice = 1..6;
+ say @dice.pick(2).join(" ");
+ > 3 4
+
+
+仅仅使用一套骰子，你就可以和你的朋友们进行角色扮演的会话了。现在让我们看看使用 10 次6面的骰子会有多少攻击：
+
+ my @dice = 1..6;
+ say @dice.pick(10).join(" ");
+ > 5 3 1 4 2 6
+
+
+对那些怀疑者，上面的结果并非拼写错误。 .pick 的行为实际上和它的名字是一致的。当你把某个东西选出来，你通常不会把它放回去了。如果你想把它们再放回去，允许同一个项目被再次选中，请在第二个参数中使用副词 :repalce。 
+
+ my @dice = 1..6;
+ say @dice.pick(10, :replace).join(" ");
+ > 4 1 5 6 4 3 3 5 1 1
+
+
+Note to game masters: don’t invite me to your D&D games unless you need someone with terrible dice luck. ;)
+
+There is no specific order the list items have to be in for  .pick  to work its magic. Take the values of monopoly money, for instance:
+
+ my @dice = <1 5 10 20 50 100 500>;
+ say @dice.pick(10, :replace).join(" ");
+ > 20 50 100 500 500 10 20 5 50 20
+
+
+When dice aren’t available, a deck of cards is usually on hand. This version is very basic, but is meant to get ideas going.
+
+ use v6;
+ class Card
+ {
+    has $.rank;
+    has $.suit;
+  
+    multi method Str()
+    {
+      return $.rank ~ $.suit;
+    }
+ }
+  
+ my @deck;
+ for <A 2 3 4 5 6 7 8 9 T J Q K> -> $rank
+ {
+    for <♥ ♣ ♦ ♠> -> $suit
+    {
+      @deck.push(Card.new(:$rank, :$suit));
+    }
+ }
+ # Shuffle the cards.
+ @deck .= pick(*);
+ say @deck.Str;
+ > Not outputting the results here.
+
+
+What does the  pick(*)  do? Call that a sneak peak for another gift. For now, see if you can improve on the card code and make a deck class.
+
+With that, I hope I have proven that Perl 6 is fun. It certainly gets a high mark from me. ✓
