@@ -1,15 +1,16 @@
-Perl 6专家指南 - Perl 6 的散列
-分类: Perl6
+# Perl 6专家指南 - Perl 6 的散列
+> 分类: Perl6
 
 
 
 
-散列 (关联数组)
+## 散列 (关联数组)
 
 散列（也叫做关联数组）是一列键值对，其中，键是唯一的字符串，键值可以是任意值。
 
 散列以 % 符号开始。
 examples/hash/create_hash.p6
+```perl
 #!/usr/bin/env perl6
 use v6;
 
@@ -25,17 +26,19 @@ say %user_a{"fname"};
 say %user_a{"email"};
 
 say %user_b;
-
+```
  
 
 输出:
+```perl
 examples/hash/create_hash.p6.out
 Foo
 foo@bar.com
 Bar
-
-从散列中取回数据
+```
+## 从散列中取回数据
 examples/hash/print_hash.p6
+```perl
 #!/usr/bin/env perl6
 use v6;
 
@@ -48,17 +51,19 @@ my %user =
 for %user.keys.sort -> $key {
       say "$key  %user{$key}";
 }
-
+```
  
 
 输出
 examples/hash/print_hash.p6.out
+```perl
 email  foo@bar.com
 fname  Foo
 lname  Bar
-
-多维散列
+```
+## 多维散列
 examples/hash/multi.p6
+```perl
 #!/usr/bin/env perl6
 use v6;
 
@@ -68,15 +73,14 @@ my %xml;
 %xml[1] = 'Bar';
 
 say %xml.perl;
-
- 
-
+```
 输出:
 examples/hash/multi.p6.out
-("person" => ["Foo", "Bar"]).hash
+> ("person" => ["Foo", "Bar"]).hash
 
 计算字数
 examples/hash/count_words.p6
+```perl
 #!/usr/bin/env perl6
 use v6;
 
@@ -95,9 +99,10 @@ for $fh.lines -> $line {
 for %counter.keys.sort -> $word {
       say "$word {%counter{$word}}";
 }
-
+```
 回顾
 examples/hash/hash.p6
+```perl
 #!/usr/bin/env perl6
 use v6;
 
@@ -124,19 +129,21 @@ say %h1;
 #my %h2{'a', 'b'} = ('A', 'B');
 #say %h2.delete('a');
 #say %h2.delete('a');
-
+```
 
 输出:
 examples/hash/hash.p6.out
+```perl
 the value of 'first' is defined
 the value of 'second' is defined
 the key 'first' exists in h2
 third does not exist
 1st
 2nd
-
-slurp
+```
+## slurp
 examples/files/slurp_csv_file.p6
+```perl
 #!/usr/bin/env perl6
 use v6;
 
@@ -154,15 +161,17 @@ my %phonebook = slurp($filename).comb(/\w+/);
 
 my $name = prompt "Name:";
 say %phonebook{$name};
-
+```
 
 examples/phonebook.txt
+```perl
 Foo,123
 Bar,78
 Baz,12321
-
-kv
+```
+## kv
 examples/hash/print_hash_kv.p6
+```perl
 #!/usr/bin/env perl6
 use v6;
 
@@ -175,16 +184,15 @@ my %user =
 for %user.kv -> $key, $value {
       say "$key  $value";
 }
-
- 
-
+```
 输出:
 examples/hash/print_hash_kv.p6.out
+```perl
 fname  Foo
 lname  Bar
 email  foo@bar.com
-
-遍历散列键
+```
+## 遍历散列键
 
 使用 "keys" 函数也可以遍历散列键.
 
@@ -192,6 +200,7 @@ The declaration of hashes in Perl 6 is similar to that in Perl 5 but when access
 
 As mentioned earlier the string interpolation of hashes requires curly braces around the statement.
 examples/hash/loop_over_hash.p6
+```perl
 #!/usr/bin/env perl6
 use v6;
 
@@ -203,11 +212,11 @@ my %phone =
 for keys %phone -> $name {
       say "$name %phone{$name}";
 }
-
+```
 
 输出:
 examples/hash/loop_over_hash.p6.out
+```perl
 Bar 456
 Foo 123
-
- 
+```
