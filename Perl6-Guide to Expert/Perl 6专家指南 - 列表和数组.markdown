@@ -1,4 +1,4 @@
-# Perl 6专家指南 -_gt_ 列表和数组
+# Perl 6专家指南 -> 列表和数组
 > 分类: Perl6
 
 ## List Literals, list ranges
