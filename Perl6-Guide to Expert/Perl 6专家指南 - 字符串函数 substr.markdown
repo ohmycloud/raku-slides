@@ -1,12 +1,12 @@
-Perl 6专家指南 - 字符串函数 - substr
-分类: Perl6
+# Perl 6专家指南 - 字符串函数 - substr
+> 分类: Perl6
 
 
-字符串函数: substr
-examples/scalars/string_functions_substr.p6
+## 字符串函数: substr
+### examples/scalars/string_functions_substr.p6
+```perl
 #!/usr/bin/env perl6
 use v6;
-
 
 my $s = "The black cat climbed the green tree";
 my $z;
@@ -20,4 +20,4 @@ $z = substr $s, *-4;                     # $z = tree
 say $z;
 $z = substr $s, *-4, 2;                   # $z = tr
 say $z;
-
+```
