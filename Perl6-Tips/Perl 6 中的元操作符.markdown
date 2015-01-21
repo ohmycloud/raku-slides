@@ -1,7 +1,7 @@
 # Perl 6 Tips - 元操作符
 我们习惯了很多语言的快捷操作符。
 
-## examples/arrays/assignment_shortcut.p6
+examples/arrays/assignment_shortcut.p6
 ```perl
 #!/usr/bin/env perl6
 use v6;
@@ -111,7 +111,11 @@ examples/arrays/reversed_operators.p6.out
 ## Hyper 操作符 —— 超运算符
 Hyper操作符真的很有趣。 超运算符允许你拓展一个标量操作符的功能，而能够**操作列表**。
 
-这个操作符其实是一个Unicode字符，但是使用常规的双尖括号也能工作。正常情况下，箭头是指向**内侧**的（例如>>+<<），向着操作符的方向，并且操作符的两边有两个列表。这会将常规的中缀操作符应用到取自两侧列表中的成对儿元素上，并 返回一个**同等长度**的列表 。如果一侧的列表比另一侧的长度长，perl 抛出一个异常： "Non-dwimmy hyperoperator cannot be used on arrays of different sizes or dimensions."  dwim=do what i mean，按照我的意思做。 前面那句话意思是，超运算符没有按照我的意思做，它不能用在大小和维数**不同**的数组上。
+这个操作符其实是一个Unicode字符，但是使用常规的双尖括号也能工作。正常情况下，箭头是指向**内侧**的（例如>>+<<），向着操作符的方向，并且操作符的两边有两个列表。
+这会将常规的中缀操作符应用到取自两侧列表中的成对儿元素上，并 返回一个**同等长度**的列表 。如果一侧的列表比另一侧的长度长，perl 抛出一个异常：
+
+ "Non-dwimmy hyperoperator cannot be used on arrays of different sizes or dimensions."  dwim=do what i mean，按照我的意思做。 
+ 前面那句话意思是，超运算符没有按照我的意思做，它不能用在大小和维数**不同**的数组上。
 
 examples/arrays/hyper.p6  
 ```perl
