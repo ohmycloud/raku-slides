@@ -250,6 +250,7 @@ http://perlcabal.org/syn/S02.html#Built-In_Data_Types,
 # "Perl 5 to 6" Lesson 03 - 基本的控制结构
 
 概要
+```perl
 if $percent > 100  {
     say "weird mathematics";
 }
@@ -267,7 +268,7 @@ while $stuff.is_wrong {
 }
 
 die "Access denied" unless $password eq "Secret";
-
+```
 描述
 
 大多 Perl 5 的控制结构和 Perl 6 颇为相似, 如果从视觉差异上来讲, 你可以见到在使用 if, while, for 之类不后需要一对括号.
@@ -277,6 +278,7 @@ die "Access denied" unless $password eq "Secret";
 分支控制
 
 if 功能大部分没在变化, 仍然可以添加 elsif 和 else 分支. unless 仍然存在，但是在 unless 之后没有了 else 分支.
+```perl
 my $sheep = 42;
 if $sheep == 0 {
     say "How boring";
@@ -285,37 +287,41 @@ if $sheep == 0 {
 } else {
     say "A herd, how lovely!";
 }
-
+```
 你现在还是可以使用 if 和 unless 做语句修饰, 即后声明方式来使用.（倒装句方式）
-say "you won" if $answer == 42;
+    say "you won" if $answer == 42;
 
 循环
 
 你可以通过 next 和 last 来控制循环就象 Perl 5 一样.
 
 在这 for 循环现在只用于遍历列表. 默认是操作 $_ 变量, 除非显式的指出变量名.
+```perl
 for 1..10 -> $x {
     say $x;
 }
-
+```
 在这的 -> $x { ... } 是叫做 "pointy block" 这就象一个匿名的子函数或者 lisp 中的 lambda 操作.
 
 你也可以使用一个以上的循环变量:
+```perl
 for 0..5 -> $even, $odd {
     say "Even: $even \t Odd: $odd";
 }
-
+```
 这也是遍历哈希值的好方法:
+```perl
 my %h = a => 1, b => 2, c => 3;
 for %h.kv -> $key, $value {
     say "$key: $value";
 }
-
+```
 这个 C-style 的 for 循环现在叫做 loop ( 这是唯一需要括号的循环结构 ):
+```perl
 loop (my $x = 2; $x < 100; $x = $x**2) {
     say $x;
 }
-
+```
 另请参阅
 
 [http://perlcabal.org/syn/S04.html#Conditional_statements]
