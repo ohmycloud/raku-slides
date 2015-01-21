@@ -154,23 +154,24 @@ examples/arrays/reduction_operators.p6
 use v6;
 
 say [+] 1, 2;    # 3
-say [+] 1..10;  # 55
+say [+] 1..10;   # 55
 
 # 阶乘
 say [*] 1..5;    # 120
 
-say [**] 2,2,2; # 16      == 2**2**2
+say [**] 2,2,2;  # 16      == 2**2**2
 
 my @numbers = (2, 4, 3);
 
 # 检查数字是否是递增顺序
 say [<] @numbers;          # False   
 
-say [<] sort @numbers; # True
+say [<] sort @numbers;     # True
 ```
 输出
 
 examples/arrays/reduction_operators.p6.out
+
     3
     55
     120
