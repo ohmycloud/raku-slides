@@ -23,14 +23,14 @@ Player1 Player2 | 3:2
 
  my $file = open 'scores';
  my @names = $file.get.words ;  #get方法读入一行，每调用一次get，读取一行
- # > @names.perl  #  Array.new("1", "Beth", "Ana", "Charlie", "Dave")
- my %matches;  # 赢得比赛次数
+ # > @names.perl   #  Array.new("1", "Beth", "Ana", "Charlie", "Dave")
+ my %matches;      # 赢得比赛次数
  my %sets;         # 赢得比赛局数
 
- for $file.lines -> $line {    # .lines 是惰性的
-     my ($pairing, $result) = $line.split(' | ');      # 对剩下的每一行调用split操作
-     my ($p1, $p2)              = $pairing.words;    # 提取选手1和选手2的名字
-     my ($r1, $r2)                = $result.split(':');    # 提取比赛比分
+ for $file.lines -> $line {                       # .lines 是惰性的
+     my ($pairing, $result) = $line.split(' | '); # 对剩下的每一行调用split操作
+     my ($p1, $p2)          = $pairing.words;     # 提取选手1和选手2的名字
+     my ($r1, $r2)          = $result.split(':'); # 提取比赛比分
      
      %sets{$p1} += $r1;  # 选手1赢得的比赛局数
      %sets{$p2} += $r2;  # 选手2赢得的比赛局数
@@ -50,12 +50,11 @@ Player1 Player2 | 3:2
 ```
 
 输出如下：
-```perl
- Ana has won 2 matches and 8 sets
- Dave has won 2 matches and 6 sets
- Charlie has won 1 matches and 4 sets
- Beth has won 1 matches and 4 sets
-``` 
+    Ana has won 2 matches and 8 sets
+    Dave has won 2 matches and 6 sets
+    Charlie has won 1 matches and 4 sets
+    Beth has won 1 matches and 4 sets
+
 每个 Perl 6程序应该以 use v6;作为开始，它告诉编译器程序期望的是哪个版本的Perl。
  
 在Perl6中，一个变量名以一个魔符打头，这个魔符是一个非字母数字符号，诸如$,@,%或者 &,还有更少见的双冒号 ::
@@ -89,16 +88,15 @@ for循环中 $file.lines 产生一组从文件 scores 读取的行，从上次 $
 split此处是一个方法，字符串 '|' 是它的参数。
  
 第一次循环结束：
-```perl
-Variable       Contents
-$line           'Ana Dave | 3:0'
-$pairing        'Ana Dave'
-$result         '3:0'
-$p1             'Ana'
-$p2             'Dave'
-$r1              '3'
-$r2              '0'
-```
+    Variable       Contents
+    $line           'Ana Dave | 3:0'
+    $pairing        'Ana Dave'
+    $result         '3:0'
+    $p1             'Ana'
+    $p2             'Dave'
+    $r1              '3'
+    $r2              '0'
+
 
 ```perl 
  my @sorted = @names.sort({ %sets{$_} }).sort({ %matches{$_} }).reverse;
@@ -144,7 +142,7 @@ TODO: explain <...> quote-words
 ```perl
  my @flavours = <vanilla peach>;
 
- say "we have @flavours";      # we have @flavours ，这里没进行插值
+ say "we have @flavours";    # we have @flavours ，这里没进行插值
  say "we have @flavours[0]"; # we have vanilla，后置环缀，变量名字后面跟着一对儿括号
  # so-called "Zen slice"
  say "we have @flavours[]";  # we have vanilla peach
@@ -190,12 +188,12 @@ my @sorted = %sets.keys.sort({ %sets{$_} }).sort({ %matches{$_} }).reverse;
 ```perl
  for $file.lines -> $line {
  my ($pairing, $result) = $line.split(' | ');
- my ($p1, $p2)             = $pairing.split(' ');
-       for $p1, $p2 -> $p {
-             if !%legitimate-players{$p} {
-             say "Warning: '$p' is not on our list!";
-             }
-      }
+ my ($p1, $p2)          = $pairing.split(' ');
+    for $p1, $p2 -> $p {
+        if !%legitimate-players{$p} {
+            say "Warning: '$p' is not on our list!";
+         }
+     }
 
  ...
  }
@@ -248,23 +246,23 @@ my $label-area-width = 1 + [max] @scores».key».chars;
 @scores».key».chars 
 my @scores = Ana => 8, Dave => 6, Charlie => 4, Beth => 4;
 ```
-> Ana     8 Dave  6 Charlie       4 Beth  4
+    Ana     8 Dave  6 Charlie       4 Beth  4
 
 ```perl
 @scores.key
 ```
-> Method 'key' not found for invocant of class 'Array'
+    Method 'key' not found for invocant of class 'Array'
 
 ```perl
  @scores>>.key
 ```
-> Ana Dave Charlie Beth
+    Ana Dave Charlie Beth
 
 就像@variable.method 在@variable上调用一个方法一样，@array».method 对@array中的每一项调用method方法，并且返回一个返回值的列表。即@scores>>.key返回一个列表。
 ```perl 
  @scores>>.key>>.chars  #每个名字含有几个字符
 ```
-> 4 7 4
+    4 7 4
  
 表达式 [max] @scores».key».chars 给出(3,4,7,4)中的最大值。它与下面的表达式相同：
 
@@ -278,12 +276,12 @@ my @scores = Ana => 8, Dave => 6, Charlie => 4, Beth => 4;
 ```perl 
  @scores[0]
 ```
-> "Ana" => 8
+    "Ana" => 8
 
 ```perl
  @scores[0].key
 ```
-> Ana
+    Ana
 
 ```perl 
  my $format = '%- ' ~ $label-area-width ~ "s%s\n";
@@ -340,13 +338,13 @@ Perl 6 中的优先级可以用圆括号改变，但是如果圆括号直接跟�
  my $a = 'a';
  say $a === 'a'; # Bool::True
 ```
-> @b===@a
+    @b===@a
 
 False
-> @a eqv @b
+    @a eqv @b
 
 True
-> '2' eqv 2
+    '2' eqv 2
 
 False
  
@@ -384,13 +382,14 @@ Perl 6 中使用 eq 比较字符串，必要时会将其参数转换为字符串
 Table 3.2: Operators and Comparisons
 ```perl
  数字比较	字符串比较	意思
- ==	      eq	    等于
- !=	      ne	    不等于
- !==	      !eq	    不等于
- <	          lt	    小于
- <=	      le	    小于或等于
- >	          gt	    大于
- >=	      ge	    大于或等于
+ ------------------------------------------
+ ==	      eq	        等于
+ !=	      ne	        不等于
+ !==	  !eq	        不等于
+ <	      lt	        小于
+ <=	      le	        小于或等于
+ >	      gt	        大于
+ >=	      ge	        大于或等于
 ```
  
 例如，'a' lt 'b' 为 true，'a' lt 'aa' 也为 true。 != 是 !==的便捷形式，它实际是 ! 元操作符加在 中缀操作符 ==之前。同样地， ne 和 !eq 是一样的。
@@ -687,8 +686,7 @@ different name:
      :color(:colour($c))) {
 
      # print a piece of SVG that represents a rectangle
-     say qq[<rect x="$x" y="$y" width="$width" height="$height"
-     style="fill: $c" />]
+     say qq[<rect x="$x" y="$y" width="$width" height="$height" >]
  }
 
  # both calls work the same
