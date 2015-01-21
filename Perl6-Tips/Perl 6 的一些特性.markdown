@@ -1,7 +1,8 @@
-Perl6的一些特性
-分类: Perl6
-日期: 2013-05-16 15:21
-原文地址: http://blog.sina.com.cn/s/blog_6c9ce1650101c9ii.html
+# Perl6的一些特性
+> 分类: Perl6
+> 日期: 2013-05-16 15:21
+
+```perl
 > my $foo = "bar";
 bar
 > if $foo eq "foo" | "bar" | "baz" { say "ok" }
@@ -24,3 +25,4 @@ ok
 1A 2B 3C 4D 5E 6F
 > say 1..3 X~ 'A'..'D'
 1A 1B 1C 1D 2A 2B 2C 2D 3A 3B 3C 3D
+```
