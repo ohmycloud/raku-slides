@@ -323,7 +323,8 @@ loop (my $x = 2; $x < 100; $x = $x**2) {
 
 # "Perl 5 to 6" Lesson 04 - 子函数和参数
 
-概要
+`概要`
+```perl
 # Perl 5 中传参的方式
 sub print_arguments {
     say "Arguments:";
@@ -353,14 +354,15 @@ sub doit(:$when, :$what) {
 doit(what => 'stuff', when => 'once');     # 'doing stuff at once'
 doit(:when<noon>, :what('more stuff')); # 'doing more stuff at noon'
 # illegal: doit("stuff", "now")
-
-描述
+```
+`描述`
 
 子函数是使用 sub 关键字来声明, 并且有形式参数列表, 就象 C, Java 和一些其它的语言. 这些参数有可选的类型约束.
 
 参数默认是只读的. 可通过 "traits" 来修改成可以读写.
+```perl
 sub try-to-reset($bar) {
-    $bar = 2;       # 禁止修改参数
+    $bar = 2;         # 禁止修改参数
 }
 
 my $x = 2;
@@ -374,7 +376,7 @@ sub quox($bar is copy){
 }
 quox($x); say $x    # still 0
 
-参数可以在后面增加一个问号来标记是否可选.
+# 参数可以在后面增加一个问号来标记是否可选.
 sub foo($x, $y?) {
     if $y.defined {
         say "Second parameter was supplied and defined";
@@ -384,94 +386,106 @@ sub foo($x, $y?) {
 sub bar($x, $y = 2 * $x) {
     ...
 }
-
-命名参数
+```
+`命名参数`
 
 当你象这样调用子函数: my_sub($first, $second). 在这的这个 $first 参数会绑定到第一个正式的参数, $second 会传递给第二个参数..等等, 这就是所谓的位置 "positional".
 
 有时, 我们希望使用更加容易记住的名字, 而不是数字之类. 这是为什么使用命名参数的原因:
+```perl
 my $r = Rectangle.new(
         x       => 100,
         y       => 200,
-        height => 23,
-        width  => 42,
-        color  => 'black'
+        height  => 23,
+        width   => 42,
+        color   => 'black'
 );
-
+```
 当你看到这样这些名字, 你马上知道参数具体是什么含义。
 
 要定义一个命名参数, 你只需要给 : 放在参数之前:
+```perl
 sub area(:$width, :$height) {
     return $width * $height;
 }
 area(width => 2,  height => 3);
 area(height => 3, width => 2 ); # 同上 
-area(:height(3), :width(2));          # 同上
-
-这最后一个例子使用的是叫 colon pair syntax 的语法. 当给使用 :draw-perimeter 给其赋布尔值的时候, 你什么都不写默认是 True, 当想给一个参数赋值为布尔类型的 FALSE 的时候，也不需要写明 0，而是用以下格式  :!transparent
-:draw-perimeter              # same as "draw-perimeter => True"
-:!transparent                   # same as "transparent => False"
-
+area(:height(3), :width(2));    # 同上
+```
+这最后一个例子使用的是叫 colon pair syntax 的语法. 当给使用 :draw-perimeter 给其赋布尔值的时候, 你什么都不写默认是 True, 当想给一个参数赋值为布尔类型的 FALSE 的时候，也不需要写明 0，而是用以下格式  
+```perl
+:!transparent
+:draw-perimeter   # same as "draw-perimeter => True"
+:!transparent     # same as "transparent => False"
+```
 在命名参数的声明, 变量也被用来作为参数. 您可以使用不同的名称:
+```perl
 sub area(:width($w), :height($h)) {
     return $w * $h;
 }
 area(width => 2,  height => 3);
-
-Slurpy 参数
+```
+`Slurpy 参数`
 
 你给你的 sub 参数的时候, 有时你并不知道所有的参数个数. 你可以定义一种称作 slurpy 参数来提交任何所剩余的参数:
+```perl
 sub tail ($first, *@rest){
     say "First: $first";
     say "Rest: @rest[]";
 }
 tail(1, 2, 3, 4);           # "First: 1\nRest: 2 3 4\n"
-
+```
 对于哈希, 命名的 slurpy 参数定义是使用有 * 号前缀的哈希参数:
+```perl
 sub order-meal($name, *%extras) {
     say "I'd like some $name, but with a few modifications:";
     say %extras.keys.join(', ');
 }
 
 order-meal('beef steak', :vegetarian, :well-done);
-
-Interpolation
+```
+`Interpolation`
 
 默认数组是不能插入到参数的列表中. 所以这不同于 Perl 5 的写法.
+```perl
 sub a($scalar1, @list, $scalar2) {
     say $scalar2;
 }
 
 my @list = "foo", "bar";
-a(1, @list, 2);                  # 2
-
+a(1, @list, 2);       # 2
+```
 这也意味着, 默认的情况下你不能使用一个列表做为参数列表:
+```perl
 my @indexes = 1, 4;
 say "abc".substr(@indexes)       # 不能实现你想做的
-
+```
 ( 实际的情况是, 这的第一个参数需要是一个 Int, 需要被强制转换成 Int, 所以你可以写成 "abc."substr(@indexes.elems) 来放在第一位 ).
 
 当然, 你也可以使用前缀 | 来完成所需的行为
+```perl
 say "abcdefgh".substr(|@indexes) #  结果 bcde, 等同于 "abcdefgh".substr(1, 4)
-
-Multi Subs
+```
+`Multi Subs`
 
 实际上, 你其实可以定义多个 sub 来使用相同的名字, 但接收不同的参数列表:
+```perl
 multi sub my_substr($str) { ... }                          # 1
 multi sub my_substr($str, $start) { ... }                  # 2
 multi sub my_substr($str, $start, $end) { ... }            # 3
 multi sub my_substr($str, $start, $end, $subst) { ... }    # 4
-
+```
 现在, 当你调用这个 sub 时, 所述的参数会有一个匹配上并选择使用的.
 
 这个 multis 并不只是可以工作在参数数量不等的情况上, 也可以用于在不同的参数类型的时候:
+```perl
 multi sub frob(Str $s) { say "Frobbing String $s"  }
 multi sub frob(Int $i) { say "Frobbing Integer $i" }
 
 frob("x");      # Frobbing String x
 frob(2);        # Frobbing Integer 2
-
-动机
+```
+`动机`
 
 没有人会怀疑明确的子函数参数的实用性: 少打字, 少重复的参数检查, 更多的安全文档代码.
 
@@ -480,8 +494,9 @@ frob(2);        # Frobbing Integer 2
 Multi subs 这个功能也非常有用, 因为它可以使用新类型来覆盖内建命令. 比如, 你想有一个版本的 Perl6 是本地化上来正确处理土耳其字符串，这对大小写转换是使用的不同寻常的规则时非常好用.
 
 这时, 不需要修改语言本身. 你只需要加入一个新的 TurkishStr, 并为原生的函数加入一个 multi subs:
+```perl
 multi uc(TurkishStr $s) { ... }
-
+```
 现在, 所有这个对字符串处理就会自动对应他们的语言类型, 然后你就可以使用 uc 函数象内置的函数一样.
 
 由于操作也可以使用 subs, 所以这些改进操作是可以正常工作的.
