@@ -7,20 +7,20 @@ Perl6 相对于 Perl5 做了革命性的改革，拥有丰富的语言特征、�
 代文娟，IBM 西安实验室的软件工程师，来自 Analytic Decision Management 部门,专注于 SPSS Analytic Decision Management 产品的核心功能测试以自动化测试。
 
 
-2013 年 11 月 18 日
-+内容
-前言 
-Perl6 诞生 
-START 
-变量和类型 
-类型 
-操作符 
-控制结构 
-函数 
-类 
-小结 
-参考资料 评论
-前言
+    2013 年 11 月 18 日
+    +内容
+    前言 
+    Perl6 诞生 
+    START 
+    变量和类型 
+    类型 
+    操作符 
+    控制结构 
+    函数 
+    类 
+    小结 
+    参考资料 评论
+    前言
 
 
 --------------------------------------------------------------------------------
@@ -38,26 +38,27 @@ START
 安装 Perl6,可以从以下网址下载 http://rakudo.org/how-to-get-rakudo/， 安装步骤如下：
 
 
-安装 Perl6
-$ cd rakudo
-$ perl Configure.pl --gen-parrot --gen-nqp
-$ make
-$ make install参数–gen-parrot 实际上是在调用 svn 或 git 生成合适的 Parrot 才能编译它，Parrot 是 Perl6 相关计划书中支援 Perl6 的 Virtual Machine，也就是说， Perl 程序将在 Parrot 上执行，程序所面对的是个共通的跨平台 Virtual Machine 环境，而不用考虑您所面对的 OS 环境，就像 Java、.NET 所使用的 VM 一样。参数-gen-nqp 会下载一份 NQP，NQP 是一个小型的 Perl6 编译器，用来构建 Rakudo，Rakudo 是用于 Parrot 虚拟机上的编译器。
+    安装 Perl6
+    $ cd rakudo
+    $ perl Configure.pl --gen-parrot --gen-nqp
+    $ make
+    $ make install
+参数–gen-parrot 实际上是在调用 svn 或 git 生成合适的 Parrot 才能编译它，Parrot 是 Perl6 相关计划书中支援 Perl6 的 Virtual Machine，也就是说， Perl 程序将在 Parrot 上执行，程序所面对的是个共通的跨平台 Virtual Machine 环境，而不用考虑您所面对的 OS 环境，就像 Java、.NET 所使用的 VM 一样。参数-gen-nqp 会下载一份 NQP，NQP 是一个小型的 Perl6 编译器，用来构建 Rakudo，Rakudo 是用于 Parrot 虚拟机上的编译器。
 
 
 安装完之后，进入安装目录，并运行./Perl6，当您在 $ 后面见到 > 时，您就进入了 Rakudo 的环境中，可以执行一些东西见到 Rakudo 的响应，如：
 
 
-运行 Perl6
-$./perl6
->say "Hello world!";
->Hello world!而在 Perl5 中，运行./perl 后直接停留在当前状态，不会进入用户交互状态。
+    运行 Perl6
+    $./perl6
+    >say "Hello world!";
+    >Hello world!而在 Perl5 中，运行./perl 后直接停留在当前状态，不会进入用户交互状态。
 
 --------------------------------------------------------------------------------
 
-变量和类型
-数组
-Perl6 对数组和哈希的定义 无需括号 ，如:
+    变量和类型
+    数组
+    Perl6 对数组和哈希的定义 无需括号 ，如:
 
 
 Perl6 中数组定义
@@ -97,7 +98,9 @@ my %bar = :first(1), :second(2), :third(3);
 --------------------------------------------------------------------------------
 
 类型
-在 Perl 5 中，$scalar 的标量只能包含二种东西引用或值，这值可以是任何东西，可以是整数、字符、数字、日期和您的名字，这通常是非常方便的，但并不明确。在 Perl6 中给您机会修改标量的类型 。如果您这个值比较特别，您可以直接放个类型名在 my 和 $variable 的中间。像下面的例子，是在设置值一定要是一个 Int 型的数据，来节约 cpu 判断类型的时间，和让您更少在程序上出错。
+在 Perl 5 中，$scalar 的标量只能包含二种东西引用或值，这值可以是任何东西，可以是整数、字符、数字、日期和您的名字，这通常是非常方便的，但并不明确。在 Perl6 中给您机会修改标量的类型 。
+
+如果您这个值比较特别，您可以直接放个类型名在 my 和 $variable 的中间。像下面的例子，是在设置值一定要是一个 Int 型的数据，来节约 cpu 判断类型的时间，和让您更少在程序上出错。
 ```perl
 my Int $days = 24;
 ```
@@ -126,9 +129,9 @@ my %hash = %("a","1","b","2"); #    %()将列表转换为哈希
 --------------------------------------------------------------------------------
 ```
 
-操作符
-拼接
-Perl6 中使用~进行字符串的拼接，如：
+    操作符
+    拼接
+    Perl6 中使用~进行字符串的拼接，如：
 
 字符串拼接
 ```perl
@@ -186,7 +189,7 @@ for 1, 2, 3, 4 { .say }
 loop 用法
 ```perl
 loop (my $i = 1; $i<= 10; $i++) {
-print $i;
+    print $i;
 }
 ```
 
@@ -300,7 +303,9 @@ class MyClass {
 }
 ```
 
-以上代码中，使用一个 class 的关键字定义类。如果您有学过 Perl5 的话，您能想到这有点像包(package)的变种。接下来，使用 has 的关键字来声明属性访问器方法。 这个"."的东西名叫 twigil 。Twigil 是用来告诉您 指定变量的作用域 。它是"属性 + 存取方法"的组合。接下来是方法的使用，并介绍使用 method 的关键字。在对象中的方法像包中的子函数，不同之处在于方法是放在类的方法列表的条目中。它还能自动取得调用者(invocant)，所以您如果没有在参数列表中加入参数，它是会给自我传递过去，在 Perl 5 中需要我们显示的写 $self = shift。
+以上代码中，使用一个 class 的关键字定义类。如果您有学过 Perl5 的话，您能想到这有点像包(package)的变种。接下来，使用 has 的关键字来声明属性访问器方法。 这个"."的东西名叫 twigil 。
+
+Twigil 是用来告诉您 指定变量的作用域 。它是"属性 + 存取方法"的组合。接下来是方法的使用，并介绍使用 method 的关键字。在对象中的方法像包中的子函数，不同之处在于方法是放在类的方法列表的条目中。它还能自动取得调用者(invocant)，所以您如果没有在参数列表中加入参数，它是会给自我传递过去，在 Perl 5 中需要我们显示的写 $self = shift。
 
 
 对于以前在 Perl5 中使用的大部分函数都已经转换为方法，如得到字符串长度,调用 chars 方法：My $len = $string.chars 和排序数组，调用 sort 方法：Print @array.sort ;
@@ -328,25 +333,25 @@ class MySubClass is MyClass {
 
 小结
 
-我们将以上内容总结对比为如下表： Perl6 与 Perl5 对比一览表 类别 Perl6 Perl5
- 命令运行 支持交互 不支持交互
- 数组定义 @a = “hello”, “world”; @a = (“hello”, “world”;)
- 哈希定义 %a = “first” => 1, “second” => 2; or
- %a = :first(1),:second(2); %a = (“first” => 1, “second” => 2);
- 哈希访问 %a{“first”} or %a<first> $a{“first”}
- 字符拼接 “hello “ ~ “ world”     “hello”.”world”
- 匹配 “c” ~~/c/                    “c” =~/c/
- 数据类型 Bool, Array, Int, Num, Pair,Complex, Str 等 Scalar, Array, Hash
- 控制结构 given/when   无
- for    foreach
- loop   for
- repeat/while while
- 函数重载 参数不同，并需要加上 multi 关键字 无
- 变量作用域 my, our, local, $OUTER, $CALLER my , our, local
- 类定义 使用 class，支持公有变量和私有变量 使用 package
- 构造函数 new() 引用＋bless()
- 方法调用 使用. 使用->
- 继承 is 父类名（使用的是 class） use 父类名（使用的是 package）
+    我们将以上内容总结对比为如下表： Perl6 与 Perl5 对比一览表 类别 Perl6 Perl5
+    命令运行 支持交互 不支持交互
+    数组定义 @a = “hello”, “world”; @a = (“hello”, “world”;)
+    哈希定义 %a = “first” => 1, “second” => 2; or
+    %a = :first(1),:second(2); %a = (“first” => 1, “second” => 2);
+    哈希访问 %a{“first”} or %a<first> $a{“first”}
+    字符拼接 “hello “ ~ “ world”     “hello”.”world”
+    匹配 “c” ~~/c/                    “c” =~/c/
+    数据类型 Bool, Array, Int, Num, Pair,Complex, Str 等 Scalar, Array, Hash
+    控制结构 given/when   无
+    for    foreach
+    loop   for
+    repeat/while while
+    函数重载 参数不同，并需要加上 multi 关键字 无
+    变量作用域 my, our, local, $OUTER, $CALLER my , our, local
+    类定义 使用 class，支持公有变量和私有变量 使用 package
+    构造函数 new() 引用＋bless()
+    方法调用 使用. 使用->
+    继承 is 父类名（使用的是 class） use 父类名（使用的是 package）
 总结
 
 本文从 Perl6 的诞生来由讲起，从变量、类型、操作符、控制结构、函数、类六个方面介绍了 Perl6 的改进，并给出实例，最后总结对比在 Perl5 中的差异点的使用方法。从这些改进中，可以看出 Perl6 在字符处理方面更加轻便、灵活，且从结构上成为真正意义上的面向对象语言。
