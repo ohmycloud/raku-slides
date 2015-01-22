@@ -157,6 +157,7 @@ for lines() {...}              # lines() defaults to $fh = $*ARGFILES
 ```
 
 ## 将散列初始化为一个常量
+```perl
 my %h;   for (@a) { $h{$_} = 1 }
 my %h = map { $_ => 1 } @a;
 #
@@ -171,10 +172,11 @@ eg：
     ("Perl" => 1, "Python" => 1, "Ruby" => 1, "Perl6" => 1).hash
      
 ## Hash initialization for enumeration
+
      my %h;   for (0..$#a) { $h{ $a[$_] } = $_ }
      my $c;   my %h = map { $_ => ++$c } @a;
     #
-     my $c;   my %h = map { $_ => ++$c }, @a;
+    my $c;   my %h = map { $_ => ++$c }, @a;
     > ("Perl" => 1, "Python" => 2, "Ruby" => 3, "Perl6" => 4).hash
     my %h = @a Z=> 1..*; # ("Perl" => 1, "Python" => 2, "Ruby" => 3, "Perl6" => 4).hash
     my %h = @a.pairs » .invert;  # if zero based , ("Perl" => 0, "Python" => 1, "Ruby" => 2, "Perl6" => 3).hash
@@ -183,6 +185,7 @@ eg：
     
     
 ## Hash initialization from parallel arrays
+
     my %h;   for (@a) { $h{$_} = shift @b }
     my %h;   @h{@a} = @b;
     #
