@@ -1906,8 +1906,9 @@ token tag   {
 token attribute {
     \w+ '="' <-["<>]>* \"
 };
+```
 这并不会有新的测试通过. 原因是因为签名和属性之间的有空白. 我们不使用 \s+ 或 \s* 而是使用 token 转到 rule, 所以这会有 :sigspace 的修饰符:
-
+```perl
 rule tag   {
     '<'(\w+) <attribute>* '>'
     <xml>
@@ -1917,8 +1918,9 @@ rule tag   {
 token attribute {
     \w+ '="' <-["<>]>* \"
 };
+```
 现在，所有的测试都通过了，除了最后两个:
-
+```perl
 ok 1 - 'abc'
 ok 2 - '<a></a>'
 ok 3 - '..<ab>foo</ab>dd'
@@ -1932,16 +1934,16 @@ ok 10 - '<a>b</a'
 ok 11 - '<a>b</a href="">'
 not ok 12 - '<a/>'
 not ok 13 - '<a />'
+```
 这些包含在封闭的标签中有单个斜线 /. 这个很容易, 我们只要在我们的 rule 的 tag 中加入这个就好:
-
+```perl
 rule tag   {
     '<'(\w+) <attribute>* [
-
         | '/>'
         | '>' <xml> '</'$0'>'
     ]
-
 };
+```
 所有的测试都通过了, 我们很高兴, 我们的第一个 grammar 效果很好.
 
 More hacking
@@ -1969,49 +1971,39 @@ Regexes are specified in great detail in S05: http://perlcabal.org/syn/S05.html.
  More working examples for grammars can be found at https://github.com/moritz/json/ (check file lib/JSON/Tiny/Grammar.pm).
  
  
- "Perl 5 to 6" Lesson 21 - Subset Types 子类型
+# "Perl 5 to 6" Lesson 21 - Subset Types 子类型
 
 `概要`
-
+```perl
 subset Squares of Int where { .sqrt.Int**2 == $_ };
-
-
-
 multi sub square_root(Squares $x --> Int) {
-
     return $x.sqrt.Int;
-
 }
 
 multi sub square_root(Num $x --> Num) {
-
     return $x.sqrt;
-
 }
+```
 `描述`
 
 Java 程序员倾向于认为类型就是一个类或者接口 ( 这有点像一个残缺的类 ), 但这种观点是因为对 Perl 6 的了解太有限了. 类型普通普通看法是对容器中可以放什么值进行约束.
 
 传统的一个约束是, 某个东西, 它是一个 X 类的对象或者它是从 X 继承, Perl 6 也有类似的限制象类或者对象 does role Y, 或者这一段代码返回 true 为我们的对象. 这个我们在这叫 subset 类型.
-
+```perl
 subset Even of Int where { $_ % 2 == 0 }
-
 # Even 现在是可以象其它类型一样使用了 
-
-
-
 my Even $x = 2;
-
 my Even $y = 3; # 类型不匹配错误 
+```
 ( 试试, Rakudo 实现的子类型 ).
 
 你也可以在子函数中使用匿名的子类型.
-
+```perl
 sub foo (Int where { ... } $x) { ... }
-
 # or with the variable at the front:
 
 sub foo ($x of Int where { ... } ) { ... }
+```
 `动机`
 
  代码的终极可扩展性就是许任意类型的约束形式: 如果你不喜欢现有的类型系统, 你可以使用基于自己创建的子类型.
@@ -2022,34 +2014,26 @@ sub foo ($x of Int where { ... } ) { ... }
 # "Perl 5 to 6" Lesson 23 - 引号和解析
 
 `概要`
-
-my @animals = <dog cat tiger>
-
+```perl
+my @animals = <dog cat tiger>;
 # or
 
 my @animals = qw/dog cat tiger/;
 
 # or 
 
-
-
 my $interface = q{eth0};
 
 my $ips = q :s :x /ifconfig $interface/;
 
-
-
 # -----------
 
-
-
 sub if {
-
     warn "if() calls a sub\n";
-
 }
 
 if();
+```
 `描述`
 
 引号
@@ -2061,78 +2045,58 @@ Perl 5 中有单引号, 双引号和 qw(...) ( 单引号, 按分割的空格 ) �
  Perl 6 又定义了一个名为 Q 的引号操作来修饰变量. 这 :b ( 反斜杠 ) 修饰符让 \n 之类可以让反斜杠插值, 这个 :s 修饰符可以让标量进行插值. 这个 :c 可以让闭包的函数进行插值 ("1 + 2 = { 1 + 2 }"), :w 用于象 qw/.../ 一样分割单词.
 
 你可以任意组合这些修饰符. 例如, 你也许想 qw/../ 只插标量, 但没其它的? 没问题:
-
+```perl
 my $stuff = "honey";
-
 my @list = Q :w :s/milk toast $stuff with\tfunny\nescapes/;
-
-say @list[*-1];                     # prints with\nfunny\nescapes
+say @list[*-1];    # prints with\nfunny\nescapes
+```
 下面是修饰符可用的列表, 基本大部分直接来自 S02 , 所有的这些有很长的名字, 我这个地方省略了.
 
 特性:
 
     :q          内插 \\, \q 和 \'
-
     :b          其他的反斜杠转义序列 \n, \t
-
 操作:
-
     :x          执行 shell 命令, 返回其结果
-
     :w          分割空格
-
     :ww         分割空格, 使用引号保护
-
 变量内插:
 
     :s          内插值 scalars   ($stuff)
-
     :a          内插值 arrays    (@stuff[])
-
     :h          内插值 hashes    (%stuff{})
-
     :f          内插值 functions (&stuff())
-
 其它:
-
     :c          内插闭包 closures  ({code})
-
     :qq         插值下面这些 :s, :a, :h, :f, :c, :b
-
     :regex      解析正则 
 还有一些短的形式:
 
-q       Q:q
-
-qq      Q:qq
-
-m       Q:regex
+    q       Q:q
+    qq      Q:qq
+    m       Q:regex
 你也可以省略第一个冒号 : 如果使用引号的简短形式:
 
-symbol      short for
-
-qw          q:w
-
-Qw          Q:w
-
-qx          q:x
-
-Qc          Q:c
-
-# and so on.
+    symbol      short for
+    qw          q:w    
+    Qw          Q:w
+    qx          q:x
+    Qc          Q:c
+    # and so on.
 注意, 有一种形式不能工作, 有些 Perl 5 的程序员容易搞错: 你并不能在 Perl 6 中写 qw(...) 这个圆括号. 它现在是插值调用子函数叫 qw.
 
 解析
 
  解析开始发挥作用时: 象 identifier(...) 这种都会解析成子函数调用.
-
-if($x<3)
+    if($x<3)
 它会解析成调用子函数 if. 你可以用空格来防止歧义:
-
+```perl
 if ($x < 3) { say '<3' }
+```
 或者干脆省略括号:
-
+```perl
 if $x < 3 { say '<3' }
+```
 这也意味着 Perl 6 没有关键字, 其它象 use 或 if 关键字, 这也只是特定作用的特殊的语法.
 
 `动机`
@@ -2150,29 +2114,19 @@ http://perlcabal.org/syn/S02.html#Literals
 # "Perl 5 to 6" Lesson 24 - Reduction 元操作
 
 `概要`
-
+```perl
 say [+] 1, 2, 3;    # 6
-
 say [+] ();         # 0
-
 say [~] <a b>;      # ab
-
 say [**] 2, 3, 4;   # 2417851639229258349412352
-
-
-
 [\+] 1, 2, 3, 4     # 1, 3, 6, 10
-
 [\**] 2, 3, 4       # 4, 81, 2417851639229258349412352
 
-
-
 if [<=] @list {
-
     say "ascending order";
-
 }
-Description
+```
+描述
 
 这个 reduction 的元操作 [...] 可以放入所有的相关的缀操作符, 并把它变成一个列表操作符. 相当于给在这个操作符后面的列表中所有的元素进行前面的缀操作符的操作. 所以象 [op] $i1, $i2, @rest 返回的结果和你写的 $i1 op $i2 op @rest[0] op @rest[1] ... 是相同的.
 
@@ -2181,29 +2135,28 @@ Description
 就象其它的操作符一样, 在操作符中间是禁止出现空格, 所以你可以写 [+], 但你不能写 [ + ].
 
 由于比较操作符可串连, 你也可以这样写
-
-if    [==] @nums { say "all nums in @nums are the same" }
-
+```perl
+if  [==] @nums { say "all nums in @nums are the same" }
 elsif [<]  @nums { say "@nums is in strict ascending order" }
-
 elsif [<=] @nums { say "@nums is in ascending order"}
+
 你甚至可以没有赋值操作符:
-
+```perl
 my @a = 1..3;
-
 [=] @a, 4;          # same as @a[0] = @a[1] = @a[2] = 4;
+```
 注意这个地方 [...] 总是返回标量, 所以 [,] @list 其实和 [@list] 是一样的.
 取得过程中分片的结果
 
  这个操作符有一种特殊形式使用反斜杠象 [\+]. 它会返回列表的运算的结果的列表的每一部分. 所以 [\+] 1..3 返回的列表是 1, 1+2, 1+2+3, 这个结果当然是 1, 3, 6.
 
-[\~] 'a' .. 'd'     # <a ab abc abcd>
+    [\~] 'a' .. 'd'     # <a ab abc abcd>
 这个右结合性的操作符是从右到左的列表结果, 所以你可以取得象下面一样的结果:
 
-[\**] 1..3;         # 3, 2**3, 1**(2**3), which is 3, 8, 1
+    [\**] 1..3;         # 3, 2**3, 1**(2**3), which is 3, 8, 1
 多个 reduction 的操作符也可以绑定:
 
-[~] [\**] 1..3;     # "381" 
+    [~] [\**] 1..3;     # "381" 
 `动机`
 
  程序员是懒惰的, 所以我们并不想我们花了很多时间写了个循环, 其中只放一行用于操作列表所有元素的二元运算符.
@@ -2217,6 +2170,7 @@ If you're not convinced, play a bit with it (pugs mostly implements it), it's re
 # "Perl 5 to 6" Lesson 25 - Cross 元操作符
 
 `概要`
+```perl
 for <a b> X 1..3 -> $a, $b {
     print "$a: $b   ";
 }
@@ -2225,12 +2179,13 @@ for <a b> X 1..3 -> $a, $b {
 .say for <a b c> X 1, 2;
 # output: a1\n a2\n b1\n b2\n c1\n c2\n
 # (with real newlines instead of \n)
-
+```
 `描述`
 
 这个 cross 操作符 X 用于返回两个或多个列表的笛卡儿积, 这表示它会返回所有可能的元组, 其中第一个元素是第一个列表中的元素，第二元素是第二个列表中的元素等..
 
-如果有另一个操作符放在 X 之后, 这个操作符会被运用到所有的元组元素上, 它的结果也会相应换成这样, 所以 1, 2 X+ 3, 6 会返回 1+3, 1+6, 2+3, 2+6 的操作结果 4, 7, 5, 8.
+如果有另一个操作符放在 X 之后, 这个操作符会被运用到所有的元组元素上, 它的结果也会相应换成这样, 
+所以 1, 2 X+ 3, 6 会返回 1+3, 1+6, 2+3, 2+6 的操作结果 4, 7, 5, 8.
 
 `动机`
 
@@ -2245,20 +2200,14 @@ for <a b> X 1..3 -> $a, $b {
 # "Perl 5 to 6" Lesson 26 - 异常和异常控制
 
 `概要`
-
+```perl
 try {
-
     die "OH NOEZ";
-
-
-
     CATCH { 
-
         say "there was an error: $!";
-
     }
-
 }
+```
 `描述`
 
  异常在 Perl 6 中是正常的正常控制流的一部分.
@@ -2270,24 +2219,16 @@ try {
 到目前为止讲的异常处理都还比较常规, 但错误处理对程序来说是很复杂的, 有的时候甚至一个普通的函数返回 "return" 也会抛出异常. 这种情况被叫做 "control exceptions"，可以用 CONTROL 块获取到, 或是在每个 routine 定义的时候捕获到。
 
  看下面这个例子:
-
+```perl
 use v6;
 
 my $block = -> { return "block"; say "still here" };
-
-
-
 sub s {
-
     $block.();
-
     return "sub";
-
 }
-
-
-
 say s();
+```
 这的 return "block" 会抛出一个控制异常, 使其不仅退出当前块 ( 因此不会在屏幕上打印 "still here" ), 还会退出子函数, 这时会补 sub s... 的声明捕捉. 这是有效返回是字符串, 它被做为返回值, 并在最后一行的 say 来打印出来.
 
 嵌入调用 $block.() 中放入 $block.() 块或者增加 CONTROL { ... } 块到程序的主体中可以使其捕获到异常.
@@ -2299,10 +2240,10 @@ say s();
 Perl 6 中全部包含了多线程的想法, 尤其是自动并行化. 为了确保不是所有的线程要遭受从一个单独的线程中止而中断, 发明了一种 "软" 异常.
 
 当一个函数调用 fail($obj), 它会返回一个特定的 undef 的值, 其实是包含了 $obj ( 通常是一个错误消息 ) 和 back trace ( 文件名和行号 ). 进程需要在外面对这个特定的未定义的值进行检查, 如果它是未定义的来由自己控制异常抛出.
-
+```perl
 my @files = </etc/passwd /etc/shadow nonexisting>;
-
 my @handles = hyper map { open($_) }, @files;
+```
 在这个例子中 hyper 操作会让 map 尽可能并行的做自己所要做的动作. 当打开一个不存在的文件失败时, 普通的 die "No such file or directory" 会中止所有其它的 open 操作. 但如果使用了失败的打开后启用 fail("No such file or directory") 来替换 die 操作, 它会给调用者让其来检查包含的 @handles, 并且仍然可以访问完整的错误消息.
 
 如果你不喜欢 "软" 异常的处理, 你可以 use fatal; 这会让程序从一开始就给全部的异常的 fail() 变成立即抛出的所有异常.
@@ -2317,60 +2258,30 @@ my @handles = hyper map { open($_) }, @files;
 # "Perl 5 to 6" Lesson 27 - 常用的 Perl 6 数据处理的习惯用法
 
 `概要`
-
+```perl
 # 从键和值的列表创建哈希 
-
 # 方案 1: slices 切片 
-
 my %hash; 
-
 %hash{@keys} = @values; 
-
-
-
 # 方案 2: meta operators 元操作 
-
 my %hash = @keys Z=> @values;
-
-
-
 # 从数组创建哈希, 给每个数组元素 true 值: 
-
 my %exists = @keys Z=> 1 xx *;
-
-
-
 # 限制值的范围, 这是 0 .. 10. 
-
 my $x = -2; say 0 max $x min 10;
-
-
-
 # dubugging: 给容器中的值 dump 出来, 包含名字, 输出到标准错误 
-
 note :$x.perl;
 
-
-
 # 不区分大小写排序 
-
 say @list.sort: *.lc;
-
-
-
 # 强制属性 
-
 class Something { 
-
     has $.required = die "Attribute 'required' is mandatory"; 
-
 } 
 
-
-
 Something.new(required => 2); # no error 
-
 Something.new() # BOOM
+```
 `描述`
 
  学习一门语言只靠规范是不够的, 它必须在生产中使用. 相反, 你们需要知道如何解决具体问题. 常用的处理模式叫 idioms 惯用用法, 可以帮助我们在每次有问题的时候不用重新发明轮子.
@@ -2378,25 +2289,21 @@ Something.new() # BOOM
 所以这是一些常用的 Perl 6 的习惯用法来操作数据结构.
 
 哈希
-
+```perl
 # 从键和值的列表创建哈希 
-
 # 方案 1: slices 切片 
-
 my %hash; 
-
 %hash{@keys} = @values; 
-
-
 
 # 方案 2: meta operators 元操作 
 
 my %hash = @keys Z=> @values;
+```
 这个第一个方案和你的 Perl 5 是基本相同的: 使用切片来分配. 第二个方案是使用的 zip 操作符的 Z 操作, 这会 zip 成一个列表象: 1, 2, 3 Z 10, 20, 30 变成 1, 10, 2, 20, 3, 30. 这的 Z=> 是元操作, 在这通过 => ( Pair 创建的操作 ) 来绑定 zip . 所以 1, 2, 3 Z=> 10, 20, 30 相当于 1, 2, 3 Z=> 10, 20, 30. 赋值给哈希一个数组列表变量.
 
 对于存在检查, 这个哈希的值是不什么重要, 主要他们在布尔上下文返回 True. 在这种情况下, 有一个不错的方式来初始化哈希, 给 keys 一个数组或者列表
 
-my %exists = @keys Z=> 1 xx *;
+    my %exists = @keys Z=> 1 xx *;
 这是一个 lazy, 在右侧 1 组成无穷列表, 并依赖 Z 来结束这个列表.
 
 [Numbers]
@@ -2405,12 +2312,12 @@ my %exists = @keys Z=> 1 xx *;
 
 在 Perl 5 中, 你常常会遇到什么 $a = $b > $upper ? $upper : $b, 其它的限制是 lower. 在这个地方我们使用 max 和 min 的中缀运算符, 可以简化成
 
-my $in-range = $lower max $x min $upper;
+    my $in-range = $lower max $x min $upper;
 因为 $lower max $x 返回两个数中较大的, 因此切出了这个范围的下端.
 
 这为 min 和 max 是中缀运算符, 你也可以这样使用:
 
-$x max= 0; $x min= 10;
+    $x max= 0; $x min= 10;
 [Debugging]
 
  Perl 5 中我们常常使用 Data::Dumper, 在 Perl 6 的中我们使用对象的 .perl 方法. 这二个都能尽可能生成, 真实的原始数据结构.
@@ -2422,104 +2329,81 @@ $x max= 0; $x min= 10;
 象 Perl 5 中一样, 这个 sort 是内置的. 它可根据所采取的比较函数来比较两个值, 然后排序. 不同于 Perl 5 的是, 这更加智能, 如果你的参数只有一个值会自动使用 transformation.
 
 如果你想过一个 transformed 对值进行比较, 在 Perl 5 中你可以这样:
-
+```perl
 # WARNING: Perl 5 code ahead
-
 my @sorted = sort { transform($a) cmp transform($b) } @values;
-
-
-
 # or the so-called Schwartzian Transform:
-
 my @sorted = map { $_->[1] }
-
              sort { $a->[0] cmp $b->[0] }
-
              map { [transform($_), $_] }
-
              @values
+```
 上面二个的解决方案的在进行比较的时候, 第一个需要不断重复转换的输入. 第二个方案通过存储原始值转化后的值避免了重复输入, 但它多写了相当多的代码.
 
 Perl 6 会自动使用第二种方案 ( 使用更加有效的 Schwartzian 转换, 避免数组的每个值重复转换 ), 这个转换函数只有一个参数:
 
-my @sorted = sort &transform, @values;
+    my @sorted = sort &transform, @values;
 强制属性
 
  通常我们强制一些属性必须存在, 是为了检查其构造函数中是否存在.
 
 在 Perl 6 中也是这样工作的, 但它更加容易, 更加安全, 当请求每个需要存在属性时:
 
-has $.attr = die "'attr' is mandatory";
+    has $.attr = die "'attr' is mandatory";
 这利用了默认值的机制. 当提供一个值, 这个就永远不会执行, 会用于生成默认值, 这个 die 不会触发. 如果有任何构造函数没设置这个值, 就会抛出异常.
-
 
 # "Perl 5 to 6" Lesson 28 - Currying 柯里化
 
 `概要`
-
+```perl
   use v6;
 
-
-
   my &f := &substr.assuming('Hello, World');
-
   say f(0, 2);                # He
-
   say f(3, 2);                # lo
-
   say f(7);                   # World
-
-
-
   say <a b c>.map: * x 2;     # aabbcc
-
   say <a b c>.map: *.uc;      # ABC
-
   for ^10 {
-
       print <R G B>.[$_ % *]; # RGBRGBRGBR
-
   }
+```  
 `描述`
 
 Currying 和 partial application 用于用一个函数产生新的函数, 或是用一个方法提供一些参数再产生新的方法. 因为可以动态产生很多函数, 这样就省去很多码字的时间, 当函数需要返回一个回调的时候也会非常有用.
 
 假设你想要一个函数用于从 `"Hello, World"` 做各种提取子串操作, 这样做的经典方法是写自己的函数:
-
+```perl
   sub f(*@a) {
-
       substr('Hello, World', |@a)
-
   }
+```  
 通过 `assuming` 方法来实现柯里化
 
 Perl 6 提供了一个方法 `assuming` 在代码的对象上, 它可以传递参数给它的调用者成为一体, 并返回调用者的功能的函数.
 
-my &f := &substr.assuming('Hello, World');
+    my &f := &substr.assuming('Hello, World');
 现在 `f(1, 2)` 相当于 `substr('Hello, World', 1, 2)`.
 
 这个 `assuming` 方法也可以工作在操作符上, 因为操作符只是一个奇怪名字的函数. 你想实现一个子函数, 给任何传递给它的数值都增加 2 , 你可以这样写.
 
-my &add_two := &infix:<+>.assuming(2);
+    my &add_two := &infix:<+>.assuming(2);
 但这是一种很无聊的写法, 所以有另一种选择.
 
 通过 Whatever-Star ( * 号 ) 来实现柯里化
 
-  my &add_two := * + 2; 
-
-  say add_two(4);         # 6 
+     my &add_two := * + 2; 
+     say add_two(4);         # 6 
 星号, 叫 _Whatever_, 是一个占位符参数, 所以整个表达式返回一个闭包. 多个星号 "Whatevers" 在单个表达式中也是可以的, 这样也会创建闭包, 但希望提供更多的参数, 通过形参替换每个 "*" 元素. 所以 `* * 5 + *` 相当于 `-> $a, $b { $a * 5 + $b }`.
 
-  my $c = * * 5 + *; 
-
-  say $c(10, 2);                # 52 
+    my $c = * * 5 + *; 
+    say $c(10, 2);                # 52 
 注意第二个 `*` 是一个中缀运算符, 不是术语, 所以不会被 Whatever-currying 影响.
 
 这的东西是由星号和闭包组成, 直接在语法驱动层实现的, 所以这些是在编译时完成, 所以:
 
-  my $star = *; 
-
-  my $code = $star + 2
+    my $star = *; 
+    my $code = $star + 2
 如果这不构造成一个闭包的话, 就会出现 die 并给出一个信息, 必须由这个来做为占位符并返回闭包
 
   Can't take numeric value for object of type Whatever
@@ -2546,5 +2430,3 @@ Perl 5 中也可用于函数式编程, 你可以看看 Jason Dominus' book _High
  <http://hop.perl.plover.com/>
 
  <http://en.wikipedia.org/wiki/Currying>
-
- 
