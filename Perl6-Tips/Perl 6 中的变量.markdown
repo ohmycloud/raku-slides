@@ -215,6 +215,7 @@ The Grammar.parse method also sets the caller's $/ to the resulting Match object
     $! is the error variable. If a try block or statement prefix catches an exception, that exception is stored in $! . If no exception was caught, $! is set to the Any type object.
 
 Note that CATCH blocks do not set $! . Rather they set $_ inside the block to the caught exception. 编译时  "常量"
+
     $?FILE      所在文件
     $?LINE      所在行
     &?ROUTINE   所在子例程
@@ -222,6 +223,7 @@ Note that CATCH blocks do not set $! . Rather they set $_ inside the block to th
     %?LANG      What is the current set of interwoven languages?
 
 其它编译时常量：
+
     $?KERNEL    Which kernel am I compiled for?
     $?DISTRO    Which OS distribution am I compiling under
     $?VM        Which virtual machine am I compiling under
