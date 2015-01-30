@@ -96,6 +96,7 @@ say qq:!s:!c/foo "$x{$y}"\n/; # foo "$x{$y}"␤
 一些 Q 结构的高级功能
 
 引用功能在这里并没有停止. 下表是一些 Rakudo Perl 6 中已经起作用的其他功能:
+
     short       long            功能
     =====       ====            ===============
     :x          :exec           作为命令执行并返回结果
@@ -115,18 +116,18 @@ say qqx/echo Hello $w/; # Hello World
 .say for qw/ foo bar 'first second' /;
 ```
 
-   foo
-   bar
-   'first
-   second'
+    foo
+    bar
+    'first
+    second'
 
 ## 作为单引号单词进行插值. 这会确保平衡的引号会被看作一个整体(请再次查看单引号发生了什么):
 ```perl
 .say for qww/ foo bar 'first second' /;
 ```
-foo
-bar
-first second
+    foo
+    bar
+    first second
 
 ## 插值变量到 heredoc:
 ```perl
@@ -135,7 +136,7 @@ say qqto/FOO/;
   Hello $a
   FOO
 ```
-Hello world␤
+    Hello world␤
 
 文本会被自动扩展为跟目标字符串同样数量的缩进
 
