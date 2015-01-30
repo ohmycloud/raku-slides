@@ -106,12 +106,12 @@ say qq:!s:!c/foo "$x{$y}"\n/; # foo "$x{$y}"␤
 	
 
 qq:x// 可以简写为 qqx//
-## 插值并作为外部程序执行
+ 插值并作为外部程序执行
 ```perl
 my $w = 'World';
 say qqx/echo Hello $w/; # Hello World
 ```
-## 作为单引号单词进行插值(请查看单引号发生了什么):
+ 作为单引号单词进行插值(请查看单引号发生了什么):
 ```perl
 .say for qw/ foo bar 'first second' /;
 ```
@@ -121,7 +121,7 @@ say qqx/echo Hello $w/; # Hello World
     'first
     second'
 
-## 作为单引号单词进行插值. 这会确保平衡的引号会被看作一个整体(请再次查看单引号发生了什么):
+ 作为单引号单词进行插值. 这会确保平衡的引号会被看作一个整体(请再次查看单引号发生了什么):
 ```perl
 .say for qww/ foo bar 'first second' /;
 ```
@@ -129,7 +129,7 @@ say qqx/echo Hello $w/; # Hello World
     bar
     first second
 
-## 插值变量到 heredoc:
+ 插值变量到 heredoc:
 ```perl
 my $a = 'world';
 say qqto/FOO/;
