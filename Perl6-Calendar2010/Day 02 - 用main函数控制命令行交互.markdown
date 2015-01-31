@@ -1,4 +1,4 @@
-第二天:用main函数控制命令行交互
+# 第二天:用main函数控制命令行交互
 
 
 
@@ -6,7 +6,7 @@
 
 在 UNIX 环境下，很多脚本都是要从命令行里获取运行参数的。Perl6 上，实现这个相当简单~比如下面这样：
 
-$ cat add.pl
+    $ cat add.pl
     sub MAIN ($x, $y) {
         say $x + $y
     }
@@ -30,9 +30,9 @@ $ cat add.pl
     $ perl6 add2.pl too many arguments
     Usage: add.pl <num1> <num2>
 
-更进一步的，你可以用 multi 指令声明多种 MAIN 函数以完成一种可替代的语法，或者根据某些常量做出不同反应，比如：
+更进一步的，你可以用 multi 指令声明多种 MAIN 函数以完成一种可替代的语法，或者根据某些**常量**做出不同反应，比如：
 
-$ cat calc
+    $ cat calc
     #!/usr/bin/env perl6
     multi MAIN('add', $x, $y)  { say $x + $y }
     multi MAIN('div', $x, $y)  { say $x / $y }
@@ -51,7 +51,7 @@ $ cat calc
 
 还有命名参数对应不同的选项的情况：
 
-$ cat copy.pl
+    $ cat copy.pl
     sub MAIN($source, $target, Bool :$verbose) {
         say "Copying '$source' to '$target'" if $verbose;
         run "cp $source $target";
@@ -62,7 +62,7 @@ $ cat copy.pl
 
 这里申明变量 $verbose 类型为 Bool，也就是不接受赋值。如果没有这个类型约束的话，它是需要赋值的，就像下面这样：
 
-$ cat do-nothing.pl
+    $ cat do-nothing.pl
     sub MAIN(:$how = 'fast') {
         say "Do nothing, but do it $how";
     }
@@ -75,5 +75,3 @@ $ cat do-nothing.pl
     do-nothing.pl [--how=value-of-how]
 
 总之，Perl6 提供了内置的命令行解析功能和使用帮助说明，你只要声明好函数就行了。
-
-来源： < https://github.com/sxw2k/perl6advent_cn/blob/master/chinese/2010/%E7%AC%AC%E4%BA%8C%E5%A4%A9:%E7%94%A8main%E5%87%BD%E6%95%B0%E6%8E%A7%E5%88%B6%E5%91%BD%E4%BB%A4%E8%A1%8C%E4%BA%A4%E4%BA%92.markdown >  
