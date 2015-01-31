@@ -14,10 +14,13 @@ $^a 和 $^b 没有特殊的意义, 只是两个占位符.相当于形式参数 $
 
     # 数值比较
     my @sorted = @unsorted.sort: { $^a <=> $^b };
+	
     # 或者用函数调用的形式
     my @sorted = sort { $^a <=> $^b }, @unsorted;
+	
     # 字符串比对 ( 跟Perl5的cmp一样 )
     my @sorted = @unsorted.sort: { $^a leg $^b };
+	
     # 类型依赖比对
     my @sorted = @unsorted.sort: { $^a cmp $^b };
 
@@ -36,11 +39,13 @@ $^a 和 $^b 没有特殊的意义, 只是两个占位符.相当于形式参数 $
 ```
 	
 你也可以把 : 换成 () ，然后再跟上一些方法进行后续处理，比如：
+
     my @topten = @scores.sort( { $^b <=> $^a } ).list.munch(10);
 
 小提示： $a 和 $b 不再像在 Perl5 中那样有**特殊含义**了，在 sort 代码块里用别的命名变量 $var 、**位置变量 $^var** 或者其他任何的都跟在其他代码段里一样。
 
 你可以直接在排序的时候直接就做好变换函数：
+
     my @sorted = @unsorted.sort: { foo($^a) cmp foo($^b) };
 
 不过 foo() 会重复执行，如果列表不大也就罢了，如果比较大的话……如果 foo() 还是个计算密集型的……你懂的！
@@ -60,6 +65,7 @@ Perl6 里，你一样可以使用施瓦茨变换，不过 Perl6 内置了一些�
 ### 不区分大小写的排序:
 
 把每个元素都改成小写，然后把数组按照**小写**的次序排好返回。
+
     my @sorted = @unsorted.sort: { .lc };
 	my @sorted = @unsorted.sort: { $^a.lc <=> $^b.lc}; # 同上
 	my @sorted = @unsorted.sort: { $^a.lc }; # 与上面相同, $^a 只是一个占位符
@@ -67,6 +73,7 @@ Perl6 里，你一样可以使用施瓦茨变换，不过 Perl6 内置了一些�
 ### 单词长度排序：
 
 把每个元素的单词按照从短到长排序。
+
     my @sorted = @unsorted.sort: { .chars };
 
 ### 或者从长到短。
@@ -75,20 +82,24 @@ Perl6 里，你一样可以使用施瓦茨变换，不过 Perl6 内置了一些�
 ### 多次排序比较：
 
 你可以在 sort 代码块里放多个比较函数，sort 会顺序执行直到退出。比如在单词长度的基础上，再按照 ASCII 码的顺序排序。
-     .say for @a.sort: { $^a.chars, $^a } ;
+
+    .say for @a.sort: { $^a.chars, $^a } ;
 
 不过，在 Rakudo 里好像运行有点问题……它只会比较长度不会比较数值，也就是说， 10 排在 2 的前面。（没关系，TMTONTDI）
 
 perl6 里的 sort 本身是稳定工作的，你可以重复使用。
-     .say for @a.sort.sort: { $^a.chars };
+
+    .say for @a.sort.sort: { $^a.chars };
 
 不过这样 sort 有两次调用，no fashion ！所以你还可以这么写：
-     .say for @a.sort: { $^a.chars <=> $^b.chars || $^a leg $^b };
+
+    .say for @a.sort: { $^a.chars <=> $^b.chars || $^a leg $^b };
 
 不过这下你有**两个**参数了，perl6 没法自动给你启动施瓦茨变换了。
 
 又或者，你可以加上一个给自然数排序的**函数**：
-     .say for @a.sort: { $^a.chars.&naturally, $^a };
+
+    .say for @a.sort: { $^a.chars.&naturally, $^a };
 
 “给自然数排序？”我好像听到你们的哭声了，“哪里有？”
 
@@ -149,11 +160,13 @@ perl6 里的 sort 本身是稳定工作的，你可以重复使用。
 所以，我们必须的在排序的时候加上一点转换了。
 
 我使用 .subst 方法，这是我们所熟悉的 s/// 操作符的面向对象形式。
+
     .subst(/(\d+)/, -> $/ { 0 ~ $0.chars.chr ~ $0 }, :g)
 
 第一部分，捕获一个连续的数字，然后由 ->$/{} 构成一个尖块，意思是：“传递匹配到 $/ 的数组到 {} 代码里”。然后代码里替换成用 0 按照数量级排序的顺序联结的字符串。这个 0 是以 ASCII 字符串出现，联结在原始字符串上的。最后 :g 表示全局替换。
 
 如果也不区分大小写，那么：
+
     .lc.subst(/(\d+)/, -> $/ { 0 ~ $0.chars.chr ~ $0 }, :g)
 
 改成子例程的方式：
@@ -169,6 +182,7 @@ perl6 里的 sort 本身是稳定工作的，你可以重复使用。
     }
 
 然后你看，这个子例程只有一个参数，所以我们还可以用上施瓦茨变换了：
+
     .say for <0 1 100 11 144th 2 21 210 3rd 33rd AND ARE An Bit Can and by car d1 d10 d2>.sort: { .&naturally };
 
 或者用来给 ip 排序：
