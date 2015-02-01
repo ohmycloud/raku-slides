@@ -1,24 +1,28 @@
-Day 12 – Slicing with adverbs, the only way! By   Liztormato
+# Day 12 – Slicing with adverbs, the only way! By   Liztormato
 
 
-在散列切片和数组切片中你能使用哪些 副词 呢？ 名称 描述
- :exists 元素是否存在
- :delete 移除元素，返回真，如果有元素被移除的话
- :kv 将键和值作为Parcel返回
- :p return  key(s) and value(s)  as Parcel of Pairs
- :k  只返回键
- :v  只返回值
-:exists
+在**散列切片**和**数组切片**中你能使用哪些 副词 呢？
+    名称    描述
+    :exists 元素是否存在
+    :delete 移除元素，如果有元素被移除的话返回真
+    :kv     将键和值作为Parcel返回
+    :p      return  key(s) and value(s)  as Parcel of Pairs
+    :k      只返回键
+    :v      只返回值
 
-这个副词代替 .exists方法。 副词为散列和数组提供了统一的接口，可以一次检查多个元素。 .exists方法只允许一次检查单个键。
+:exists这个副词代替 .exists方法。 副词为散列和数组提供了**统一的接口**，可以一次检查**多个元素**。 .exists方法一次只允许检查**单个**键。
 
 例子更有说服力。检查单个键是否存在：
-$ perl6 -e 'my %h = a=>1, b=>2; say %h<a>:exists’
+```perl6
+> perl6 -e "my %h = a=>1, b=>2; say %h<a>:exists"
 True
+```
 
 如果我们将这扩展到切片上，我们会得到一堆布尔值
-$ perl6 -e 'my %h = a=>1, b=>2; say %h<a b c>:exists'
-True True False
+
+    > perl6 -e "my %h = a=>1, b=>2; say %h<a b c>:exists"
+    True True False
+	
 返回结果是 （Parcel）
 
 注意，如果我们仅仅请求一个键，我们取回的是一个布尔值，不是一个只含一个布尔值的Parcel.
