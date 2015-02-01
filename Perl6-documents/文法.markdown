@@ -1,0 +1,133 @@
+# Grammars 文法
+
+    Named Regexes
+    Creating Grammars
+    Methods
+    method parse
+    method subparse
+    method parsefile
+    Action Classes
+	
+文法是一种强大的工具, 用于拆解文本,并通常返回数据结构
+例如, Perl 6 是使用 Perl 6 风格的文法解析和执行的.
+对普通 Perl 6 用户来说,一个更实用的例子就是 JSON::Simple 模块, 这个模块能反序列化任何有效的 JSON 文件, 反序列化代码还写了不到 100 行, 简单,可扩展.
+
+词法允许你组织正则, 就像类允许你组织普通代码的方法一样.
+## 命名正则 Named Regexes
+
+命名正则有特殊的语法, 与子例程的定义类似:
+```perl
+my regex number { \d+ [ \. \d+ ]? }
+```
+这个例子中, 我们必须使用 ** my ** 关键词指定这个正则是词法作用域的, 因为 **命名正则** 通常用在 词法中.
+给正则命名后有利于在其他地方复用正则:
+```perl
+say "32.51" ~~ &number;
+say "15 + 4.5" ~~ / <number> \s* '+' \s* <number> /
+```
+regex 不是命名正则仅有的标示符 -- 实际上, 它用的不多. 大多数时候, 用的最多的是 token 和 rule 标识符. 它们都是不能回溯的, 这意味着正则引擎在匹配失败时不会备份和重试. 这通常是你想要的, 但不是对所有场合都合适:
+```perl
+my regex works-but-slow { .+ q }
+my token fails-but-fast { .+ q }
+my $s = 'Tokens won\'t backtrack, which makes them fail quicker!'; # Tokens 不会沿原路返回, 这让它们更快地失败!
+say so $s ~~ &works-but-slow; # True
+say so $s ~~ &fails-but-fast; # False, the entire string get taken by the .+
+```
+token 和 rule 标识符的不同之处在于 rule 标识符让 Regex 的 :sigspace 起作用了:
+```perl
+my token non-space-y { once upon a time }
+my rule space-y      { once upon a time }
+say 'onceuponatime'    ~~ &non-space-y;
+say 'once upon a time' ~~ &space-y;
+```
+## 创建文法 Creating Grammars
+```perl
+class Grammar is Cursor { }
+```
+使用 grammar 关键字而非 class 关键字声明文法. Grammars 应该只用于解析文本; 如果你想提取复杂的数据, 建议将 action 类 和 grammar 结合使用.
+```perl
+grammar CSV {
+    token TOP { [ <line> \n? ]+ }
+    token line {
+        ^^            # Beginning of a line
+        <value>* % \, # Any number of <value>s with commas in between them
+        $$            # End of a line
+    }
+    token value {
+        [
+        | <-[",\n]>     # Anything not a double quote, comma or newline
+        | <quoted-text> # Or some quoted text
+        ]*              # Any number of times
+    }
+    token quoted-text {
+        \"
+        [
+        | <-["\\]> # Anything not a " or \
+        | '\"'     # Or \", an escaped quotation mark
+        ]*         # Any number of times
+        \"
+    }
+}
+
+say "Valid CSV file!" if CSV.parse( q:to/EOCSV/ );
+    Year,Make,Model,Length
+    1997,Ford,E350,2.34
+    2000,Mercury,Cougar,2.38
+    EOCSV
+```
+## 方法	Methods
+
+### 方法解析
+
+method parse($str, :$rule = 'TOP', :$actions) returns Match:D
+让 grammar 与 $str 匹配,使用 $rule 作为起始 rule, 选择性地将 $action 作为 action 对象应用.
+
+如果 grammar 不能解析全部文本就会失败. 如果只想解析部分字符串, 使用 subparse
+返回结果匹配对象, 并设置调用者的 $/ 变量为结果匹配对象.
+```perl
+say CSV.parse( q:to/EOCSV/ );
+    Year,Make,Model,Length
+    1997,Ford,E350,2.34
+    2000,Mercury,Cougar,2.38
+    EOCSV
+```
+	This outputs:
+
+｢Year,Make,Model,Length
+1997,Ford,E350,2.34
+2000,Mercury,Cougar,2.38
+｣
+ line => ｢Year,Make,Model,Length｣
+  value => ｢Year｣
+  value => ｢Make｣
+  value => ｢Model｣
+  value => ｢Length｣
+ line => ｢1997,Ford,E350,2.34｣
+  value => ｢1997｣
+  value => ｢Ford｣
+  value => ｢E350｣
+  value => ｢2.34｣
+ line => ｢2000,Mercury,Cougar,2.38 ｣
+  value => ｢2000｣
+  value => ｢Mercury｣
+  value => ｢Cougar｣
+  value => ｢2.38 ｣
+
+##  method subparse
+
+    method subparse($str, :$rule = 'TOP', :$actions) returns Match:D
+
+将 $str 与 grammar 匹配, 使用 $rule 作为起始 rule, 选择性将 $action 作为 action 对象应用.
+不像 parse , subparse 允许 grammar 只匹配提供的字符串一部分.
+
+## method parsefile
+
+    method parsefile(Cool $filename as Str, *%opts) 返回 Match:D
+
+	使用 parse 方法解析 文件 $filename 的内容, 传递任何命名选项到 %opts
+
+## Action Classes
+
+TODO
+
+[↑] In fact, named regexes can even take extra arguments, using the same syntax as subroutine parameter lists
