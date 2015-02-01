@@ -191,6 +191,7 @@ for %h.kv -> $k, $v {
 ```perl
 > for @a -> $first, $second, $third { say "$first, $second, $third: I'm greedy on each iteration!"; }
 ```
+```perl
     1, 2, 3: I'm greedy on each iteration!
     4, 5, 6: I'm greedy on each iteration!
     7, 8, 9: I'm greedy on each iteration!
