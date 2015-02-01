@@ -1,4 +1,4 @@
-Day 09 – Hashes and pairs By   Carl
+Day 09 – Hashes and pairs -- By   Carl
 
 
 Hashes are nice. They can work as a kind of “poor man’s objects” when creating a class seems like just too much ceremony for the occasion.
@@ -91,5 +91,3 @@ Pair.^add_fallback(
 $lisp-list.caddr.say;    # 3
 
 Whee!
-
-来源： < http://perl6advent.wordpress.com/2013/12/09/day-09-hashes-and-pairs/ >  
