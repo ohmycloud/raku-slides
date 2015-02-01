@@ -1,27 +1,36 @@
-
+# Day 13 – Bags and Sets December 13, 2012
 
 过去几年，我写过很多下面这种代码的变体：
-
+```perl
 my %words;
 for slurp.comb(/\w+/).map(*.lc) -> $word {
     %words{$word}++;
 }
-
+```
 (悄悄说： slurp.comb(/\w+/).map(*.lc) 是Perl的标准技巧之一。用来读取命令行指定的文件或者标准输入，逐个单词输入并改成小写。)
-
-Perl6 引入了两种新的关联类型用来处理这类功能。 KeyBag 就是用来这种情况下作为 Hash 的替代品：
+单行命令 : 
+     for slurp('test.txt').comb(/\./).map(*.lc) -> $word {%words{$word}++;}
+	 for %words.kv -> $key,$value {say $key,"\t",$value; }
+	 
+	 按单词出现的次数降序排列:
+	 for %words.pairs.sort(-*.value).map({ $_.key, $_.value }) -> $word, $count {
+         say "$word: $count";
+    }
+	 
+	 
+Perl6 引入了两种新的**关联类型**用来处理这类功能。 KeyBag 就是用来这种情况下作为 Hash 的替代品：
 
 my %words := KeyBag.new;
 for slurp.comb(/\w+/).map(*.lc) -> $word {
     %words{$word}++;
 }
 
-这种时候为什么会觉得 KeyBag 比 Hash 好呢，还多几个字母呢？嗯，因为他可以把你真需要的做的更好。如果你需要的是一个 Int 类型的值的 Hash ，它可以这样做：
+这种时候为什么会觉得 KeyBag 比 Hash 好呢，还多几个字母呢？嗯，因为他可以把你真需要的做的更好。如果你需要的是一个 Int 类型值的 Hash ，它可以这样做：
 
 > %words{"the"} = "green";
 Unhandled exception: Cannot parse number: green
 
-这是 Niecza 的错误；Rakudo 的稍微好看点，不过重点是出错了；Perl6 检查出来你违反了约定和投诉。
+这是 Niecza 的错误；Rakudo 的稍微好看点，不过重点是出错了；Perl6 检查出来你违反了约定和规范。
 
 而且 KeyBag 还有更多的好办法。首先，虽然用四行代码来初始化 KeyBag 不是很麻烦，但是 Perl6 完全可以在单行内搞定：
 my %words := KeyBag.new(slurp.comb(/\w+/).map(*.lc));
@@ -42,7 +51,7 @@ blue blue blue blue blue blue red blue red blue
 blue red blue blue red blue blue blue blue blue blue blue
 
 用普通的 Array 来模拟也不太难，不过这个版本会是：
-
+ 
 > $bag = bag "red" => 20000000000000000001, "blue" => 100000000000000000000;
 > say $bag.roll(10);
 > say $bag.pick(10).join(" ");
@@ -121,5 +130,3 @@ oph: 58
 ros: 53
 horatio: 48
 clown: 47
-
-来源： < https://github.com/sxw2k/perl6advent_cn/blob/master/chinese/2012/%E7%AC%AC%E5%8D%81%E4%B8%89%E5%A4%A9:%E8%A2%8B%E5%92%8C%E9%9B%86.markdown >  
