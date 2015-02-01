@@ -1,48 +1,41 @@
+# Perl 6 Basics Tablet
 
-
-
- V
-
-
- Perl 6
- Perl 6 Basics Tablet
-
- Contents
- Defaults
- Statements
- Spaces and Indentation
- Comments
- Single Line
- Multi Line
- POD
-
- Quoting
- Delimiter
- Interpolation
- Single Quotes
- Double Quotes
- Quote Words
- Heredocs
- Paths
- Regex
- Code
-
- Number Literals
- Radix Prefixes
- General Radix Form
- Scientific Notation
- Rational Number
- Complex Number
- Version Number
-
- Formatting
- perl
- pretty
- fmt
- sprintf
- pack
- Formats
- Date and Time
+    Contents
+    Defaults
+    Statements
+    Spaces and Indentation
+    Comments
+    Single Line
+    Multi Line
+    POD
+    
+    Quoting
+    Delimiter
+    Interpolation
+    Single Quotes
+    Double Quotes
+    Quote Words
+    Heredocs
+    Paths
+    Regex
+    Code
+    
+    Number Literals
+    Radix Prefixes
+    General Radix Form
+    Scientific Notation
+    Rational Number
+    Complex Number
+    Version Number
+    
+    Formatting
+    perl
+    pretty
+    fmt
+    sprintf
+    pack
+    Formats
+    Date and Time
 
 
 
@@ -93,25 +86,25 @@ The examples in this chapter use almost every time slashes for that purpose, but
 An extended delimiter mechanism is delivered by heredocs . 插值
 
 Inside of these delimiters, every character will be taken literally. Any additional meaning has to be added by quoting adverbs that have to follow the Q. Most of them have a short and a long name and some of the most useful have an additional syntax that replaces them altogether with the Q operator (like single or double quotes). :b aka :backslash # control character (implies at least :q )
-:s aka :scalar # scalar variable : $name
-:a aka :array # array variable : @name[...]
-:h aka :hash # hash variable : %name{...}
-:c aka :closure # anonymous blocks : {...}
-:f aka :function # callable routines : &name(...)
-Q :b /\t\n/; # tab and new line character
-Q :s /$poem/; # content of $poem
-Q :a /@primes[]/; # all number separated by single spaces
-Q :a /@primes[0]/; # returns '2', the first prime
-Q :a /me@primes.de/; # returns literally the mail adress, you need the square braces to interpolate arrays
-Q :h /%dev{}/; # all developer names (values, not keys) separated by single spaces, angle brackets work too
-Q :h /%dev[rakudo] %dev<niecza>/; # just 2 values
-Q :h /%dev/; # literally '%dev', you need braces here too
-Q :c /There are {2**6} hexagrams in I Ging./; # returns: 'There are 64 hexagrams in I Ging.', inserts the result of the closure
-Q :c /Perl 6 Compiler: {%dev.keys}./; # use it too for method calls
-Q :h /Perl 6 Compiler: %dev.keys./; # no interpolation
-Q :f :a /Here it Tom with the weather: &fetch_report($day)./; # inserts report of that day, even inside Strings the correctness of arguments will be checked!
-Q :f :a /fetch_report($day)/; # interpolates just $day
-Q :f :a /&fetch_report/; # literal string '&fetch_report', even if the subroutine takes no arguments
+    :s aka :scalar # scalar variable : $name
+    :a aka :array # array variable : @name[...]
+    :h aka :hash # hash variable : %name{...}
+    :c aka :closure # anonymous blocks : {...}
+    :f aka :function # callable routines : &name(...)
+    Q :b /\t\n/; # tab and new line character
+    Q :s /$poem/; # content of $poem
+    Q :a /@primes[]/; # all number separated by single spaces
+    Q :a /@primes[0]/; # returns '2', the first prime
+    Q :a /me@primes.de/; # returns literally the mail adress, you need the square braces to interpolate arrays
+    Q :h /%dev{}/; # all developer names (values, not keys) separated by single spaces, angle brackets work too
+    Q :h /%dev[rakudo] %dev<niecza>/; # just 2 values
+    Q :h /%dev/; # literally '%dev', you need braces here too
+    Q :c /There are {2**6} hexagrams in I Ging./; # returns: 'There are 64 hexagrams in I Ging.', inserts the result of the closure
+    Q :c /Perl 6 Compiler: {%dev.keys}./; # use it too for method calls
+    Q :h /Perl 6 Compiler: %dev.keys./; # no interpolation
+    Q :f :a /Here it Tom with the weather: &fetch_report($day)./; # inserts report of that day, even inside Strings the correctness of arguments will be checked!
+    Q :f :a /fetch_report($day)/; # interpolates just $day
+    Q :f :a /&fetch_report/; # literal string '&fetch_report', even if the subroutine takes no arguments
 单引号
 
 They provide the most basic mechanism in a convenient syntax. All the following are synonyms: Q :single /.../;
@@ -239,103 +232,3 @@ say %p6c.fmt("%s", ',' ); # "sorear , fglock!\n"
 say %p6c.fmt("%s:%s"); # "sorear:niecza\nfglock:perlito\n"
 say %p6c.fmt("%s:%s",); # "sorear:niecza,fglock:perlito\n"
 say %p6c.fmt("%s %s %s"); # ERROR
-
-
-
-
-
-
-
-
-
-Upload Files
-
-Click "Browse" to find the file you want to upload. When you click "Upload file" your file will be uploaded and added to the list of attachments for this page.
-
-Maximum file size: 50MB
-
-
- 
- 
-Add a link to the attachment at the top of the page? Images will appear in the page.
-Expand zip archive and attach individual files to the page
-
- Done
-
-
- 
-
- File Name Author Date Uploaded Size
-
-
- Close
-
-
- Delete Selected Files
-
-
-
-Save Page As
-
-Enter a meaningful and distinctive title for your page.
-
-Page Title:
-
-Tip: You'll be able to find this page later by using the title you choose.
-
- Cancel
-
- Save
-
-
-
-Page Already Exists
-
-There is already a page named XXX . Would you like to:
-
-Save with a different name:
-
-Save the page with the name " XXX "
-
-Append your text to the bottom of the existing page named: " XXX "
-
- Cancel
-
- Ok
-
-
-
-Upload Files
-
-Click "Browse" to find the file you want to upload. When you click "Add file," this file will be added to the list of attachments for this page, and uploaded when you save the page.
-
-
- 
- 
-Add a link to this attachment at the top of the page? Images will appear in the page.
-Expand zip archive and attach individual files to the page?
-
- Done
-
-
- Add file
-
- 
-<span class="st-attachmentsqueue-listlabel">${ loc('Files To upload:') } </span> {var lastIndex = queue.length-1} {for file in queue} <span class="st-attachmentsqueue-filelist-name">${file}  <a href="#" onclick="javascript:window.EditQueue.remove_index(${file_index}); return false" title="${ loc('Remove [_1] from the queue', file) }" class="st-attachmentsqueue-filelist-delete">[x]</a> {if file_index != lastIndex}, {/if} {/for}
-
-Add Tags
-
-Enter a tag and click "Add tag". The tag will be saved when you save the page.
-
-
-Tag: 
- 
-Suggestions:
-
- Done
-
-
- Add tag
-
- 
-Tags to apply: {var lastIndex = queue.length-1} {for tag in queue} <span class="st-tagqueue-taglist-name">${tag} <a href="#" onclick="javascript:window.TagQueue.remove_index(${tag_index}); return false" title="Remove ${tag} from the queue" class="st-tagqueue-taglist-delete">[x]</a>{if tag_index != lastIndex}, {/if} {/for} {var lastIndex = matches.length-1} {for t in matches} <a href="#" onclick="TagQueue.queue_tag('${t.name|escapespecial|quoter}'); return false" title="Add ${t.name} to page" class="st-tags-suggestion" >${t.name}</a>{if t_index != lastIndex}, {/if} {/for}

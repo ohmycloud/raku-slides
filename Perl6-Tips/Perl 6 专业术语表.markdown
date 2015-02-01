@@ -1,18 +1,16 @@
- Perl 6 Documentation
-Search 
+# Glossary of Perl 6 terminology
+    Anonymous
+    Autothreading
+    Instance
+    Invocant
+    Literal
+    lvalue
+    Mainline
+    Slurpy
+    Type Object 
+	
 
-Glossary of Perl 6 terminology
-Anonymous
-Autothreading
-Instance
-Invocant
-Literal
-lvalue
-Mainline
-Slurpy
-Type Object 匿名
-
-子例程、方法或子方法，当它们不能通过名字调用时，被称作匿名的
+匿名子例程、方法或子方法，当它们不能通过名字调用时，被称作匿名的
 # named subroutine
 sub double($x) { 2 * $x };
 # 
