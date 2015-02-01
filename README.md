@@ -1,6 +1,10 @@
 # Perl6
-将为知笔记中记录的笔记转移到这里来, 因为 Github 的 Markdown 语法更友好. 另外还会翻译一些 Perl 6 的文章,顺便记点单词.
-弄了半天不会创建子文件夹,特此一并记录下.
+在github上创建子文件夹, 就是在目录下面再创建文件夹, 然后里面不能为空, 新建一个文件修改后,
+    git add "something"
+	git commit -m "你是猪吗"
+	git push origin master
+就okay了
+
 # 目录
 * Perl6 Calendar2014
 * Perl6 Calendar2013
