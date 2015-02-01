@@ -12,6 +12,7 @@ say @char_set. roll (8).join("")  # 可以重复
 ```
 
 # 排序
+```perl
 > my %hash='Perl'=>100,'Python'=>100,'Go'=>100,'CMD'=>20,"Php"=>80,"Java"=>85;
 ("Perl" => 100, "Python" => 100, "Go" => 100, "CMD" => 20, "Php" => 80, "Java" => 85).hash
 > %hash.values
@@ -20,13 +21,13 @@ say @char_set. roll (8).join("")  # 可以重复
 20 80 85 100 100 100
 > %hash.values.sort(-*)
 100 100 100 85 80 20
-
+```
 
 # 求 1! + 2! + 3! + 4! +5! + 6! +7! +8! +9! +10!
 ```perl
      > multi sub postfix:<!>(Int $x){ [*] 1..$x }
      > say [+] 1!,2!,3!,4!,5!,6!,7!,8!,9!,10!
-4037913
+    4037913
 ```     
 # 列出对象所有可用的方法 , Perl 6 就可以
 对象名.^methods
