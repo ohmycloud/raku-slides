@@ -201,13 +201,13 @@ m/regex/  和  /regex/  正则匹配 和  s/regex/subst/  替换是作用于  $_
 
 $/  是匹配变量。它存储着每次正则匹配的结果，通常包含 Match 类型的对象。
 'abc 12' ~~ /\w+/;  # 设置 $/ 为一个Match 对象
-say $/
-.Str
+say $/.Str
 ;         # abc
 
 The Grammar.parse method also sets the caller's $/ to the resulting Match object.
 
 其他匹配变量是$/元素的别名：
+
     $0          # same as $/[0]
     $1          # same as $/[1]
     $<named>    # same as $/<named> $!
