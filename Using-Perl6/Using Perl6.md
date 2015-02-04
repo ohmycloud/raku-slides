@@ -1607,7 +1607,72 @@ reveals the named captures. 在前面的例子中, $<dup> 是 $/<dup> 或 $/{ 'd
 字符串的某一部分匹配但是不是捕获的一部分不会出现在caps 方法返回的值中。
  
 为了访问非捕获部分，用 $/. 代替。它返回匹配字符串的捕获和非捕获两部分，跟  caps 的格式相同但是带有一个 ~ 符号作为键。如果没有重叠的捕获（出现在环视断言中）,所有返回的 pair 值连接与匹配部分的字符串相同。
-## 第十章 语法
+## 第十章 Grammars
+
+Grammars 组织正则表达式, 就像类组织方法一样.下面的例子演示了怎样解析JSON, 一种已经介绍过的数据交换格式.
+
+```perl
+ # file lib/JSON/Tiny/Grammar.pm
+
+ grammar JSON::Tiny::Grammar {
+     rule TOP      { ^[ <object> | <array> ]$ }
+     rule object   { '{' ~ '}' <pairlist>     }
+     rule pairlist { <pair>* % [ \, ]         }
+     rule pair     { <string> ':' <value>     }
+     rule array    { '[' ~ ']' [ <value>* % [ \, ] ] }
+
+ proto token value { <...> };
+
+ token value:sym<number> {
+     '-'?
+     [ 0 | <[1..9]> <[0..9]>* ]
+     [ \. <[0..9]>+ ]?
+     [ <[eE]> [\+|\-]? <[0..9]>+ ]?
+ }
+
+ token value:sym<true>   { <sym>    };
+ token value:sym<false>  { <sym>    };
+ token value:sym<null>   { <sym>    };
+ token value:sym<object> { <object> };
+ token value:sym<array>  { <array>  };
+ token value:sym<string> { <string> }
+
+ token string {
+     \" ~ \" [ <str> | \\ <str_escape> ]*
+ }
+
+ token str {
+     [
+         <!before \t>
+         <!before \n>
+         <!before \\>
+         <!before \">
+         .
+     ]+
+     # <-["\\\t\n]>+
+ }
+
+ token str_escape {
+     <["\\/bfnrt]> | u <xdigit>**4
+ }
+
+ }
+
+
+ # test it:
+ my $tester = '{
+     "country": "Austria",
+     "cities": [ "Wien", "Salzburg", "Innsbruck" ],
+     "population": 8353243
+ }';
+
+ if JSON::Tiny::Grammar.parse($tester) {
+     say "It's valid JSON";
+ } else {
+     # TODO: error reporting
+     say "Not quite...";
+ }
+```
  
  
  
