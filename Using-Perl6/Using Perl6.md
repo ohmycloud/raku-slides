@@ -79,7 +79,7 @@ Player1 Player2 | 3:2
 ``` 
 
 for循环中 $file.lines 产生一组从文件 scores 读取的行，从上次 $file.lines 离开的地方开始，一直到文件末尾结束。
-在第一次循环中， $line 会包含字符串 Ana Dave | 3:0; 在第二次循环中，$line 会包含 Charlie Beth | 3:1,以此类推。
+在第一次循环中， $line 会包含字符串 `Ana Dave | 3:0;` 在第二次循环中，$line 会包含 `Charlie Beth | 3:1`,以此类推。
 
 ``` perl 
  my ($pairing, $result) = $line.split(' | ');
@@ -88,6 +88,7 @@ for循环中 $file.lines 产生一组从文件 scores 读取的行，从上次 $
 split此处是一个方法，字符串 '|' 是它的参数。
  
 第一次循环结束：
+
     Variable       Contents
     $line           'Ana Dave | 3:0'
     $pairing        'Ana Dave'
@@ -439,12 +440,12 @@ Table 3.2: Operators and Comparisons
 ## 第四章 子例程和签名
  
  
-一个子例程就是一段执行特殊任务的代码片段。它可以对提供的数据（实参）操作，并产生结果（返回值）。子例程的签名是它所含的参数和它产生的返回值的描述。从某一意义上来说，第三章描述的操作符也是Perl 6用特殊方式解释的子例程。
+一个子例程就是一段执行特殊任务的代码片段。它可以对提供的数据（`实参`）操作，并产生结果（返回值）。子例程的签名是它`所含的参数`和它产生的`返回值`的描述。从某一意义上来说，第三章描述的操作符也是Perl 6用特殊方式解释的子例程。
  
 ### 4.1 申明子例程
 
- 一个子例程申明由几部分组成。首先， sub 表明你在申明一个子例程，然后是可选的子例程的名称和可选的签名。子例程的主体是一个用花括号扩起来的代码块。
-默认的，子例程是本地作用域的，就像任何使用 my 申明的变量一样。这意味着，一个子例程只能在它被申明的作用域内被调用。使用 our 来申明子例程可以使其在当前包中可见。
+ 一个子例程申明由几部分组成。首先， `sub `表明你在申明一个子例程，然后是可选的子例程的名称和`可选的签名`。子例程的主体是一个用花括号扩起来的代码块。
+默认的，子例程是本地作用域的，就像任何使用 `my` 申明的变量一样。这意味着，一个子例程只能在它被申明的作用域内被调用。使用 `our` 来申明子例程可以使其在`当前包`中可见。
  
 ```perl 
  {
@@ -475,7 +476,7 @@ our 也能让子例程从包或模块的外部是可见的：
  EatAndDrink::eat(); # om nom nom
  EatAndDrink::drink(); # fails, not declared with "our"
  ```
-你也可以导出一个子例程，让它在另外的作用域内可见。
+你也可以`导出`一个子例程，让它在另外的作用域内可见。
 ```perl
  # in file Math/Trivial.pm
  # TODO: find a better example
@@ -517,7 +518,7 @@ First-class 子例程能帮助你解决复杂的问题。例如，为了做出�
  
 ### 4.2 添加签名
  
-子例程的签名执行两个任务。首先，它申明哪个调用者可能或必须将参数传递给子例程。第二，它申明子例程中的变量被绑定到哪些参数上。这些变量叫做参数。Perl 6的签名更深入，它们允许你限制参数的类型，值和参数的定义，并准确匹配复杂数据结构的某一部分。此外，它们也允许你显式地指定子例程返回值的类型。
+子例程的签名执行两个任务。首先，它申明哪个调用者可能或必须将参数传递给子例程。第二，它申明子例程中的变量被绑定到哪些参数上。这些变量叫做参数。Perl 6的签名更深入，它们允许你`限制参数的类型`，值和参数的定义，并准确匹配复杂数据结构的某一部分。此外，它们也允许你显式地指定子例程返回值的类型。
  
 ### 4.2.1 基础
 签名最简单的形式是，绑定到输入参数上的用逗号分隔的一列变量的名字。
@@ -529,8 +530,8 @@ First-class 子例程能帮助你解决复杂的问题。例如，为了做出�
  order-beer('Hobgoblin', 1);    # A pint of Hobgoblin, please.
  order-beer('Zlatý Bažant', 3);  # 3 pints of Zlatý Bažant, please.
 ```
-这里使用的关系绑定而非赋值就是签名。默认地，在Perl6 中，子例程中引用到传入参数的签名的变量是只读的。这意味着你不能从子例程内部修改它们。
-如果只读绑定太受限制了，你可以将 is rw (rw是read/write的缩写) 特性应用到参数上以降低这种限制。这个特性说明参数是可读可写的，这允许你从子例程内部修改参数。使用的时候必须小心，因为它会修改传入的原始对象。如果你试图传入一个字面值，一个常量，或其它类型的不可变对象到一个有 is rw  特性的参数中，绑定会在调用时失败并抛出异常:
+这里使用的关系绑定而非赋值就是签名。默认地，在Perl6 中，子例程中引用到传入参数的签名的变量是`只读`的。这意味着你`不能`从子例程内部`修改`它们。
+如果只读绑定太受限制了，你可以将 `is rw` (rw是read/write的缩写) 特性应用到参数上以降低这种限制。这个特性说明参数是可读可写的，这允许你从子例程内部修改参数。使用的时候必须小心，因为它会`修改`传入的原始对象。如果你试图传入一个字面值，一个常量，或其它类型的不可变对象到一个有 `is rw`  特性的参数中，绑定会在调用时失败并抛出异常:
  ```perl
  sub make-it-more-so($it is rw) {
      $it ~= substr($it, $it.chars - 1) x 5;
@@ -538,10 +539,10 @@ First-class 子例程能帮助你解决复杂的问题。例如，为了做出�
 
  my $happy = "yay!";
  make-it-more-so($happy);
- say $happy; # yay!!!!!!  #原始传入对象被修改了
+ say $happy; # yay!!!!!!   # 原始传入对象被修改了
  make-it-more-so("uh-oh"); # 失败，不能修改一个常量
  ```
-如果你想将参数的本地副本用在子例程内部而不改变调用者的变量，----使用 is copy 特性：
+如果你想将参数的本地副本用在子例程内部而不改变调用者的变量，----使用 `is copy` 特性：
  ```perl
  sub say-it-one-higher($it is copy) {
      $it++;
@@ -553,7 +554,7 @@ First-class 子例程能帮助你解决复杂的问题。例如，为了做出�
  say-it-one-higher(41); # 42
  $unanswer;  #41
  ```
-在诸如C/C++ and Scheme等其它类型的编程语言中,这种广为人知的求值策略就是“按值传递”。当使用 is copy 特性时，只有本地副本被赋值。其它任何传递给子例程的参数在调用者的作用域内保持不变。（一个不可变对象是当这个对象被创建后，它的状态不会改变，作为比较，一个可变对象的状态在创建后是会被改变的）
+在诸如C/C++ and Scheme等其它类型的编程语言中,这种广为人知的求值策略就是“按值传递”。当使用 `is copy `特性时，只有本地副本被赋值。其它任何传递给子例程的参数在调用者的作用域内保持不变。（一个不可变对象是当这个对象被创建后，它的状态不会改变，作为比较，一个可变对象的状态在创建后是会被改变的）
  
 ### 4.2.2 传递数组、散列和代码
  
@@ -582,11 +583,11 @@ First-class 子例程能帮助你解决复杂的问题。例如，为了做出�
  do-it-lots(sub { say "Eating a stroopwafel" }, 10);   #此处是一个匿名子例程
  ```
  
-标量使用 $符号，并表明没有限制。什么都可以绑定在它上面，即使它使用另外的符号绑定到一个对象上。
+标量使用 $ 符号，并表明没有限制。什么都可以绑定在它上面，即使它使用另外的符号绑定到一个对象上。
  
 ### 4.2.3 插值、数组和散列
  
-有时你想从数组中填充占位参数。你可以通过在数组前添加一个垂直竖条或管道字符 ( | ): eat(|@food)    而不是写作eat(@food[0],@food[1], @food[2], ...) 等将它们吸进参数列表。
+有时你想从数组中填充占位参数。你可以通过在数组前添加一个垂直竖条或管道字符 ( `|` ): eat(|@food)    而不是写作eat(@food[0],@food[1], @food[2], ...) 等将它们吸进参数列表( | 像不像一个吸管, ^_^)。
  
 同样地，你可以将散列插值进具名参数:
 ```perl 
@@ -620,7 +621,7 @@ First-class 子例程能帮助你解决复杂的问题。例如，为了做出�
 ```
 如果没有参数被传递，参数会被绑定成一个未定义的值。 defined(...) 函数用来检查是否有值。
  
-### 4.2.5 必不可少的参数
+### 4.2.5 强制参数
 默认地，位置参数是必不可少的。然而，你可以通过在参数后面追加一个感叹号来显式地指定该参数是必须的：
 ```perl 
  sub order-drink($size, $flavor!) {
@@ -631,8 +632,10 @@ First-class 子例程能帮助你解决复杂的问题。例如，为了做出�
  order-drink('Small'); # Error
 ``` 
 ### 4.2.6 具名实参和形参
+* arguments  实参
+* parameters 形参
  
-当一个子例程有很多参数时，调用者很难记清传递参数的顺序。这种情况下，通过名字传递参数往往更容易。这样，参数出现的顺序就无关紧要了:
+当一个子例程有很多参数时，调用者很难记清传递参数的顺序。这种情况下，通过`名字`传递参数往往更容易。这样，参数出现的顺序就无关紧要了:
 ```perl 
  sub order-beer($type, $pints) {
      say ($pints == 1 ?? 'A pint' !! "$pints pints") ~ " of $type, please."
@@ -644,7 +647,7 @@ First-class 子例程能帮助你解决复杂的问题。例如，为了做出�
  order-beer(pints => 3, type => 'Zlatý Bažant');
  # 3 pints of Zlatý Bažant, please.
 ``` 
-你也可以指定参数只能按名字被传递（这意味着它不允许按位置传递）。这样的话，在参数名字前加一个冒号：
+你也可以指定参数只能按名字被传递（这意味着它不允许按位置传递）。这样的话，在参数名字前加一个`冒号`：
 ```perl 
  sub order-shrimps($count, :$from = 'Northern Sea') {
      say "I'd like $count pieces of shrimp from the $from, please";
@@ -663,12 +666,10 @@ First-class 子例程能帮助你解决复杂的问题。例如，为了做出�
  design-ice-cream-mixture(name => 'Plain');
  design-ice-cream-mixture(base => 'Strawberry chip'); # 错误,没有指定 $name
 ``` 
-重命名参数
+#### 重命名参数
  
-Since it is possible to pass arguments to parameters by name, the parameter names should
-be considered as part of a subroutine’s public API. Choose them carefully! Sometimes it
-may be convenient to expose a parameter with one name while binding to a variable of a
-different name:
+因为按名字传递实参给形参是合理的, 形参的名字应该应该作为子例程公共 API 的一部分被考虑在内. 小心地挑选它们吧! 有时候, 使用一个名字暴露形参而使用另外一个名字绑定到变量会很方便:
+
 ```perl
  sub announce-time(:dinner($supper) = '8pm') {
      say "We eat dinner at $supper";
@@ -697,8 +698,8 @@ different name:
  paint-rectangle :width(30), :height(10), :colour<Blue>;
 ```
  
-Alternative Named Argument Syntaxes
-命名变量通常是成对的（键值对）。有多种方式可以写成一对儿。各种方法的不同之处就是清晰性，因为每种选择提供不同的引用机制。下面的三种调用是一样的意思：
+#### 可选的命名参数语法
+命名变量通常是成对的（键值对）。写一个 `Pairs` 有多种方式。各种方法的不同之处就是清晰性，因为每种选择提供不同的引述机制。下面的三种调用是一样的意思：
 ```perl 
  announce-time(dinner => '9pm');
  announce-time(:dinner('9pm'));
@@ -706,27 +707,37 @@ Alternative Named Argument Syntaxes
 ``` 
 如果传递的是布尔值，你可以省略键值对的键值：
 ```perl 
- toggle-blender( :enabled); # enables the blender
- toggle-blender(:!enabled); # disables the blender
+ toggle-blender( :enabled); # enables the blender 开启果汁机
+ toggle-blender(:!enabled); # disables the blender 关闭果汁机
 ``` 
-A named argument of the form :name with no value has an implicit value of Bool::True.
-e negated form of this, :!name, has an implicit value of Bool::False.
-If you use a variable to create a pair, you can reuse the variable name as the key of the
-pair.
+
+形如 `:name` 但不带值的命名参数有一个隐式的布尔真值 `Bool::True`. 它的对立形式是 `:!name` , 其值是隐式的布尔假值 `Bool::false`. 如果你使用变量创建了一个 `pair`, 你可以将变量名作为 `pair` 的键复用.
+
 ```perl 
  my $dinner = '9pm';
  announce-dinner :$dinner; # same as dinner => $dinner;
 ``` 
-pairForms on page 37 lists possible Pair forms and their meanings.
+                            Pair forms and their meanings.
 
+        Shorthand      Long form                          Description
+    :allowed           allowed => Bool::True               Boolean flag
+    :!allowed          allowed => Bool::False              Boolean flag
+    :bev<tea coffee>   bev => ('tea', 'coffee')            List
+    :times[1, 3]       times => [1, 3]                     Array
+    :opts{ a => 2 }    opts => { a => 2 }                  Hash
+    :$var              var => $var Scalar                  variable
+    :@var              var => @var Array                   variable
+    :%var              var => %var Hash                    variable
+    :&var              vaf => &var Callable/ Subroutine    variable
  
-You can use any of these forms in any context where you can use a Pair object. For
-example, when populating a hash:
+
+你可以使用在任何可以使用 Pair 对象的上下文使用表中的任意一种形式. 例如, 生成散列:
+
 ```perl 
  # TODO: better example
  my $black = 12;
- my %color-popularities = :$black, :blue(8),
- red => 18, :white<0>;
+ my %color-popularities = :$black, :blue(8), red => 18, :white<0>;
+ 
  # 与此相同：
  # my %color-popularities =
  # black => 12,
@@ -734,24 +745,26 @@ example, when populating a hash:
  # red => 18,
  # white => 0;
 ``` 
-Finally, to pass an existing Pair object to a subroutine by position, not name, either put
-it in parentheses (like (:$thing)), or use the => operator with a quoted string on the
-le-hand side: "thing" => $thing.
+最后, 通过位置而非名字传递一个已存在的 Pair 对象到子例程中, 要么把它放在圆括号中 ( 就像 (:$thing) ), 或者使用 => 操作符引起左侧的字符串: "thing" => $thing.
  
-参数的顺序
-当位置参数和命名参数都出现在签字中时，所有的位置参数都要出现在命名参数之前：
+#### 参数的顺序
+
+当位置参数和命名参数都出现在签名中时，所有的位置参数都要出现在命名参数之前：
+
 ```perl 
- sub mix(@ingredients, :$name) { ... } # OK
+ sub mix(@ingredients, :$name)    { ... } # OK
  sub notmix(:$name, @ingredients) { ... } # Error
 ``` 
-Required 位置参数要在可选的位置参数之前。然而，命名参数没有这种限制。
+必须的位置参数要在可选的位置参数之前。然而，命名参数没有这种限制。
 ```perl 
  sub copy-machine($amount, $size = 'A4', :$color!, :$quality) { ... } # OK
  sub fax-machine($amount = 1, $number) { ... } # Error
 ``` 
  
-.2.7 Slurpy 参数
-有时候，你会希望让子例程接受任何数量的参数，并且将所有这些参数收集到一个数组中。为了达到这个目的，给签字添加一个数组参数，就是在数组前添加一个 * 号前缀：
+### 4.2.7 Slurpy 参数
+
+有时候，你会希望让子例程接受任何数量的参数，并且将所有这些参数收集到一个数组中。为了达到这个目的，给签名添加一个数组参数，就是在数组前添加一个 * 号前缀：
+
 ```perl 
  sub shout-them(*@words) {
      for @words -> $w {
@@ -763,15 +776,17 @@ Required 位置参数要在可选的位置参数之前。然而，命名参数�
  shout-them('go'); # GO
  shout-them('go', 'home'); # GO HOME
 ``` 
-除了集合所有的值之外，slurpy 参数会展平任何它收到的数组，最后你只会得到一个展平的列表，因此：
+除了集合所有的值之外，slurpy 参数会展平任何它接收到的数组，最后你只会得到一个展平的列表，因此：
 ```perl 
  my @words = ('go', 'home');
  shout-them(@words);
 ``` 
-会导致 *@words 参数有两个字符串元素，而非只有单个数组元素。
+会导致 `*@words` 参数有两个字符串元素，而非只有单个数组元素。
  
-你可以选择将某些参数捕获到位置参数中，并让其它参数被吸进数组参数里。这种情况下， slupy 因该放到最后。相似地， *%hash slurps 所有剩下的未绑定的命名参数到散列 %hash中。Slurpy 数组和散列允许你传递所有的位置参数和命名参数到另一个子例程中。
+你可以选择将某些参数捕获到位置参数中，并让其它参数被吸进数组参数里。这种情况下， `slupy` 应该放到最后。相似地， `*%hash` slurps 所有剩下的未绑定的命名参数到散列 %hash中。`Slurpy` 数组和散列允许你传递所有的位置参数和命名参数到另一个子例程中。
+
 ```perl 
+
  sub debug-wrapper(&code, *@positional, *%named) {
      warn "Calling '&code.name()' with arguments "
      ~ "@positional.perl(), %named.perl()\n";
@@ -780,10 +795,14 @@ Required 位置参数要在可选的位置参数之前。然而，命名参数�
  }
 
  debug-wrapper(&order-shrimps, 4, from => 'Atlantic Ocean');
+ 
 ``` 
 ### 4.3 返回结果
+
 子例程也能返回值。之前本章中的 ASCII 艺术舞蹈例子会更简单当每个子例程返回一个新字符串：
+
 ```perl 
+
  my %moves =
  hands-over-head => sub { return '/o\ '   },
  bird-arms       => sub { return '|/o\| ' },
@@ -798,9 +817,12 @@ Required 位置参数要在可选的位置参数之前。然而，命名参数�
  }
 
  print "\n";
+ 
  ```
 子例程也能返回多个值（译者注：那不就是返回一个列表嘛）：
+
 ```perl 
+
  sub menu {
      if rand < 0.5 {
          return ('fish', 'white wine')
@@ -810,9 +832,12 @@ Required 位置参数要在可选的位置参数之前。然而，命名参数�
  }
 
  my ($food, $beverage) = menu();
+ 
 ```
  如果你把 return 语句排除在外，则在子例程内部运行的最后一个语句产生的值被返回。这意味着前一个例子可以简化为：
+ 
 ```perl 
+
  sub menu {
      if rand < 0.5 {
          'fish', 'white wine'
@@ -822,23 +847,29 @@ Required 位置参数要在可选的位置参数之前。然而，命名参数�
  }
 
  my ($food, $beverage) = menu();
+ 
 ``` 
+
 记得：当子例程中的控制流极其复杂时，添加一个显式的 return 会让代码更清晰，所以 return 还是加上的好。
 return 另外的副作用就是执行后立即退出子例程：
+
 ```perl 
+
  sub create-world(*%characteristics) {
      my $world = World.new(%characteristics);
      return $world if %characteristics<temporary>;
 
      save-world($world);
  }
+ 
 ``` 
 ...并且你最好别放错你的新单词 $word 如果它是临时的。因为这是你要获取的仅有的一个。
  
  
 ### 4.4 返回值的类型
  
-像其它现代语言一样，Perl 6 允许你显式地指定子例程返回值的类型。这允许你限制从子例程中返回的值的类型。使用 returns 特性可以做到这样： 
+像其它现代语言一样，Perl 6 允许你显式地指定子例程返回值的类型。这允许你限制从子例程中返回的值的类型。使用 returns 特性可以做到这样：
+ 
 ```perl 
  sub double-up($i) returns Int {
      return $i * 2;
@@ -846,7 +877,7 @@ return 另外的副作用就是执行后立即退出子例程：
 
  my Int $ultimate-answer = double-up(21);  # 42
 ```
- 当然，使用这个 returns 特性是可选的
+ 当然，使用这个 `returns` 特性是可选的
  
 ### 4.5 Working With Types
  
@@ -854,6 +885,7 @@ return 另外的副作用就是执行后立即退出子例程：
  
 ### 4.5.1 基本类型
 最简单的限制子例程接收可能的值的方法是在参数前写上类型名。例如，一个子例程对其参数执行数值计算，这要求它的参数类型是 Numeric：
+
 ```perl 
  sub mean(Numeric $a, Numeric $b) {
     return ($a + $b) / 2;
@@ -884,7 +916,7 @@ nominal 类型是一个人实际类型的名字，这里是 Numeric。
 ```
  因为这种计算只对非负面积值有意义，该子例程的参数包含了一个限制，对于非负值它会返回真。如果这个限制返回一个假的值，类型检查会失败，当有些东西调用该子例程时。
  
-where 之后的代码块是可选的。Perl 通过通过智能匹配where后面的参数来执行检查。 就
+where 之后的代码块是可选的。Perl 通过通过智能匹配 where 后面的参数来执行检查。 
 例如，它可能接受在某一确定范围中的参数：
 ```perl 
  sub set-volume(Numeric $volume where 0..11) {
@@ -935,10 +967,10 @@ where 之后的代码块是可选的。Perl 通过通过智能匹配where后面�
  # FOOBAR!
 ``` 
 ### 4.7 捕获
-签字不仅仅是语法，它们是  first-class 含有一列参数对象的对象。同样地，有一种含有参数集的数据结构,叫捕获。捕获有位置和命名两个部分，表现的就像列表和散列。像列表的那部分含有位置参数，而像散列的那部分含有命名参数。
+签名不仅仅是语法，它们是含有一列参数对象的 first-class 对象  。同样地，有一种含有参数集的数据结构,叫捕获。捕获有位置和命名两个部分，表现的就像列表和散列。像列表的那部分含有位置参数，而像散列的那部分含有命名参数。
  
  
-### 4.7.1 创建和使用一个捕获
+### 4.7.1 创建和使用捕获
  
 无论你什么时间写下一个子例程调用，你就隐式地创建了一个捕获。然而，它随即被调用消耗了。有时，你想做一个捕获，存储它，然后将一个或多个子例程应用到它包含的一系列参数上。为了这，使用 n(...) 语法。
 ```perl 
@@ -982,7 +1014,7 @@ that is a type of capture, with named attributes and positional children. Bindin
 to a function could use the appropriate parameter syntax to work with various children
 and attributes.
  
-### 4.7.2签字中的捕获
+### 4.7.2 签名中的捕获
  
 All calls build a capture on the caller side and unpack it according to the signature on
 the callee side
@@ -1169,7 +1201,7 @@ roll-dice.pl [--sides=<Numeric>] [--sum] [<count>]
 ``` 
 命名参数可以跟很多GNU工具一样，使用 --name=value 语法提供，而位置参数使用它们的值就好了。
  
-如果选项没有要求参数，MAIN 签字里的参数需要被标记为 Bool 类型。
+如果选项没有要求参数，MAIN 签名里的参数需要被标记为 Bool 类型。
 使用未知选项或太多或太少的参数会触发一个自动生成的用法通知，它可以用一个普通的 USAGE 子例程重写：
  
   sub MAIN(:$really-do-it!) { ... }
