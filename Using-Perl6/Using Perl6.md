@@ -982,7 +982,7 @@ that is a type of capture, with named attributes and positional children. Bindin
 to a function could use the appropriate parameter syntax to work with various children
 and attributes.
  
-.7.2签字中的捕获
+### 4.7.2签字中的捕获
  
 All calls build a capture on the caller side and unpack it according to the signature on
 the callee side
@@ -1177,6 +1177,220 @@ roll-dice.pl [--sides=<Numeric>] [--sum] [<count>]
       say "This script is dangerous, please read the documentation first";
     }
  
+## 第五章 类和对象
+
+TODO: 以一个超简单露骨的例子开始!
+
+下面的程序显示了 Perl 6 中的依赖处理是怎样的. 它展示了 cases custom constructors , 私有和公共属性, 方法和签名的各个方面. 它不太像代码, 结果却很有意思, 有时还是有用的.
+
+```perl
+
+class Task {
+    has      &!callback;
+    has Task @!dependencies;
+    has Bool $.done;
+
+method new(&callback, Task *@dependencies) {
+    return self.bless(*, :&callback, :@dependencies);
+}
+
+method add-dependency(Task $dependency) {
+    push @!dependencies, $dependency;
+}
+method perform() {
+    unless $!done {
+        .perform() for @!dependencies;
+        &!callback();
+        $!done = True;
+    }
+  }
+}
+
+my $eat =
+    Task.new({ say 'eating dinner. NOM!' },
+        Task.new({ say 'making dinner' },
+            Task.new({ say 'buying food' },
+                Task.new({ say 'making some money' }),
+                Task.new({ say 'going to the store' })
+            ),
+            Task.new({ say 'cleaning kitchen' })
+        )
+    );
+	
+$eat.perform();
+
+```
+
+### 5.1 从 class 开始
+
+Perl 6 像很多其它语言一样, 使用 class 关键字来引入一个新类. 随后的 block 可能包含任意的代码, 就像任何其他块一样, 但是类通常包含状态和行为描述. 例子中的代码包含了通过 has 关键字引入的属性(状态), 和通过 method 关键字引入的行为.
+
+ 声明一个类就创建了 type object, 它默认被安装到当前包中.(就像使用 our 作用域声明一个变量一样). 这个 type object 是这个类的 "空实例". 你在之前的章节中已经见到过了. 例如, 诸如 Int 和 Int 之类的 types 引用例如 Perl 6  内置类中的 type object. 上面的例子使用了类名 Task, 以至于其它代码能在之后引用这个类, 例如通过调用 new 方法来创建类的实例.
+
+ 类型对象是未定义的, 如果你在类型对象上调用 .defined 方法会返回 False.
+ 你可以使用这个方法找出一个给定的对象是类型对象还是不是:
+ 
+ ```perl
+ my $obj = Int;
+ if $obj.defined {
+     say "Ordinary, defined object";
+} else {
+    say "Type object";
+}
+
+```
+### 我能拥有状态?
+
+在这个 Task类的 block 里面, 前 3 行都声明了属性(在其它语言中叫做范畴或实例存储). 这些都是存储在本地的, 类的每个实例都能获得. 就像 my 声明的变量不能在它的声明范围之外访问到一样, 属性在类的外面也不可访问. 这种封装是面向对象设计的一个关键原则.
+
+第一个声明为 callback 回调指定了实例存储 - 引用的一小块代码, 为了执行对象代表的任务.
+
+```perl
+has &!callback;
+```
+
+`&`符号表明这个属性代表某些能调用的东西. `!` 符号是一个 twigil, 或者 第二符号. twigil 组成了变量名字的一部分. 这个例子里, `!` twigil 强调这个属性是类私有的.
+
+第二个声明也使用了私有 twigil:
+
+```perl
+has Task @!dependencies;
+```
+
+然而, 这个属性代表一组项, 所以它要用 @ 符号. 这些项每个都指定了一个任务, 即在当前任务完成之前必须先被完成. 还有, 属性的类型声明表明数组能够存储 Task 类的实例(或者某些它的子类).
+
+第三个属性代表了任务完成的状态:
+
+```perl
+has Bool $.done;
+```
+
+这个标量属性( 带有 $ 符号 )有一个 Bool 类型. 这里的 twigil 是 `.` 而非 `!`. 虽然 Perl 6 确实强制封装属性, 它也让你免于写 accessor 方法.
+使用 . 代替 !  既声明了属性 $!done 又声明了名为 done 的访问方法. 它就像你这样写的一样:
+
+```perl
+has Bool $!done;
+method done() { return $!done }
+```
+
+注意, 这不像是声明一个公共属性, 像其他语言允许的那样; 你真的既得到了私有存储位置,又得到一个方法, 不用非得手写方法了. 你可以自由的书写你自己的访问方法, 如果在未来的某些时候, 你需要做一些更复杂的事情而不仅仅是返回它的值.
+
+注意, 使用 . twigil 已经创建了一个方法用于只读访问那个属性. 如果这个对象的使用者想重置任务的完成状态(也许重新执行这个任务), 你可以更改属性声明:
+
+```perl
+has Bool $.done is rw;
+```
+
+`is rw` 特征允许生成的访问方法返回某些外部代码, 能够修改以改变属性的值.
+
+#### 5.3 方法
+
+属性给了对象状态, 方法则给了对象行为. 暂时无视 new 方法;它是一个特殊类型的方法. 看看第二个方法, add-dependency, 它给这个任务依赖列表添加了一个新任务:
+
+```perl
+method add-dependency(Task $dependency) {
+    push @!dependencies, $dependency;
+}
+```
+
+从很多方面讲, 这看起开很像子例程声明. 然而, 有两个重要区别. 首先, 把该子例程声明为方法就把它添加到当前类的方法列表中了. 因此, 任何 Task 类的实例都能使用 .method 调用操作调用这个方法. 第二, 方法把它的调用放到特殊变量 `self` 中了.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+## 第六章 Multis
+
+## 第七章 Roles
+
+
+
  
 ## 第八章 子类
 ```perl 
@@ -1270,7 +1484,7 @@ roll-dice.pl [--sides=<Numeric>] [--sum] [<count>]
  
  
  
-尽管 Perl 6 中描述的语法跟 PCRE 和 POSIX 已经不一样了，我们还是叫它们regex.
+尽管 Perl 6 中描述的语法跟 PCRE 和 POSIX 已经不一样了，我们还是叫它们 regex.
  
 eg：查找连续重复2次的单词
 ```perl
@@ -1408,7 +1622,18 @@ $string ~~ m/ \d**4 '-' \d\d '-' \d\d | 'today' | 'yesterday' /
  一个竖直条意味着分支是并行匹配的，并且最长匹配的分支胜出。两个竖直条会让正则引擎按顺序尝试匹配每个分支，并且第一个匹配的分支胜出。
  
 ### 9.1 锚
+ 到目前为止, 在一个字符串中, 所有的正则都是在任何地方匹配. 通常把匹配限制为字符串或单词边界的开始或结尾是很有用的. 单个的 ^ 符号匹配字符串的开始, 美元符 $ 匹配字符串的结尾. m/ ^a / 匹配以一个字母 a 开头的字符串, m/ ^ a $ / 匹配只含一个字符 a 的字符串.
  
+                           Table 9.2: Regex anchors
+    Anchor Meaning
+    ^      字符串的开头
+    $      字符串的结尾
+    ^^     行的开头
+    $$     行的结尾
+    <<     左单词边界
+    «      左单词边界
+    >>     右单词边界
+    »      右单词边界
  
  
 ### 9.2 捕获
@@ -1419,9 +1644,9 @@ use v6;
 my $str = 'Germany was reunited on 1990-10-03, peacefully';
  
 if $str ~~ m/ (\d**4) \- (\d\d) \- (\d\d) / {
-    say 'Year: ',"$/[0]";
-    say 'Month: ',"$/[1]";
-    say 'Day: ',"$/[2]";
+    say 'Year:  ',  "$/[0]";
+    say 'Month: ',  "$/[1]";
+    say 'Day:   ',  "$/[2]";
     # usage as an array:
     say $/.join('-'); # prints 1990-10-03
 }
@@ -1607,6 +1832,7 @@ reveals the named captures. 在前面的例子中, $<dup> 是 $/<dup> 或 $/{ 'd
 字符串的某一部分匹配但是不是捕获的一部分不会出现在caps 方法返回的值中。
  
 为了访问非捕获部分，用 $/. 代替。它返回匹配字符串的捕获和非捕获两部分，跟  caps 的格式相同但是带有一个 ~ 符号作为键。如果没有重叠的捕获（出现在环视断言中）,所有返回的 pair 值连接与匹配部分的字符串相同。
+
 ## 第十章 Grammars
 
 Grammars 组织正则表达式, 就像类组织方法一样.下面的例子演示了怎样解析JSON, 一种已经介绍过的数据交换格式.
@@ -1685,18 +1911,168 @@ rule TOP { ^[ <object> | <array> ]$ }
 ```
 在这个例子中, TOP rule 锚定了匹配的开始和末尾, 以至于整个字符串是合法的 JSON 格式,以让匹配成功. 在字符串的开头匹配了锚点之后, 正则表达式尝试匹配一个 <array> 或 <object>. 把正则的名字包裹在一对儿尖括号中让正则引擎尝试在同一个 grammar 里通过名字匹配一个正则. 随后的匹配很易懂了, 反映了 JSON 组件出现的可能结构.  
  
+ 正则可以是递归的. 数组可能包含着值. 反过来值也可以包含数组.这不会引发无限循环,只要正则表达式的每次递归调用消耗至少一个字符. 如果一系列正则相互递归调用彼此,但不在字符串中移动, 递归可能进入无限循环并且永远不会处理 grammar 的其余部分.
  
+ JSON grammar 的例子介绍了目标匹配语法,即能够被呈现为: A ~B C. 在 JSON::Tiny::Grammar中, A 是 '{', B 是 '}', 而 C 是 <pairlist>. 在波浪线左侧的原子(A) 被正常匹配. 一旦最后的原子匹配, 正则引擎会尝试匹配目标(B). 这里的作用是改变了最后两个原子(B 和 C ) 的匹配顺序, 但是因为 Perl 知道正则引擎应该查找目标, 当目标不匹配时,能给出更好的错误信息. 这对括号结构很有帮助, 因为括号彼此靠的很近.
  
+ 另外一个新奇的小东西是 proto token 声明:
+ ```perl
+ proto token value { <...> };
  
+ token value:sym<number> {
+    '-'?
+    [ 0 | <[1..9]> <[0..9]>* ]
+    [ \. <[0..9]>+ ]?
+    [ <[eE]> [\+|\-]? <[0..9]>+ ]?
+}
+token value:sym<true>  { <sym> };
+token value:sym<false> { <sym> };
+ ```
  
+proto token 语法表明 value 是一系列分支而非单个 regex. 每个分支有一个形如 token value:sym<thing> 的名字, 参数 sym 设置为 thing 的 value 分支. 这种分支的主体是正常的 regex, 而 <sym> 匹配参数的值, 在这个例子中就是 thing.
+
+当调用 rule<value>时, grammar 引擎尝试并行地匹配所有分支,并且最长的匹配胜出. 这真的像极了普通分支, 但是就像我们下一节看到的那样, 他还有可扩展性的优势.
  
+### 10.1 Grammar 继承 
  
+ grammars 和 类的相似性让把正则存储在名称空间走的更深入, 就像类存储方法那样. 你可以从 grammars 继承并扩展grammars, 将 roles 混合到 grammars, 并且利用多态. 事实上, grammar 就是一个类, 它默认继承于 Grammar 而非 Any. Grammar 基础词法中广泛包含了有用的预定义好的 rules. 例如, 有一个匹配字母字符(<alpha>)的 rule, 还有一个匹配数字(<digit>)的, 还有个匹配空白符的(<ws>), 等等.
  
+ 假设你想增强 JSON 词法以允许单行 C++ 或 JavaScript 注释, 它们以 // 开始, 直到行的末尾. 最简单的增强方法是允许这样的注释出现在允许空白符的任何地方.
  
+ 然而, JSON::Tiny::Grammar 在 rules 的使用过程中只隐式地匹配空白符. 隐式空白是使用继承的正则 <ws>, 所以开启单行注释最简单的方法就是覆盖那个 ws 命名正则:
  
+ ```perl
  
+grammar JSON::Tiny::Grammar::WithComments
+    is JSON::Tiny::Grammar {
+	
+    token ws {
+    \s* [ '//' \N* \n ]?
+    }
+}
+
+my $tester = '{
+    "country": "Austria",
+    "cities": [ "Wien", "Salzburg", "Innsbruck" ],
+    "population": 8353243 // data from 2009-01
+}';
+
+if JSON::Tiny::Grammar::WithComments.parse($tester) {
+    say "It's valid (modified) JSON";
+}
+
+```
+开头两行引入一个 grammar , 这个 grammar 继承于 JSON::Tiny::Grammar. 就像子类从父类中继承方法一样, 所以 grammars 从它的 base grammar 中继承 rules. 在 grammar 中使用的任何 rule, 在使用时首先要它曾经用过的 grammar 中进行查找, 然后才在它的 parent(s) 中查找.
+
+在这个微型的 JSON grammar 中, 空白符从来不是强制性的, 所以 ws 可以什么也不匹配. 在可选的空白后面, 两个反斜杠 '//' 引入一个注释, 注释之后必须跟着任意数量的非新行符, 然后是一个换行符. 在散文中, 注释以 '//' 开头, 并延伸到该行的剩余部分.
+
+继承的 grammars 也能添加变体到 proto tokens中:
+
+```perl
+grammar JSON::ExtendedNumeric is JSON::Tiny::Grammar {
+    token value:sym<nan> { <sym> }
+    token value:sym<inf> { <[+-]>? <sym> }
+}
+```
+在这个grammar中, 调用 <value> 会匹配两个新添加的分支中的一个, 或匹配父词法 JSON::Tiny::Grammar 中任意的旧分支. 这样的扩展性对于普通的, 使用 | 分隔的分支是很难实现的.
+
+### 10.2 提取数据
+
+grammar 的 .parse 方法返回一个 Match 对象, 通过它我们可以获取匹配所有的相关信息.与散列相似,  命名正则在 grammar 中的匹配可以通过 Match 对象获取, 而键是正则表达式的名字, 键值是 `Match` 对象中, 代表整个正则匹配中它匹配到的那部分. 类似地, 匹配的一部分被圆括号捕获, 并作为 Match 对象(它就像一个数组) 的位置元素访问.
+
+一旦你有了 Match 对象, 你能用它来做什么? 你可以递归遍历这个对象, 并基于你查找的东西或可执行的代码块来创建数据结构. Perl 6 提供了另外一种选择: action 方法.
+
+```perl
+
+# JSON::Tiny::Grammar as above
+# ...
+class JSON::Tiny::Actions {
+    method TOP($/)      { make $/.values.[0].ast              }
+    method object($/)   { make $<pairlist>.ast.hash           }
+    method pairlist($/) { make $<pair>».ast                   }
+    method pair($/)     { make $<string>.ast => $<value>.ast  }
+    method array($/)    { make [$<value>».ast]                }
+    method string($/)   { make join '', $/.caps>>.value>>.ast }
+
+# TODO: make that
+# make +$/
+# once prefix:<+> is sufficiently polymorphic
+method value:sym<number>($/) { make eval $/       }
+method value:sym<string>($/) { make $<string>.ast }
+method value:sym<true>  ($/) { make Bool::True    }
+method value:sym<false> ($/) { make Bool::False   }
+method value:sym<null>  ($/) { make Any           }
+method value:sym<object>($/) { make $<object>.ast }
+method value:sym<array> ($/) { make $<array>.ast  }
+
+method str($/)               { make ~$/           }
+
+method str_escape($/) {
+    if $<xdigit> {
+        make chr(:16($<xdigit>.join));
+    } else {
+        my %h = '\\' => "\\",
+        'n' => "\n",
+        't' => "\t",
+        'f' => "\f",
+        'r' => "\r";
+        make %h{$/};
+    }
+  }
+}
+
+my $actions = JSON::Tiny::Actions.new();
+JSON::Tiny::Grammar.parse($str, :$actions);
+
+``` 
  
+这个例子传递了一个 action 对象给 grammars的 parse 方法. 每当 grammar 引擎解析完一个正则 regex,  就在 action 对象上调用一个和跟正则的名字一样的方法. 如果该方法不存在, grammar 引擎会继续解析剩余的 grammar. 如果确实存在这样一个方法, grammar 引擎会把当前的匹配对象作为位置参数传递.
+
+对有效负载的对象,每个匹配对象有一个叫做 ast(抽象语法树的简写 abstract syntax tree)的槽口. 这个槽持有能从 action 方法中创建的一般数据结构. 在 action 方法中调用 make $thing 把当前匹配对象的 ast 属性设置为了 $thing.
+
+>  抽象语法树, 或者叫 AST, 是一种表现文本解析版本的数据结构. 你的词法描述了 AST 的结构: 它的根元素是 TOP 节点, 包含了允许类型的孩子等等.
+
+在 JSON 解析这个例子中, 有效负载是 JSON 字符串代表的数据结构. 对每个 matching rule , 词法引擎调用一个 action 方法生成匹配对象的抽象语法树 ast. 这个处理把 match tree 转换为不同的 tree -- 这样, 真正的 JSON tree.
+
+尽管 rules 和 action 方法处于不同的名字空间(并且在现实世界中工程甚至可能在各自的文件中), 这里它们连在一块来说明他们的关系:
+
+```perl
+rule   TOP     { ^ [ <object> | <array> ]$  }
+method TOP($/) { make $/.values.[0].ast     }
+```
  
+ TOP rule 有一个含有两个分支的选项, object 分支和 array 分支. 这两个都有一个命名捕获. `$/.values` 返回所有捕获的一个列表, 这儿要么是 object 要么是 array 捕获.
+ 
+ action 方法使 AST 附加到子捕获的匹配对象上, 并通过调用 make 把它提升为自己的 AST.
+ 
+ rule object       { '{' ~ '}' <pairlist>      }
+ method object($/) { make $<pairlist>.ast.hash }
+ 
+ object 的 reduction 方法提取了 子匹配 pairlist 的 AST 结构, 并通过调用它的 hash 方法将它转换为一个散列.
+ ```perl
+ rule pairlist       { <pair>* % [ \, ]   }
+ method pairlist($/) { make $<pair>».ast; }
+ ```
+ pairlist rule 匹配多个用逗号分隔的 pairs. reduction 方法在每个匹配的 pair 上调用 .ast 方法, 并把结果列表组装到它自己的 AST 中.
+
+ ```perl
+ rule pair       { <string> ':' <value>               }
+ method pair($/) { make $<string>.ast => $<value>.ast }
+```
+ 一个 pair 由字符串形式的键和值组成, 所以 action 方法使用 => 操作符创建了一个 Perl 6 的 pair.
+ 
+ 其他的 action 方法原理与此相同. 它们将他们从匹配对象中提取出来的信息转换为原生的 Perl 6 数据结构, 并调用 `make` 把那些原生的数据结构转换为他们自己的 ASTs.
+ 
+ proto tokens 的 action 方法包含了每个独立 rule 的全名, 包括 `sym` 部分:
+ ```perl
+ token value:sym<null>        { <sym>              };
+ method value:sym<null>($/)   { make Any           }
+ 
+ token value:sym<object>      { <object>           };
+ method value:sym<object>($/) { make $<object>.ast }
+ ```
+ 
+ 当一个 <value> 调用匹配时, 带有相同符号的 action 方法作为匹配 subrule 执行.
  
 ## 第11章 内建类型、操作符和方法
  
@@ -1743,7 +2119,7 @@ Table 11.2: 一元数字操作符
 数学函数和方法
  
  
-11.2 字符串
+### 11.2 字符串
  
 根据字符编码，字符串存储为 Str，它是字符序列。 Buf 类型用作存储二进制数据，  encode 方法将 Str  转换为 Buf. decode 相反。
 ```perl 
@@ -1768,7 +2144,7 @@ Table 11.6: 字符串方法/函数
 .lcfirst                                   首字符转换为小写
 .capitalize                                将每个单词的首字符转换为大写，其余字符转换为小写
 ``` 
-11.3 布尔
+### 11.3 布尔
  
 布尔值要么为真，要么为假。在布尔上下文中，任何值都可以转化为布尔值。决定一个值是真是假要根据值的类型：
  
