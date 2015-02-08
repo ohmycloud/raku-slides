@@ -23,14 +23,8 @@
     - [4.11   MAIN 子例程](#411---main-子例程)
   - [第五章 类和对象](#第五章-类和对象)
     - [5.1 从 class 开始](#51-从-class-开始)
-- [可以使用 % 号在量词后面指定一个分隔符：](#可以使用-%-号在量词后面指定一个分隔符：)
   - [第十章 Grammars](#第十章-grammars)
     - [10.1 Grammar 继承](#101-grammar-继承)
-- [JSON::Tiny::Grammar as above](#jsontinygrammar-as-above)
-- [...](#)
-- [TODO: make that](#todo-make-that)
-- [make +$/](#make-$)
-- [once prefix:<+> is sufficiently polymorphic](#once-prefix-is-sufficiently-polymorphic)
   - [第11章 内建类型、操作符和方法](#第11章-内建类型、操作符和方法)
     - [11.1 数字](#111-数字)
     - [11.14是有理数。](#1114是有理数。)
@@ -1153,8 +1147,8 @@ access named parameters instead of positional.
      save-world($world);
  }
  
-# TODO: come up with a good example # maybe steal something from http://jnthn.net/papers/2010-yapc-eu-signatures.pdf
-# TODO: generic object unpacking
+ # TODO: come up with a good example # maybe steal something from http://jnthn.net/papers/2010-yapc-eu-signatures.pdf
+ # TODO: generic object unpacking
 ``` 
 ### 4.9 柯里化
  
@@ -1688,6 +1682,7 @@ Table 9.1: 反斜线序列和它们的意思
  
 最普遍的量词是 ** ，当它后面接一个数字number时，表示匹配前面的东西number 次。Perl 5 中用 {m,n}
 当 ** 后面跟着 一个范围时，它能匹配范围中的任何数字次数的东西
+
 ```perl 
  # match a date of the form 2009-10-24:
  m/ \d**4 '-' \d\d '-' \d\d /
@@ -1695,9 +1690,10 @@ Table 9.1: 反斜线序列和它们的意思
  # match at least three 'a's in a row:
  m/ a ** 3..* /
  
-# 可以使用 % 号在量词后面指定一个分隔符：
+ # 可以使用 % 号在量词后面指定一个分隔符：
   '1,2,3' ~~ / \d+ % ',' /
 ```
+
   分隔符也可以是一个正则表达式。
  
 贪婪匹配和非贪婪匹配：
@@ -2093,8 +2089,8 @@ grammar 的 .parse 方法返回一个 Match 对象, 通过它我们可以获取�
 
 ```perl
 
-# JSON::Tiny::Grammar as above
-# ...
+ # JSON::Tiny::Grammar as above
+ # ...
 class JSON::Tiny::Actions {
     method TOP($/)      { make $/.values.[0].ast              }
     method object($/)   { make $<pairlist>.ast.hash           }
@@ -2103,9 +2099,9 @@ class JSON::Tiny::Actions {
     method array($/)    { make [$<value>».ast]                }
     method string($/)   { make join '', $/.caps>>.value>>.ast }
 
-# TODO: make that
-# make +$/
-# once prefix:<+> is sufficiently polymorphic
+ # TODO: make that
+ # make +$/
+ # once prefix:<+> is sufficiently polymorphic
 method value:sym<number>($/) { make eval $/       }
 method value:sym<string>($/) { make $<string>.ast }
 method value:sym<true>  ($/) { make Bool::True    }
