@@ -196,7 +196,7 @@ TODO: explain <...> quote-words
  # we have peach, vanilla
 ```
  
-练习：
+### 2.1 练习：
  
 例子中的第一行选手的名字是多余的，你可以在参加比赛的选手中找出所有选手的名字！ 如果例子中的第一行被省略了，你如何更改程序？提示：%hash.keys 返回散列 %hash中的所有键。
  
@@ -362,12 +362,42 @@ Perl 6 中的优先级可以用圆括号改变，但是如果圆括号直接跟�
 ```
 只打印出了 5-7 的值。
  
-##  优先级表
+              优先级表
+    Example             Name
+    (), 42.5			(tightest precedence)
+    42.rand			    term
+    $x++			    method calls and postcircumĕxes
+    $x**2			    autoincrement and autodecrement
+    ?$x, !$x			exponentiation operator
+    +$x, ~$x			boolean preĕx
+    2*3, 7/5			preĕx context operators
+    1+2, 7-5			multiplicative inĕx operators
+    $a x 3			    additive inĕx operators
+    $x ~".nn"			replication operators
+    1&2			        string concatenation
+    1|2			        junctive AND
+    abs $x			    junctive OR
+    $x cmp 3			named unary preĕx
+    $x == 3			    non-chaining binary operators
+    $x && $y			chaining binary operators
+    $x || $y			tight AND inĕx
+    $x > 0 ?? 1 !! -1	tight OR inĕx
+    $x = 1			    conditional operator
+    not $x			    item assignment
+    1, 2			    loose unary preĕx
+    1, 2 Z @a			comma
+    @a = 1, 2			list inĕx
+    $x and say "Yes"	list preĕx, list assignment
+    $x or die "No"		loose AND inĕx
+    ;			        loose OR inĕx
+    			        statement terminator
+    			        (loosest precedence)
  
  
 
  
 ### 3.2 比较和智能匹配
+
 ```perl 
  my @a = 1, 2, 3;
  my @b = 1, 2, 3;
@@ -454,7 +484,7 @@ Table 3.2: Operators and Comparisons
  
 默认的，比较是大小写敏感的，通过比较它们的大写变形，而不是比较它们的值，这个例子使用了大小写敏感排序。
  
-### 3.2.3智能匹配
+### 3.2.3 智能匹配
  
 使用 ~~ 做正确的事情。
 
@@ -1006,7 +1036,9 @@ where 之后的代码块是可选的。Perl 通过通过智能匹配 where 后�
  say-foobar(Int);
  # FOOBAR!
 ``` 
+
 ### 4.7 捕获
+
 签名不仅仅是语法，它们是含有一列参数对象的 first-class 对象  。同样地，有一种含有参数集的数据结构,叫捕获。捕获有位置和命名两个部分，表现的就像列表和散列。像列表的那部分含有位置参数，而像散列的那部分含有命名参数。
  
  
@@ -1159,8 +1191,9 @@ schemes already described.
  order-burger-and-fries( 'plain' );
  order-burger-and-fries( :type<<double-beef>> );
 ``` 
+
 ### 4.10 自省
- 
+
 子例程和他们的签名都是对象。除了调用它们，你可以学习它们的东西，包括它们的参数的细节：
 ```perl 
  sub logarithm(Numeric $x, Numeric :$base = exp(1)) {
@@ -1207,10 +1240,9 @@ Table 4.2: Methods in the Parameter class
 how to get input from a user, validate it, and then call a routine with it based upon the
 information obtained through introspection. A similar approach might generate a command line interface along with some basic usage instructions.
 Beyond this, traits (traits) allow you to associate extra data with parameters. is metadata can go far beyond that which subroutines, signatures, and parameters normally provide.
- 
- 
+
 ### 4.11   MAIN 子例程
- 
+
 Frequent users of the UNIX shells might have noticed a symmetry between postional
 and named arguments to routines on the one hand, and argument and options on the
 command line on the other hand.
@@ -1248,7 +1280,7 @@ roll-dice.pl [--sides=<Numeric>] [--sum] [<count>]
       sub USAGE() {
       say "This script is dangerous, please read the documentation first";
     }
- 
+
 ## 第五章 类和对象
 
 TODO: 以一个超简单露骨的例子开始!
