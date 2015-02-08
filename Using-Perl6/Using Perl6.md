@@ -1,4 +1,44 @@
-﻿# Using Perl6
+﻿<!-- START doctoc generated TOC please keep comment here to allow auto update -->
+<!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
+**Table of Contents**  *generated with [DocToc](https://github.com/thlorenz/doctoc)*
+
+  - [第二章 基础](#第二章-基础)
+  - [第三章 操作符](#第三章-操作符)
+      - [3.1 关于优先级的的一句话](#31-关于优先级的的一句话)
+  - [优先级表](#优先级表)
+    - [3.2 比较和智能匹配](#32-比较和智能匹配)
+    - [3.2.1 数字比较](#321-数字比较)
+    - [3.2.2  字符串比较](#322--字符串比较)
+    - [3.2.3智能匹配](#323智能匹配)
+  - [第四章 子例程和签名](#第四章-子例程和签名)
+    - [4.1 申明子例程](#41-申明子例程)
+    - [4.4 返回值的类型](#44-返回值的类型)
+    - [4.5 Working With Types](#45-working-with-types)
+    - [4.5.1 基本类型](#451-基本类型)
+    - [4.5.2  添加限制](#452--添加限制)
+    - [4.6 抽象参数和具体参数](#46-抽象参数和具体参数)
+    - [4.9 柯里化](#49-柯里化)
+    - [4.10 自省](#410-自省)
+    - [4.11   MAIN 子例程](#411---main-子例程)
+  - [第五章 类和对象](#第五章-类和对象)
+    - [5.1 从 class 开始](#51-从-class-开始)
+- [可以使用 % 号在量词后面指定一个分隔符：](#可以使用-%-号在量词后面指定一个分隔符：)
+  - [第十章 Grammars](#第十章-grammars)
+    - [10.1 Grammar 继承](#101-grammar-继承)
+- [JSON::Tiny::Grammar as above](#jsontinygrammar-as-above)
+- [...](#)
+- [TODO: make that](#todo-make-that)
+- [make +$/](#make-$)
+- [once prefix:<+> is sufficiently polymorphic](#once-prefix-is-sufficiently-polymorphic)
+  - [第11章 内建类型、操作符和方法](#第11章-内建类型、操作符和方法)
+    - [11.1 数字](#111-数字)
+    - [11.14是有理数。](#1114是有理数。)
+    - [11.2 字符串](#112-字符串)
+    - [11.3 布尔](#113-布尔)
+
+<!-- END doctoc generated TOC please keep comment here to allow auto update -->
+
+# Using Perl6
 
 ## 第二章 基础
  
