@@ -1,6 +1,6 @@
 ﻿# Using Perl6
 
-%toc
+{:toc}
 
 ## 第二章 基础
  
