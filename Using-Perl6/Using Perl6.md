@@ -1,5 +1,7 @@
 ﻿# Using Perl6
 
+[TOC]
+
 ## 第二章 基础
  
 假设有一场乒乓球比赛，比赛结果以这种格式记录：
@@ -1156,7 +1158,7 @@ Name: $base
 
 &logarithm.signature 返回这个子例程的签名，并对签名调用.params 方法，返回一个参数对象的列表。这些对象中的每个对象都详细描述一个参数。
 Table 4.2: Methods in the Parameter class
-# stolen straight from S06, adapted a bit
+\# stolen straight from S06, adapted a bit
  
 
  
