@@ -1,15 +1,16 @@
-﻿<!-- START doctoc generated TOC please keep comment here to allow auto update -->
+<!-- START doctoc generated TOC please keep comment here to allow auto update -->
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
 **Table of Contents**  *generated with [DocToc](https://github.com/thlorenz/doctoc)*
 
+- [Using Perl6](#using-perl6)
   - [第二章 基础](#第二章-基础)
+    - [2.1 练习：](#21-练习：)
   - [第三章 操作符](#第三章-操作符)
       - [3.1 关于优先级的的一句话](#31-关于优先级的的一句话)
-  - [优先级表](#优先级表)
     - [3.2 比较和智能匹配](#32-比较和智能匹配)
     - [3.2.1 数字比较](#321-数字比较)
     - [3.2.2  字符串比较](#322--字符串比较)
-    - [3.2.3智能匹配](#323智能匹配)
+    - [3.2.3 智能匹配](#323-智能匹配)
   - [第四章 子例程和签名](#第四章-子例程和签名)
     - [4.1 申明子例程](#41-申明子例程)
     - [4.4 返回值的类型](#44-返回值的类型)
