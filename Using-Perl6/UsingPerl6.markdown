@@ -36,6 +36,46 @@
     - [4.11 MAIN子例程](#4110-main子例程)
   - [第五章 类和对象](#第五章-类和对象)
     - [5.1 从class开始](#51-从class开始)
+    - [5.2 I can has state?](#52-I-can-has-state?)
+    - [5.3 Methods](#53-Methods)
+    - [5.4 Constructors](#54-Constructors)
+    - [5.5 Consuming our class](#55-Consuming-our-class)
+    - [5.6 Inheritance](#56-Inheritance)
+      - [5.6.1 Overriding Inherited Methods](#561-Overriding-Inherited-Methods)
+      - [5.6.2 Multiple Inheritance](#562-Multiple-Inheritance)
+    - [5.7 Introspection](#57-Introspection)
+    - [5.8 Exercises](#58-Exercises)
+
+  - [第六章 Multis](#第六章-Multis)
+    - [6.1 Constraints](#61-Constraints)
+    - [6.2 Narrowness](#62-Narrowness)
+    - [6.3 Multiple arguments](#63-Multiple-arguments)
+    - [6.4 Bindability checks](#64-Bindability-checks)
+    - [6.5 Nested Signatures in Multi-dispatch](#65-Nested-Signatures-in-Multi-dispatch)
+    - [6.6 Protos](#66-Protos)
+    - [6.7 Toying with the candidate list](#67-Toying-with-the-candidate-list)
+    - [6.8 Multiple MAIN subs](#68-Multiple-MAIN-subs)
+  - [第七章 Roles](#第七章-Roles)
+    - [7.1 What is a role?](#71-What-is-a-role?)
+    - [7.2 Compile Time Composition](#72-Compile-Time-Composition)
+      - [7.2.1 Multi-methods and composition](#721-Multi-methods-and-composition)
+      - [7.2.2 Calling all candidates](#722-Calling-all-candidates)
+      - [7.2.3 Expressing requirements](#723-Expressing-requirements)
+    - [7.3 Runtime Application of Roles](#73-Runtime-Application-of-Roles)
+      - [7.3.1 Differences from compile time composition](#731-Differences-from-compile-time-composition)
+      - [7.3.2 The but operator](#732-The-but-operator)
+    - [7.4 Parametric Roles](#74-Parametric-Roles)
+    - [7.5 Roles and Types](#75-Roles-and-Types)
+  - [第八章 子类](#第八章-子类)
+  - [第九章 模式匹配](#第九章-模式匹配)
+   - [9.1 锚定](#91-锚定)
+   - [9.2 捕获](#92-捕获)
+   - [9.3 命名正则](#93-命名正则)
+   - [9.4 修饰符](#94-修饰符)
+   - [9.5 回溯控制](#95-回溯控制)
+   - [9.6 替换](#96-替换)
+   - [9.7 其他正则特性](#97-其他正则特性)
+   - [9.8 匹配对象](#98-匹配对象)
   - [第十章 Grammars](#第十章-grammars)
     - [10.1 Grammar 继承](#101-grammar-继承)
 	- [10.2 提取数据](#102-提取数据)
@@ -98,11 +138,12 @@ Player1 Player2 | 3:2
 ```
 
 输出如下：
+```perl
     Ana has won 2 matches and 8 sets
     Dave has won 2 matches and 6 sets
     Charlie has won 1 matches and 4 sets
     Beth has won 1 matches and 4 sets
-
+```
 每个 Perl 6程序应该以 use v6;作为开始，它告诉编译器程序期望的是哪个版本的Perl。
  
 在Perl6中，一个变量名以一个魔符打头，这个魔符是一个非字母数字符号，诸如$,@,%或者 &,还有更少见的双冒号 ::
@@ -295,24 +336,28 @@ my $label-area-width = 1 + [max] @scores».key».chars;
 @scores».key».chars 
 my @scores = Ana => 8, Dave => 6, Charlie => 4, Beth => 4;
 ```
-    Ana     8 Dave  6 Charlie       4 Beth  4
-
+```perl
+Ana     8 Dave  6 Charlie       4 Beth  4
+```
 ```perl
 @scores.key
 ```
-    Method 'key' not found for invocant of class 'Array'
-
+```perl
+Method 'key' not found for invocant of class 'Array'
+```
 ```perl
  @scores>>.key
 ```
-    Ana Dave Charlie Beth
-
+```perl
+Ana Dave Charlie Beth
+```
 就像@variable.method 在@variable上调用一个方法一样，@array».method 对@array中的每一项调用method方法，并且返回一个返回值的列表。即@scores>>.key返回一个列表。
 ```perl 
  @scores>>.key>>.chars  #每个名字含有几个字符
 ```
-    4 7 4
- 
+```perl
+4 7 4
+``` 
 表达式 [max] @scores».key».chars 给出(3,4,7,4)中的最大值。它与下面的表达式相同：
 
 ```perl
@@ -325,13 +370,15 @@ my @scores = Ana => 8, Dave => 6, Charlie => 4, Beth => 4;
 ```perl 
  @scores[0]
 ```
-    "Ana" => 8
-
+```perl
+"Ana" => 8
+```
 ```perl
  @scores[0].key
 ```
-    Ana
-
+```perl
+Ana
+```
 ```perl 
  my $format = '%- ' ~ $label-area-width ~ "s%s\n";
  for @scores {
@@ -433,9 +480,9 @@ False
  
 使用 == 中缀操作符查看两个对象是否有相同的数字值。如果某个对象不是数字，Perl 会在比较之前尽力使其数字化。如果没有更好的方式将对象转换为数字，Perl 会使用默认的数字 0 。
 ```perl 
- say 1 == 1.0; # Bool::True
- say 1 == '1'; # Bool::True
- say 1 == '2'; # Bool::False
+ say 1 == 1.0;  # Bool::True
+ say 1 == '1';  # Bool::True
+ say 1 == '2';  # Bool::False
  say 3 == '3b'; # fails
 ``` 
 跟数字比较相关的还有 <,<=,>,>= 。如果两个对象的数字值不同，使用 != 会返回 True 。
@@ -477,8 +524,8 @@ Table 3.2: Operators and Comparisons
  
 三路操作符有两个操作数，如果左侧较小，返回 Order::Increase ，两侧相等则返回 Order::Same，如果右侧较小则返回 Order::Decrease。对于数字使用 三路操作符 <=> ,对于字符串，使用三路操作符 leg （取自 lesser，equal，greater）。中缀操作符 cmp 是一个对类型敏感的三路操作符，它像 <=> 一样比较数字，像 leg 一样比较字符串，（举例来说）并且比较键值对儿时，先比较键，如果键相同再比较键值：
 ```perl 
- say 10 <=> 5; # +1
- say 10 leg 5; # because '1' lt '5'
+ say 10 <=> 5;     # +1
+ say 10 leg 5;     # because '1' lt '5'
  say 'ab' leg 'a'; # +1, lexicographic comparison
 ``` 
 三路操作符的典型用处就是用在排序中。列表中的.sort 方法能使用一个含有两个值的块或一个函数，比较它们，并返回一个小于，等于或大于 0 的值。 sort  方法根据该返回值进行排序：
@@ -1335,7 +1382,7 @@ $eat.perform();
 
 ```
 
-### 5.1.0 从 class 开始
+### 5.1 从 class 开始
 
 Perl 6 像很多其它语言一样, 使用 class 关键字来引入一个新类. 随后的 block 可能包含任意的代码, 就像任何其他块一样, 但是类通常包含状态和行为描述. 例子中的代码包含了通过 has 关键字引入的属性(状态), 和通过 method 关键字引入的行为.
 
@@ -1353,7 +1400,7 @@ Perl 6 像很多其它语言一样, 使用 class 关键字来引入一个新类.
 }
 
 ```
-### 我能拥有状态?
+### 5.2 我能拥有状态?
 
 在这个 Task类的 block 里面, 前 3 行都声明了属性(在其它语言中叫做范畴或实例存储). 这些都是存储在本地的, 类的每个实例都能获得. 就像 my 声明的变量不能在它的声明范围之外访问到一样, 属性在类的外面也不可访问. 这种封装是面向对象设计的一个关键原则.
 
@@ -1397,7 +1444,7 @@ has Bool $.done is rw;
 
 `is rw` 特征允许生成的访问方法返回某些外部代码, 能够修改以改变属性的值.
 
-#### 5.3.0 方法
+#### 5.3 方法
 
 属性给了对象状态, 方法则给了对象行为. 暂时无视 new 方法;它是一个特殊类型的方法. 看看第二个方法, add-dependency, 它给这个任务依赖列表添加了一个新任务:
 
@@ -1410,98 +1457,38 @@ method add-dependency(Task $dependency) {
 从很多方面讲, 这看起开很像子例程声明. 然而, 有两个重要区别. 首先, 把该子例程声明为方法就把它添加到当前类的方法列表中了. 因此, 任何 Task 类的实例都能使用 .method 调用操作调用这个方法. 第二, 方法把它的调用放到特殊变量 `self` 中了.
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+### 5.4 Constructors
+### 5.5 Consuming our class
+### 5.6 Inheritance
+#### 5.6.1 Overriding Inherited Methods
+#### 5.6.2 Multiple Inheritance
+### 5.7 Introspection
+### 5.8 Exercises
 
 
 ## 第六章 Multis
 
+### 6.1 Constraints
+### 6.2 Narrowness
+### 6.3 Multiple arguments
+### 6.4 Bindability checks
+### 6.5 Nested Signatures in Multi-dispatch
+### 6.6 Protos
+### 6.7 Toying with the candidate list
+### 6.8 Multiple MAIN subs
+
 ## 第七章 Roles
+
+### 7.1 What is a role?
+### 7.2 Compile Time Composition
+#### 7.2.1 Multi-methods and composition
+#### 7.2.2 Calling all candidates
+#### 7.2.3 Expressing requirements
+### 7.3 Runtime Application of Roles
+#### 7.3.1 Differences from compile time composition
+#### 7.3.2 The but operator
+### 7.4 Parametric Roles
+### 7.5 Roles and Types
 
 
 
