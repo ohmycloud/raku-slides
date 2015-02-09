@@ -2154,10 +2154,10 @@ method TOP($/) { make $/.values.[0].ast     }
  TOP rule 有一个含有两个分支的选项, object 分支和 array 分支. 这两个都有一个命名捕获. `$/.values` 返回所有捕获的一个列表, 这儿要么是 object 要么是 array 捕获.
  
  action 方法使 AST 附加到子捕获的匹配对象上, 并通过调用 make 把它提升为自己的 AST.
- 
+ ```perl
  rule object       { '{' ~ '}' <pairlist>      }
  method object($/) { make $<pairlist>.ast.hash }
- 
+ ```
  object 的 reduction 方法提取了 子匹配 pairlist 的 AST 结构, 并通过调用它的 hash 方法将它转换为一个散列.
  ```perl
  rule pairlist       { <pair>* % [ \, ]   }
@@ -2182,7 +2182,7 @@ method TOP($/) { make $/.values.[0].ast     }
  method value:sym<object>($/) { make $<object>.ast }
  ```
  
- 当一个 <value> 调用匹配时, 带有相同符号的 action 方法作为匹配 subrule 执行.
+ 当一个 `<value>` 调用匹配时, 带有相同符号的 action 方法作为匹配 subrule 执行.
  
 ## 第11章 内建类型、操作符和方法
  
