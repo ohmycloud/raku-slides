@@ -12,19 +12,19 @@
       - [3.2.2  字符串比较](#322--字符串比较)
       - [3.2.3 智能匹配](#323-智能匹配)
   - [第四章 子例程和签名](#第四章-子例程和签名)
-    - [4.1 申明子例程](#41-申明子例程)
-    - [4.4 返回值的类型](#44-返回值的类型)
-    - [4.5 Working With Types](#45-working-with-types)
+    - [4.1.0 申明子例程](#410-申明子例程)
+    - [4.4.0 返回值的类型](#440-返回值的类型)
+    - [4.5.0 Working With Types](#450-working-with-types)
       - [4.5.1 基本类型](#451-基本类型)
       - [4.5.2  添加限制](#452--添加限制)
-    - [4.6 抽象参数和具体参数](#46-抽象参数和具体参数)
-    - [4.9 柯里化](#49-柯里化)
-    - [4.10 自省](#410-自省)
-    - [4.11   MAIN 子例程](#411---main-子例程)
+    - [4.6.0 抽象参数和具体参数](#460-抽象参数和具体参数)
+    - [4.9.0 柯里化](#490-柯里化)
+    - [4.10.0 自省](#4100-自省)
+    - [4.11.0   MAIN 子例程](#4110---main-子例程)
   - [第五章 类和对象](#第五章-类和对象)
-    - [5.1 从 class 开始](#51-从-class-开始)
+    - [5.1.0 从 class 开始](#510-从-class-开始)
   - [第十章 Grammars](#第十章-grammars)
-    - [10.1 Grammar 继承](#101-grammar-继承)
+    - [10.1.0 Grammar 继承](#1010-grammar-继承)
   - [第11章 内建类型、操作符和方法](#第11章-内建类型、操作符和方法)
     - [11.1 数字](#111-数字)
     - [11.2 字符串](#112-字符串)
@@ -506,7 +506,7 @@ Table 3.2: Operators and Comparisons
  
 一个子例程就是一段执行特殊任务的代码片段。它可以对提供的数据（`实参`）操作，并产生结果（返回值）。子例程的签名是它`所含的参数`和它产生的`返回值`的描述。从某一意义上来说，第三章描述的操作符也是Perl 6用特殊方式解释的子例程。
  
-### 4.1 申明子例程
+### 4.1.0 申明子例程
 
  一个子例程申明由几部分组成。首先， `sub `表明你在申明一个子例程，然后是可选的子例程的名称和`可选的签名`。子例程的主体是一个用花括号扩起来的代码块。
 默认的，子例程是本地作用域的，就像任何使用 `my` 申明的变量一样。这意味着，一个子例程只能在它被申明的作用域内被调用。使用 `our` 来申明子例程可以使其在`当前包`中可见。
@@ -579,7 +579,7 @@ First-class 子例程能帮助你解决复杂的问题。例如，为了做出�
       o<
      /o\.   
 
-### 4.2 Adding Signatures
+### 4.2.0 Adding Signatures
 **添加签名**
 
 子例程的签名执行两个任务。首先，它申明哪个调用者可能或必须将参数传递给子例程。第二，它申明子例程中的变量被绑定到哪些参数上。这些变量叫做参数。Perl 6的签名更深入，它们允许你`限制参数的类型`，值和参数的定义，并准确匹配复杂数据结构的某一部分。此外，它们也允许你显式地指定子例程返回值的类型。
@@ -866,7 +866,7 @@ First-class 子例程能帮助你解决复杂的问题。例如，为了做出�
  debug-wrapper(&order-shrimps, 4, from => 'Atlantic Ocean');
  
 ``` 
-### 4.3 返回结果
+### 4.3.0 返回结果
 
 子例程也能返回值。之前本章中的 ASCII 艺术舞蹈例子会更简单当每个子例程返回一个新字符串：
 
@@ -935,7 +935,7 @@ return 另外的副作用就是执行后立即退出子例程：
 ...并且你最好别放错你的新单词 $word 如果它是临时的。因为这是你要获取的仅有的一个。
  
  
-### 4.4 返回值的类型
+### 4.4.0 返回值的类型
  
 像其它现代语言一样，Perl 6 允许你显式地指定子例程返回值的类型。这允许你限制从子例程中返回的值的类型。使用 returns 特性可以做到这样：
  
@@ -948,7 +948,7 @@ return 另外的副作用就是执行后立即退出子例程：
 ```
  当然，使用这个 `returns` 特性是可选的
  
-### 4.5 Working With Types
+### 4.5.0 Working With Types
  
 很多子例程不能完整意义上使用任意参数工作，但是要求参数支持确定的方法或有其它属性。这种情况下，限制参数类型就有意义了，诸如传递不正确值作为参数，当调用子例程时，这会引起Perl 发出错误，或者甚至在编译时，如果编译器足够聪明来捕捉错误。
  
@@ -1005,7 +1005,7 @@ where 之后的代码块是可选的。Perl 通过通过智能匹配 where 后�
       }
  }
 ``` 
-### 4.6 抽象参数和具体参数
+### 4.6.0 抽象参数和具体参数
  
 下面检测变量是否定义。
 例如，下面是Perl5 代码:
@@ -1036,7 +1036,7 @@ where 之后的代码块是可选的。Perl 通过通过智能匹配 where 后�
  # FOOBAR!
 ``` 
 
-### 4.7 捕获
+### 4.7.0 捕获
 签名不仅仅是语法，它们是含有一列参数对象的 first-class 对象  。同样地，有一种含有参数集的数据结构,叫捕获。捕获有位置和命名两个部分，表现的就像列表和散列。像列表的那部分含有位置参数，而像散列的那部分含有命名参数。
  
  
@@ -1107,7 +1107,7 @@ An optimizing Perl 6 compiler may, of course, be able to optimize away part or a
 depending on what it knows at compilation time.
 
  
-### 4.8 Unpacking
+### 4.8.0 Unpacking
  
 有时候，你只需要使用一个数组或散列的一部分。你可以使用常规的切片获取，或使用签名绑定：
 ```perl 
@@ -1147,7 +1147,7 @@ access named parameters instead of positional.
  # TODO: come up with a good example # maybe steal something from http://jnthn.net/papers/2010-yapc-eu-signatures.pdf
  # TODO: generic object unpacking
 ``` 
-### 4.9 柯里化
+### 4.9.0 柯里化
  
 Consider a module that provided the example from the \Optional Parameters" section:
 ```perl 
@@ -1188,7 +1188,7 @@ schemes already described.
  order-burger-and-fries( :type<<double-beef>> );
 ``` 
 
-### 4.10 自省
+### 4.10.0 自省
 
 子例程和他们的签名都是对象。除了调用它们，你可以学习它们的东西，包括它们的参数的细节：
 ```perl 
@@ -1237,7 +1237,7 @@ how to get input from a user, validate it, and then call a routine with it based
 information obtained through introspection. A similar approach might generate a command line interface along with some basic usage instructions.
 Beyond this, traits (traits) allow you to associate extra data with parameters. is metadata can go far beyond that which subroutines, signatures, and parameters normally provide.
 
-### 4.11   MAIN 子例程
+### 4.11.0   MAIN 子例程
 
 Frequent users of the UNIX shells might have noticed a symmetry between postional
 and named arguments to routines on the one hand, and argument and options on the
@@ -1321,7 +1321,7 @@ $eat.perform();
 
 ```
 
-### 5.1 从 class 开始
+### 5.1.0 从 class 开始
 
 Perl 6 像很多其它语言一样, 使用 class 关键字来引入一个新类. 随后的 block 可能包含任意的代码, 就像任何其他块一样, 但是类通常包含状态和行为描述. 例子中的代码包含了通过 has 关键字引入的属性(状态), 和通过 method 关键字引入的行为.
 
@@ -1383,7 +1383,7 @@ has Bool $.done is rw;
 
 `is rw` 特征允许生成的访问方法返回某些外部代码, 能够修改以改变属性的值.
 
-#### 5.3 方法
+#### 5.3.0 方法
 
 属性给了对象状态, 方法则给了对象行为. 暂时无视 new 方法;它是一个特殊类型的方法. 看看第二个方法, add-dependency, 它给这个任务依赖列表添加了一个新任务:
 
@@ -1580,10 +1580,9 @@ method add-dependency(Task $dependency) {
                     ?? 'the second hand wins'
                     !! "the hands are of equal value"; # XXX: this is wrong
 ``` 
+
 ## 第九章 模式匹配
- 
- 
- 
+
 尽管 Perl 6 中描述的语法跟 PCRE 和 POSIX 已经不一样了，我们还是叫它们 regex.
  
 eg：查找连续重复2次的单词
@@ -1731,7 +1730,7 @@ $string ~~ m/ \d**4 '-' \d\d '-' \d\d | 'today' | 'yesterday' /
 ```
  一个竖直条意味着分支是并行匹配的，并且最长匹配的分支胜出。两个竖直条会让正则引擎按顺序尝试匹配每个分支，并且第一个匹配的分支胜出。
  
-### 9.1 锚
+### 9.1.0 锚
  到目前为止, 在一个字符串中, 所有的正则都是在任何地方匹配. 通常把匹配限制为字符串或单词边界的开始或结尾是很有用的. 单个的 ^ 符号匹配字符串的开始, 美元符 $ 匹配字符串的结尾. m/ ^a / 匹配以一个字母 a 开头的字符串, m/ ^ a $ / 匹配只含一个字符 a 的字符串.
  
                            Table 9.2: Regex anchors
@@ -1746,7 +1745,7 @@ $string ~~ m/ \d**4 '-' \d\d '-' \d\d | 'today' | 'yesterday' /
     »      右单词边界
  
  
-### 9.2 捕获
+### 9.2.0 捕获
  
 圆括号里的匹配被捕获到特殊数组 $/ 中，第一个捕获分组存储在 $/[0]中，第二个存储在  $/[1]中，以此类推。
 ```perl 
@@ -1793,7 +1792,7 @@ Found 'the' twice in a row
 如果没有第一个单词边界锚点，它会匹配  strand and
 beach or lathe the table leg. 没有最后的单词边界锚点，它会匹配the theory.
  
-### 9.3 命名正则
+### 9.3.0 命名正则
  
 你可以像申明子例程一样申明正则表达式——甚至给它们起名字。假设你发现之前的例子很有用，你想让它更容易被访问。假设你想扩展这个正则让它处理诸如  doesn't 或 isn't 的缩写：
 ```perl
@@ -1812,7 +1811,7 @@ if $s ~~ m/ <dup=&dup> / {
  
 命名捕获让组织复杂正则更容易。
  
-### 9.4 修饰符
+### 9.4.0 修饰符
  
 s修饰符是 :sigspace  的缩写，该修饰符允许可选的空白出现在文本中无论哪里有一个或更多空白字符出现在模式中。它甚至比那更聪明：在两个单词字符之间，空白字符是任意的。该 regex 不匹配字符串 eggs,milk, sugarandflour.
 ```perl 
@@ -1827,7 +1826,7 @@ if $ingredients ~~ m/:s ( \w+ )+ % \,'and' (\w+)/ {
 list: eggs |  milk |  sugar
 end: flour
 ``` 
-### 9.5 回溯控制
+### 9.5.0 回溯控制
  
 当用 m/\w+ 'en'/ 匹配字符串 oxen时，\w+ 首先匹配全部字符串oxen，因为 +是贪婪的，然后 'en' 不能匹配任何东西。 \w+ 丢弃一个字符，匹配了 oxe，但是 ‘en'还是不能匹配，\w+ 继续丢弃一个字符，匹配 ox, 然后 'en'匹配成功。
  
@@ -1857,7 +1856,7 @@ end: flour
  # TODO: check if it works
  my rule wordlist { <word>+ % \, 'and' <word> }
 ``` 
-### 9.6 替换
+### 9.6.0 替换
  
 正则表达式对于数据操作很好用。 subst 方法用一个正则跟一个字符串匹配。
  当subst 匹配的时候，它用它的第二个操作数替换掉匹配到的部分字符串：
@@ -1870,7 +1869,7 @@ end: flour
 默认地，subst执行一个单个替换然后停止。 :g 告诉替换是全局的，它替换每个可能的匹配。
 注意  这里使用 rx/ ... / 而不是 m/ ... / 来构建这个正则。前者构建一个正则表达式对象。后者构建一个正则对象然后立即用它匹配主题变量 $_ 。调用subst时使用 m/ ... / 会创建一个匹配对象并且将它作为第一个参数传递，而不是传递正则表达式本身。 
  
-### 9.7 其它正则表达式特性
+### 9.7.0 其它正则表达式特性
  
 有时候你需要调用其它正则，但是不想让它们捕获匹配的文本。当解析编程语言的时候，你可能想删除空白字符和注释。你可以调用 <.otherrule> 完成。如果你用 `:sigspace` 修饰符，每个连续的空白块调用内建的规则 `<.ws>` 。使用这个规则而不是使用字符类允许你定义你自己的空白字符版本。
 有些时候你仅仅想前视一下以查看下面的字符是否满足某些属性而不消耗这些字符。这在替换中很有用。在一般的英文文本中，你总是在逗号后面添加一个空格。如果某些人忘记了添加空格，正则能够在慵懒的写完之后整理：
@@ -1892,7 +1891,7 @@ Table 9.3: 用环视断言模拟锚点
  
 
  
-### 9.8 匹配对象
+### 9.8.0 匹配对象
 ```perl 
  sub line-and-column(Match $m) {
         my $line = ($m.orig.substr(0, $m.from).split("\n")).elems;
@@ -2043,7 +2042,7 @@ proto token 语法表明 value 是一系列分支而非单个 regex. 每个分�
 
 当调用 rule`<value>`时, grammar 引擎尝试并行地匹配所有分支,并且最长的匹配胜出. 这真的像极了普通分支, 但是就像我们下一节看到的那样, 他还有可扩展性的优势.
  
-### 10.1 Grammar 继承 
+### 10.1.0 Grammar 继承 
  
  grammars 和 类的相似性让把正则存储在名字空间走的更深入, 就像类存储方法那样. 你可以从 grammars 继承并扩展grammars, 将 roles 混合到 grammars, 并且利用多态. 事实上, grammar 就是一个类, 它默认继承于 Grammar 而非 Any. Grammar 基础词法中广泛包含了有用的预定义好的 rules. 例如, 有一个匹配字母字符(`<alpha>`)的 rule, 还有一个匹配数字(`<digit>`)的, 还有个匹配空白符的(`<ws>`), 等等.
  
@@ -2086,7 +2085,7 @@ grammar JSON::ExtendedNumeric is JSON::Tiny::Grammar {
 ```
 在这个grammar中, 调用 `<value>` 会匹配两个新添加的分支中的一个, 或匹配父词法 JSON::Tiny::Grammar 中任意的旧分支. 这样的扩展性对于普通的, 使用 | 分隔的分支是很难实现的.
 
-### 10.2 提取数据 
+### 10.2.0 提取数据 
 
 grammar 的 .parse 方法返回一个 `Match` 对象, 通过它我们可以获取匹配所有的相关信息.与散列相似,  命名正则在 grammar 中的匹配可以通过 Match 对象获取, 而键是正则表达式的名字, 键值是 `Match` 对象中, 代表整个正则匹配中它匹配到的那部分. 类似地, 匹配的一部分被圆括号捕获, 并作为 Match 对象(它就像一个数组) 的位置元素访问.
 
