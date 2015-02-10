@@ -15,7 +15,7 @@
 词法允许你组织正则, 就像类允许你组织普通代码的方法一样.
 ## 命名正则 Named Regexes
 
-命名正则有特殊的语法, 与子例程的定义类似:
+命名正则有特殊的语法, 与**子例程**的定义类似:
 ```perl
 my regex number { \d+ [ \. \d+ ]? }
 ```
@@ -25,7 +25,10 @@ my regex number { \d+ [ \. \d+ ]? }
 say "32.51" ~~ &number;
 say "15 + 4.5" ~~ / <number> \s* '+' \s* <number> /
 ```
-regex 不是命名正则仅有的标示符 -- 实际上, 它用的不多. 大多数时候, 用的最多的是 token 和 rule 标识符. 它们都是不能回溯的, 这意味着正则引擎在匹配失败时不会备份和重试. 这通常是你想要的, 但不是对所有场合都合适:
+首先说下, 使用 `regex/token/rule` 定义了一个正则表达式后怎么去调用它: 
+就像调用一个子例程那样, 使用 `&` 符号: 
+& 后面跟正则表达式的名字,  即 &regex_name
+regex 不是命名正则仅有的标识符 -- 实际上, 它用的不多. 大多数时候, 用的最多的是 `token` 和 `rule` 标识符. 它们都是`不能回溯`的, 这意味着正则引擎在匹配失败时不会备份和重试. 这通常是你想要的, 但不是对所有场合都合适:
 ```perl
 my regex works-but-slow { .+ q }
 my token fails-but-fast { .+ q }
@@ -33,7 +36,7 @@ my $s = 'Tokens won\'t backtrack, which makes them fail quicker!'; # Tokens 不�
 say so $s ~~ &works-but-slow; # True
 say so $s ~~ &fails-but-fast; # False, the entire string get taken by the .+
 ```
-token 和 rule 标识符的不同之处在于 rule 标识符让 Regex 的 :sigspace 起作用了:
+`token` 和 `rule` 标识符的不同之处在于 `rule` 标识符让 `Regex` 的 `:sigspace` 起作用了:
 ```perl
 my token non-space-y { once upon a time }
 my rule space-y      { once upon a time }
@@ -44,13 +47,13 @@ say 'once upon a time' ~~ &space-y;
 ```perl
 class Grammar is Cursor { }
 ```
-使用 grammar 关键字而非 class 关键字声明文法. Grammars 应该只用于解析文本; 如果你想提取复杂的数据, 建议将 action 类 和 grammar 结合使用.
+使用 grammar 关键字而非 `class` 关键字声明文法. Grammars 应该只用于`解析文本`; 如果你想`提取`复杂的数据, 建议将 `action` 类 和 `grammar` 结合使用.
 ```perl
 grammar CSV {
     token TOP { [ <line> \n? ]+ }
     token line {
         ^^            # Beginning of a line
-        <value>* % \, # Any number of <value>s with commas in between them
+        <value>* % \, # Any number of <value>s with commas in `between` them
         $$            # End of a line
     }
     token value {
@@ -117,8 +120,8 @@ say CSV.parse( q:to/EOCSV/ );
 
     method subparse($str, :$rule = 'TOP', :$actions) returns Match:D
 
-将 $str 与 grammar 匹配, 使用 $rule 作为起始 rule, 选择性将 $action 作为 action 对象应用.
-不像 parse , subparse 允许 grammar 只匹配提供的字符串一部分.
+将 `$str` 与 grammar 匹配, 使用 `$rule` 作为`起始 rule`, 选择性将 `$action` 作为 `action` 对象应用.
+不像 `parse` , `subparse` 允许 `grammar` 只匹配所提供的字符串的一部分.
 
 ## method parsefile
 
@@ -131,3 +134,4 @@ say CSV.parse( q:to/EOCSV/ );
 TODO
 
 [↑] In fact, named regexes can even take extra arguments, using the same syntax as subroutine parameter lists
+实际上, 命名正则甚至能接受额外的参数, 它使用的语法跟子例程参数列表的语法一样.
