@@ -14,7 +14,7 @@ sub postfix:<!>($n where $n > 0) {
 say 5!
 
 ```
-## [\*]
+## [\\*]
 
 ```perl
 
