@@ -17,3 +17,4 @@
 * R 的 Perl6 实现
 * Using Perl 6 
 * Perl 6 documents
+* 笔记
