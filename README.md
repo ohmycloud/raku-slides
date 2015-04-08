@@ -8,8 +8,7 @@
 
 # 目录
 * Perl6 Calendar
-* Perl6 专家指南翻译
-* R 的 Perl6 实现
 * Using Perl 6 
 * Perl 6 documents
+* Perl6 专家指南翻译
 * 笔记
