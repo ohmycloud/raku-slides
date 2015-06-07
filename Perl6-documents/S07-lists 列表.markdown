@@ -17,13 +17,7 @@ Synopsis 7: Lists and Iteration  列表和迭代
 
 =head1 Overview
 
-Lists and arrays have always been one of Perl's fundamental data types,
-and Perl 6 is no different.  However, lists in Perl 6 have been greatly
-extended to accommodate lazy lists, infinite lists, lists of mutable
-and immutable elements, typed lists, flattening behaviors, and so on.  
-So where lists and arrays in Perl 5 tended to be finite sequences of 
-scalar values, in Perl 6 we have additional dimensions of behavior
-that must be addressed.
+
 Perl 6 中的列表扩展为惰性列表、无限列表、元素可变列表、元素不可变列表、类型列表、展开行为等等。
 
 =head2 The C<List> type
@@ -92,6 +86,12 @@ below.  For raw access to the arguments without flattening, you may use
 C<.arg($n)> instead of C<.[$n]>, and C<.args> instead of C<.elems>.
 Parcel 也是位置的，并且对于诸如  .[] 和 .elems 列表操作会使用 展开上下文。查看下面的  "Flattening contexts"。访问没有展开的原始参数，你可以使用 .arg($n) 代替 .[$n], 和 .args 代替 .elems
 
+> (1,2,3).elems
+3
+> (1,2,3).[2]
+3
+> (1,2,3).[1]
+2
 
 
 
