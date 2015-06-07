@@ -8,11 +8,11 @@
 
 my $ticks = 0;
 given $ticks {
-    when 1   {say ""; }
-    when 1/2 {say "/"; }
-    when Int {say $_.Str; }
-    when Rat {say $_.perl; }
-    die "Duration must be Int or Rat, but it's { $_.WHAT }";
+    when 1   {say ""                                        ; }
+    when 1/2 {say "/"                                       ; }
+    when Int {say $_.Str                                    ; }
+    when Rat {say $_.perl                                   ; }
+    die "Duration must be Int or Rat, but it's { $_.WHAT }" ;
 }
 
 # given 和 when 可以单独使用
