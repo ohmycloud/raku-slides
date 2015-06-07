@@ -4,7 +4,7 @@
 
 ---
 
-[TOC]
+[toc]
 
 ## exit，warn，die
 exit
@@ -67,16 +67,25 @@ sh-bang 行- 只在Unix/Linux下使用
 `use v6;`
 
 这一行告诉perl下面的代码需要Perl 6 或更高版本。如果你使用perl6来运行，这段代码也会正确运行。但在Perl5下运行会有迷惑。例如 perl hell_world_bare.p6   输出如下:
+
+```perl6
 examples/intro/hello_world_bare.err
 String found where operator expected at books/examples/intro/hello_world_bare.p6 line 1, near "say "Hello Perl 6 World""
         (Do you need to predeclare say?)
 syntax error at books/examples/intro/hello_world_bare.p6 line 1, near "say "Hello Perl 6 World""
 Execution of books/examples/intro/hello_world_bare.p6 aborted due to compilation errors.
-如果代码中使用了use v6,但是使用perl 5 来运行的话，会发生什么？    perl hello_world.p6   输出如下:
+```
+
+如果代码中使用了use v6,但是使用perl 5 来运行的话，会发生什么？    
+
+perl hello_world.p6   输出如下:
+
+```perl6
 examples/intro/hello_world.err
 Perl v6.0.0 required--this is only v5.14.2, stopped at books/examples/intro/hello_world.p6 line 2.
 BEGIN failed--compilation aborted at books/examples/intro/hello_world.p6 line 2.
 现在问题更清晰了 (Though it would be nice if the error message printed by perl 5 was something like:  This code requires Perl v6.0.0. You ran it using v5.14.2.
+```
 
 ## given-when 结构 
 ```perl6
