@@ -1,3 +1,8 @@
 # Perl6
 
-Less is nice
+收集 Perl 6 的一些:
+
+- Slides
+- Examples
+- Tips
+- 翻译

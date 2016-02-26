@@ -1,0 +1,240 @@
+```perl6
+class Enemy {
+    method attack-with-arrows   { say "peow peow peow" }
+    method attack-with-swords   { say "swish cling clang" }
+    method attack-with-fireball { say "sssSSS fwoooof" }
+    method attack-with-camelia  { say "flap flap RAWWR!" }
+}
+
+# 创建一个方法筛选器， 方法名以 attack-with- 开头
+# 对象的 ^methods 方法返回该对象所有的方法，包括自定义的方法
+my $selector = { .name ~~ /^ 'attack-with-' / };
+given Enemy.new -> $e {
+    my $attack-strategy
+        = $e.^methods().grep($selector).pick();
+
+    $e.$attack-strategy();           # call a random method
+}
+
+```
+
+```perl6
+class Parent {
+    method frob {
+        say "the parent class frobs"
+    }
+}
+
+class Child is Parent {
+    method frob {
+        say "the child's somewhat more fancy frob is called"
+    }
+}
+# 对象的实际类型决定了要调用哪个方法
+my Parent $test;
+$test = Child.new;
+$test.frob;          # calls the frob method of Child rather than Parent
+
+```
+
+```perl6
+class Dog {
+    has $.name is rw;
+    has $.color;
+
+    method kugo {
+       say "hello ",$.name;
+    }
+}
+my $pet = Dog.new(
+    name => 'Spot', color => 'Black'
+);
+$pet.kugo();
+$pet.name = 'Fido'; # OK
+$pet.kugo();
+$pet.color = 'White'; # Fails
+
+```
+
+```perl6
+class Journey {
+    has $.origin;
+    has $.destination;
+    has @!travellers;
+    has $.notes is rw;
+
+    method add_traveller($name) {
+        if $name ne any(@!travellers) {
+            push @!travellers, $name;
+        } else {
+            warn "$name is already going on the journey!";
+        } 
+    }
+
+    method describe() {
+        "From $!origin to $!destination";
+    }
+    # Private method
+    method !do-something-private($x) {
+       ($x + 120)*0.88; # 先加价，再打折！
+    }
+
+    method price($x) {
+        self!do-something-private(2*$x);
+    }
+
+}
+
+my $vacation = Journey.new(
+    origin      => 'China',
+    destination => 'Sweden',
+    notes       => 'Pack hiking'
+);
+
+say $vacation.origin;
+$vacation.notes = 'Pack hiking gear and sunglasses!';
+say $vacation.notes;
+$vacation.add_traveller('Larry Wall');
+say $vacation.price(40);
+$vacation.add_traveller('Larry Wall');
+
+```
+
+```perl6
+use MethodModifiers;
+class C {
+method m() is before { say "before"; } method m() { say "in the method"; } method m() is after { say "after"; }
+} C.m;
+
+```
+
+```perl6
+class Journey {
+    has $.origin;
+    has $.destination;
+    has @!travellers;
+    has $.notes is rw;
+        
+    method add_traveller($name) {
+        if $name ne any(@!travellers) {
+            push @!travellers, $name;
+        }
+        else {
+            warn "$name is already going on the journey!";
+        }
+    }
+        
+    method describe() {
+        "From $!origin to $!destination"
+    }
+}
+
+
+
+```
+
+```perl6
+class Point {
+    has $.x;
+    has $.y = 2 * $!x;
+}
+
+my $p = Point.new( x => 1, y => 2);
+say "x: ", $p.x;
+say "y: ", $p.y;
+
+my $p2 = Point.new( x => 5 );
+# the given value for x is used to calculate the right
+# value for y.
+say "x: ", $p2.x;
+say "y: ", $p2.y;
+
+```
+
+```perl6
+class Journey {
+    has $.origin;
+    has $.destination;
+    has @!travellers;
+    has $.notes;  # 没有添加 is rw 限制时, 属性默认是只读的!
+}
+
+my $j = Journey.new(
+    origin      => 'Sweden',
+    destination => 'China',
+    notes       => 'Be careful your money!'
+);
+
+say $j.origin;
+say $j.destination;
+say $j.notes;
+
+# now, try to change notes
+$j.notes = 'gun nima dan'; # Cannot modify an immutable Str
+say $j.notes;
+
+```
+
+```perl6
+class Journey {
+    has $.origin;
+    has $.destination;
+    has @!travellers;
+    has $.notes is rw;
+}
+
+# Create a new instance of the class.
+my $vacation = Journey.new(
+    origin      => 'Sweden',
+    destination => 'Switzerland',
+    notes       => 'Pack hiking gear!'
+);
+
+# 使用取值器, 这输出 Sweden.
+say $vacation.origin;
+# 使用 rw 存取器修改属性的值
+$vacation.notes = 'Pack hiking gear and sunglasses!';
+say $vacation.notes;
+
+```
+
+```perl6
+class Paper   { }
+class Scissor { }
+class Stone   { }
+
+multi win(Paper   $a, Stone   $b) { 1 }
+multi win(Scissor $a, Paper   $b) { 1 } 
+multi win(Stone   $a, Scissor $b) { 1 } 
+multi win(Any     $a, Any     $b) { 0 }
+
+say win(Paper.new, Scissor.new); # 0 
+say win(Stone.new, Stone.new); #0 
+say win(Paper.new, Stone.new); #1
+
+```
+
+```perl6
+class Point2D {
+    has $.x;
+    has $.y;
+
+    submethod BUILD(:$!x, :$!y) {
+        say "Initalizing Point2D";
+    }
+}
+
+class InvertiblePoint2D is Point2D {
+    submethod BUILD() {
+        say "Initilizing InvertiblePoint2D";
+    }
+    method invert {
+        self.new(x => - $.x, y => - $.y);
+    }
+}
+
+say InvertiblePoint2D.new( x => 1, y => 2);
+
+
+```
+
