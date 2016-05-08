@@ -1,8 +1,8 @@
 # Perl6
 
-收集 Perl 6 的一些:
+I collected some thing about Perl 6:
 
 - Slides
 - Examples
 - Tips
-- 翻译
+- Translation
