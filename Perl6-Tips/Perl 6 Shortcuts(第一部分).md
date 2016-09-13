@@ -1,14 +1,4 @@
-title:  Perl 6 Shortcuts(第一部分)
 
-date: 2016-02-18
-
-tags: Perl6
-
-categories: Perl 6
-
----
-
-<blockquote class='blockquote-center'>江山未老红颜旧！</blockquote>
 
 [查看原文](http://blogs.perl.org/users/zoffix_znet/2016/02/perl-6-shortcuts-part-1.html)
 
