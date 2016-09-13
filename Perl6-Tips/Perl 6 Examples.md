@@ -1,16 +1,3 @@
-title: Perl 6 Examples
-
-date: 2015-08-23T23:59:26Z
-
-tags: Perl6
-
-categories: Perl 6
-
-------
-
-<blockquote class='blockquote-center'>总是学不会 再聪明一点 记得自我保护 必要时候讲些 善意谎言 — 学不会·林俊杰</blockquote>
-
-
 
 ## 斐波拉契数列（Fibonacci Sequence）
 
