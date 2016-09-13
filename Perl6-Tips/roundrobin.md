@@ -1,16 +1,4 @@
-title:  roundrobin
 
-date: 2016-01-21
-
-tags: Perl6
-
-categories: Perl 6
-
----
-
-<blockquote class='blockquote-center'>其实感情最怕的就是拖着, 越演到重场戏越哭不出了
-
-</blockquote>
 
 定义为 
 
