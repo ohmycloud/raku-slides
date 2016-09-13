@@ -1,23 +1,5 @@
 
 
-title: How to create a grammar in Perl 6
-
-date: 2015-07-20 20:03:38
-
-tags: Perl6
-
-categories: Perl 6
-
-
-
-------
-
-<blockquote class="blockquote-center">兄弟我们都像是 山坡滚落的石子 都在颠碰之中磨掉了尖牙
-— 兄弟抱一下·庞龙
-</blockquote>
-
-
-
 检查 module 的名字是否 遵循 Perl 6 的命名规范。模块的名字可以是使用 2 个冒号分割的标识符, 例如  `File::Compare` 。标识符必须以字母字符 (a-z) 或下划线开头， 后面跟着 0 个 或多个字母数字字符。但是并没有那么简单, 有些模块的名字只有一个标识符而没有冒号，例如  Bailador ， 而其它模块可能有多个标识符和 `::` 组成。这看起来正符合 grammar 的胃口！
 
 ## 定义 grammar
