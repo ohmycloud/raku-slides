@@ -1,10 +1,3 @@
-title:  Perl 6 中的术语
-date: 2015-07-14 22:27:13
-tags: Perl6
-categories: Perl 6
----
-<blockquote class="blockquote-center">开始在内心生活得更严肃的人，也会在外表上开始生活得更朴素</blockquote>
-
 
 ## 匿名
 
