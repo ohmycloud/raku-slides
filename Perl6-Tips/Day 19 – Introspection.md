@@ -1,14 +1,4 @@
-title:  Day 19 – Introspection
 
-date: 2016-02-04
-
-tags: Perl6
-
-categories: Perl 6
-
----
-
-<blockquote class='blockquote-center'>这一生圆或缺当归在你心间！</blockquote>
 
 Perl 6 支持"泛型, roles 和 多重分发", 它们都是很好的特点, 并且已经在其它 advent calendar 中发布过了。
 
