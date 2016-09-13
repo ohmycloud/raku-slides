@@ -1,14 +1,3 @@
-title:  class List
-
-date: 2016-01-29
-
-tags: Perl6
-
-categories: Perl 6
-
----
-
-<blockquote class='blockquote-center'>好冷好冷, 没暖气伤不起, 手冻的打字僵硬。</blockquote>
 
 
 ```perl6
@@ -16,6 +5,7 @@ categories: Perl 6
 my class List is Iterable does Positional { .. }
 
 ```
+
 **List** 以序列化的方式存储 items并且潜在是惰性的。
 
 默认列表和数组的索引从 0 开始。
