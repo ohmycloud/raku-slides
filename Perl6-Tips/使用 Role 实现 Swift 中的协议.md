@@ -1,14 +1,3 @@
-title:  使用 Role 实现 Swift 中的协议
-
-date: 2016-01-12
-
-tags: Perl6
-
-categories: Perl 6
-
----
-
-<blockquote class='blockquote-center'> 路灯下, 你的身影, 看得见却看不清！</blockquote>
 
 Protocol 在 Swift 中是一组方法和属性的集合, 可用于代码复用。 Perl 6 中有与之类似的结构, 叫做 `Role`, 下面转换一个 Swift 的 Protocol 为 Perl 6 的 Role, 把部门人员的相关信息打印为一个表格:
 
