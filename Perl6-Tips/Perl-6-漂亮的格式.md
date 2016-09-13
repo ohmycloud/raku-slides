@@ -1,9 +1,4 @@
-title: Perl 6 - 漂亮的格式
-date: 2015-07-03 13:29:10
-tags: Perl6
-categories: Perl 6
----
-<blockquote class="blockquote-center">让这个世界灿烂的不是阳光，而是你的微笑</blockquote>
+
 漂亮的格式： `.fmt` 方法
 
 它是sprinf 的小兄弟，作为变量的方法使用。如果那是一个键值对儿或列表，它当然使用跟 sprinf 同样的语法和方式将几个值格式化。
