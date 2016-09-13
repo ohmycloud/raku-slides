@@ -1,10 +1,3 @@
-title: Using Perl 6
-date: 2015-07-03 16:25:17
-tags: Perl6
-categories: Perl 6
----
-<blockquote class="blockquote-center">特别的爱给特别的你，我的寂寞逃不过你的眼睛  
-— 特别的爱你特别的你·黄贯中</blockquote>
 
 ## 第一章 概要
  Comming soon!
