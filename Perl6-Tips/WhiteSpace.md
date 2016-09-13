@@ -1,12 +1,3 @@
-title: WhiteSpace
-date: 2015-07-19 18:46:41
-tags: Perl6
-categories: Perl 6
----
-
-<blockquote class="blockquote-center">事到如今 终於让自已属於我自已 只剩眼泪还骗不过自己 突然好想你
-— 突然好想你·五月天
-</blockquote>
 
 ## 空格最少化
 
