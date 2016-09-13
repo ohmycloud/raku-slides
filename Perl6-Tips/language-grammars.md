@@ -1,15 +1,4 @@
-title: Actions in Grammar
-
-date: 2015-12-29 14:07
-
-tags: Perl6
-
-categories: Perl 6
-
-------
-
-<blockquote class="blockquote-center">绵延一路的冰雪被踏成太阳, 你的微笑融化了不安和动荡</blockquote>
-
+## Actions in Grammar
 
 
 [原文在这]([http://doc.perl6.org/language/grammars)](http://doc.perl6.org/language/grammars))
