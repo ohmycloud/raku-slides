@@ -1,6 +1,6 @@
-# æ‰©å±• Perl 6 ä¸­çš„ç±»åž‹
+# À©Õ¹ Perl 6 ÖÐµÄÀàÐÍ
 
-## ä½¿ç”¨ç»§æ‰¿
+## Ê¹ÓÃ¼Ì³Ð
 
 ```perl6
 class BetterInt is Int {
@@ -21,8 +21,8 @@ say $x + 42;
 # 113
 ```
 
-`my BetterInt $x` çº¦æŸ `$x` åªèƒ½åŒ…å«  *BetterInt* æˆ–å®ƒçš„å­ç±»è¿™ç§ç±»åž‹çš„å¯¹è±¡ã€‚`.= new: 42` ç­‰ä»·äºŽ `= BetterInt.new: 42`ã€‚
-ä¸‹é¢çš„å­ä¾‹ç¨‹æœŸæœ›æŽ¥æ”¶ä¸€ä¸ª *Int* åž‹çš„å‚æ•°ï¼Œä½†æ˜¯ä½ ç»™å®ƒä¼ é€’ä¸€ä¸ª *BetterInt* ç±»åž‹çš„å‚æ•°å®ƒä¼šå¾ˆé«˜å…´:
+`my BetterInt $x` Ô¼Êø `$x` Ö»ÄÜ°üº¬  *BetterInt* »òËüµÄ×ÓÀàÕâÖÖÀàÐÍµÄ¶ÔÏó¡£`.= new: 42` µÈ¼ÛÓÚ `= BetterInt.new: 42`¡£
+ÏÂÃæµÄ×ÓÀý³ÌÆÚÍû½ÓÊÕÒ»¸ö *Int* ÐÍµÄ²ÎÊý£¬µ«ÊÇÄã¸øËü´«µÝÒ»¸ö *BetterInt* ÀàÐÍµÄ²ÎÊýËü»áºÜ¸ßÐË:
 
 ```perl6
 sub foo(Int $x) { say "\$x is $x"}
@@ -36,7 +36,7 @@ foo $x;
 
 ## But... But... But...
 
-å¦å¤–ä¸€ä¸ªé€‰æ‹©æ˜¯æŽºåˆè¿›ä¸€ä¸ªè§’è‰²(role)ã€‚*but* ä¸­ç¼€æ“ä½œç¬¦åˆ›å»ºå¯¹è±¡çš„ä¸€ä»½æ‹·è´å¹¶ä¸ºè¯¥å¯¹è±¡æ·»åŠ ä¸€ä¸ªæ–¹æ³•:
+ÁíÍâÒ»¸öÑ¡ÔñÊÇ²ôºÏ½øÒ»¸ö½ÇÉ«(role)¡£*but* ÖÐ×º²Ù×÷·û´´½¨¶ÔÏóµÄÒ»·Ý¿½±´²¢Îª¸Ã¶ÔÏóÌí¼ÓÒ»¸ö·½·¨:
 
 ```perl6
 my $x = 42 but role { method even { self %% 2 } };
@@ -46,7 +46,7 @@ say $x.even;
 # True
 ```
 
-å½“ç„¶è§’è‰²ä¸ä¸€å®šæ˜¯å†…è”çš„ã€‚è¿™å„¿æœ‰å¦å¤–ä¸€ä¸ªä¾‹å­ä½¿ç”¨äº†ä¸€ä¸ªé¢„å®šä¹‰çš„è§’è‰²å¹¶ä¸”è¿˜å±•ç¤ºäº†æˆ‘ä»¬çš„å¯¹è±¡ç¡®å®žè¢«æ‹·è´äº†ä¸€ä»½ï¼š
+µ±È»½ÇÉ«²»Ò»¶¨ÊÇÄÚÁªµÄ¡£Õâ¶ùÓÐÁíÍâÒ»¸öÀý×ÓÊ¹ÓÃÁËÒ»¸öÔ¤¶¨ÒåµÄ½ÇÉ«²¢ÇÒ»¹Õ¹Ê¾ÁËÎÒÃÇµÄ¶ÔÏóÈ·Êµ±»¿½±´ÁËÒ»·Ý£º
 
 ```perl6
 role Better {
@@ -75,7 +75,7 @@ say $original.better; # fatal error: can't find method
 #   in block <unit> at test.p6 line 18
 ```
 
-è¿™çœ‹èµ·æ¥æŒºä¸é”™çš„ï¼Œä½†æ˜¯å¯¹äºŽæˆ‘ä»¬åŽŸæ¥çš„ç›®æ ‡æ¥è¯´ï¼Œè¿™ä¸ªæ–¹æ³•è¿˜æ˜¯ç›¸å½“å¼±çš„ï¼š
+Õâ¿´ÆðÀ´Í¦²»´íµÄ£¬µ«ÊÇ¶ÔÓÚÎÒÃÇÔ­À´µÄÄ¿±êÀ´Ëµ£¬Õâ¸ö·½·¨»¹ÊÇÏàµ±ÈõµÄ£º
 
 ```perl6
 my $x = 42 but role { method even { self %% 2 } };
@@ -84,11 +84,11 @@ $x = 72;
 say $x.even; # No such method!
 ```
 
-é‚£ä¸ªè§’è‰²è¢«æ··åˆè¿›æˆ‘ä»¬å®¹å™¨é‡Œé¢å­˜å‚¨çš„å¯¹è±¡ä¸­äº†ï¼›æ‰€ä»¥ä¸€æ—¦æˆ‘ä»¬åœ¨å®¹å™¨ä¸­æ”¾è¿›äº†ä¸€ä¸ªæ–°çš„å€¼ï¼Œæˆ–é«˜çº§ç‚¹çš„ä¸œè¥¿ï¼Œé‚£ä¹ˆ *.even* æ–¹æ³•å°±ä¸è§äº†ï¼Œé™¤éžæˆ‘ä»¬å†æ¬¡æŠŠé‚£ä¸ªè§’è‰²æ··åˆè¿›æ¥ã€‚
+ÄÇ¸ö½ÇÉ«±»»ìºÏ½øÎÒÃÇÈÝÆ÷ÀïÃæ´æ´¢µÄ¶ÔÏóÖÐÁË£»ËùÒÔÒ»µ©ÎÒÃÇÔÚÈÝÆ÷ÖÐ·Å½øÁËÒ»¸öÐÂµÄÖµ£¬»ò¸ß¼¶µãµÄ¶«Î÷£¬ÄÇÃ´ *.even* ·½·¨¾Í²»¼ûÁË£¬³ý·ÇÎÒÃÇÔÙ´Î°ÑÄÇ¸ö½ÇÉ«»ìºÏ½øÀ´¡£
 
-## å­ä¾‹ç¨‹
+## ×ÓÀý³Ì
 
-ä½ çŸ¥é“ä½ å¯ä»¥æŠŠå­ä¾‹ç¨‹å½“åšæ–¹æ³•ç”¨å˜›ï¼Ÿ ä½ æŽ¥æ”¶é‚£ä¸ªå¯¹è±¡ä½œä¸ºå­ä¾‹ç¨‹çš„ç¬¬ä¸€ä¸ªä½ç½®å‚æ•°å¹¶ä¸”ä½ ç”šè‡³èƒ½ç»§ç»­ä½¿ç”¨é“¾å¼æ–¹æ³•è°ƒç”¨ï¼Œä½†æ˜¯ä¸èƒ½æŠŠé‚£äº›é“¾å­åˆ†è§£æˆå¤šè¡Œï¼š
+ÄãÖªµÀÄã¿ÉÒÔ°Ñ×ÓÀý³Ìµ±×ö·½·¨ÓÃÂï£¿ Äã½ÓÊÕÄÇ¸ö¶ÔÏó×÷Îª×ÓÀý³ÌµÄµÚÒ»¸öÎ»ÖÃ²ÎÊý²¢ÇÒÄãÉõÖÁÄÜ¼ÌÐøÊ¹ÓÃÁ´Ê½·½·¨µ÷ÓÃ£¬µ«ÊÇ²»ÄÜ°ÑÄÇÐ©Á´×Ó·Ö½â³É¶àÐÐ£º
 
 ```perl6
 sub even { $^a %% 2 };
@@ -98,17 +98,17 @@ say 42.&even.uc;
 # TRUE
 ```
 
-è¿™ç¡®å®žæ˜¯ä¸ºæ ¸å¿ƒç±»åž‹æ·»åŠ é¢å¤–åŠŸèƒ½çš„ä¸€ç§å¾—ä½“æ–¹å¼ã€‚æˆ‘ä»¬çš„å­ä¾‹ç¨‹å®šä¹‰ä¸­çš„ `$^a` å¼•ç”¨ç¬¬ä¸€ä¸ªå‚æ•°ï¼ˆæˆ‘ä»¬åœ¨è°ƒç”¨çš„é‚£ä¸ªå¯¹è±¡ï¼‰å¹¶ä¸”æ•´ä¸ªå­ä¾‹ç¨‹ä¹Ÿå¯ä»¥è¢«å†™ä¸ºï¼š
+ÕâÈ·ÊµÊÇÎªºËÐÄÀàÐÍÌí¼Ó¶îÍâ¹¦ÄÜµÄÒ»ÖÖµÃÌå·½Ê½¡£ÎÒÃÇµÄ×ÓÀý³Ì¶¨ÒåÖÐµÄ `$^a` ÒýÓÃµÚÒ»¸ö²ÎÊý£¨ÎÒÃÇÔÚµ÷ÓÃµÄÄÇ¸ö¶ÔÏó£©²¢ÇÒÕû¸ö×ÓÀý³ÌÒ²¿ÉÒÔ±»Ð´Îª£º
 
 ```perl6
 sub ($x) { $x %% 2 }
 ```
 
-## é£žé¾™åœ¨å¤©
+## ·ÉÁúÔÚÌì
 
-ä¸ç®¡[Javaccript çš„é‚£äº›äººä»¬æ€Žä¹ˆè·Ÿä½ è¯´](http://shop.oreilly.com/product/9780596517748.do), ç„¶è€Œæ‰©å……åŽŸç”Ÿç±»åž‹æ˜¯å±é™©çš„ã€‚å› ä¸ºä½ æ­£å½±å“ç¨‹åºçš„æ‰€æœ‰éƒ¨åˆ†ã€‚ç”šè‡³çœ‹ä¸åˆ°ä½ çš„æ‰©å……çš„æ¨¡å—ä¹Ÿå—åˆ°å½±å“ã€‚
+²»¹Ü[Javaccript µÄÄÇÐ©ÈËÃÇÔõÃ´¸úÄãËµ](http://shop.oreilly.com/product/9780596517748.do), È»¶øÀ©³äÔ­ÉúÀàÐÍÊÇÎ£ÏÕµÄ¡£ÒòÎªÄãÕýÓ°Ïì³ÌÐòµÄËùÓÐ²¿·Ö¡£ÉõÖÁ¿´²»µ½ÄãµÄÀ©³äµÄÄ£¿éÒ²ÊÜµ½Ó°Ïì¡£
 
-çŽ°åœ¨æˆ‘æœ‰æƒå‘Šè¯‰ä½ ï¼Œæˆ‘è·Ÿä½ è¯´è¿‡ï¼Œä½ å·¥ä½œçš„æ ¸ç”µåŽ‚èžåŒ–äº†ï¼Œè®©æˆ‘ä»¬çœ‹çœ‹ä¸€äº›ä»£ç ï¼š
+ÏÖÔÚÎÒÓÐÈ¨¸æËßÄã£¬ÎÒ¸úÄãËµ¹ý£¬Äã¹¤×÷µÄºËµç³§ÈÚ»¯ÁË£¬ÈÃÎÒÃÇ¿´¿´Ò»Ð©´úÂë£º
 
 ```perl6
 # Foo.pm6
@@ -136,14 +136,14 @@ fob;
 # True
 ```
 
-æ‰€æœ‰çš„è¡Œä¸ºéƒ½å‘ç”Ÿåœ¨ *Bar.pm6* ä¸­ã€‚é¦–å…ˆï¼Œæˆ‘ä»¬å†™äº†ä¸€è¡Œ *use MONKEY-TYPING* å£°æ˜Žï¼Œå®ƒå‘Šè¯‰æˆ‘ä»¬æ­£åœ¨åšä¸€äº›å±é™©çš„è¡Œä¸ºã€‚ç„¶åŽæˆ‘ä»¬åœ¨ç±» **class Int** çš„å‰é¢ä½¿ç”¨äº† *augment* å…³é”®å­—ä»¥æ‰©å……è¿™ä¸ªå·²ç»å­˜åœ¨çš„ç±»ã€‚æˆ‘ä»¬çš„æ‰©å……æ·»åŠ äº†ä¸€ä¸ªå« *even* çš„æ–¹æ³•ä»¥å‘Šè¯‰æˆ‘ä»¬é‚£ä¸ª Int æ˜¯å¦æ˜¯å¶æ•°ã€‚
+ËùÓÐµÄÐÐÎª¶¼·¢ÉúÔÚ *Bar.pm6* ÖÐ¡£Ê×ÏÈ£¬ÎÒÃÇÐ´ÁËÒ»ÐÐ *use MONKEY-TYPING* ÉùÃ÷£¬Ëü¸æËßÎÒÃÇÕýÔÚ×öÒ»Ð©Î£ÏÕµÄÐÐÎª¡£È»ºóÎÒÃÇÔÚÀà **class Int** µÄÇ°ÃæÊ¹ÓÃÁË *augment* ¹Ø¼ü×ÖÒÔÀ©³äÕâ¸öÒÑ¾­´æÔÚµÄÀà¡£ÎÒÃÇµÄÀ©³äÌí¼ÓÁËÒ»¸ö½Ð *even* µÄ·½·¨ÒÔ¸æËßÎÒÃÇÄÇ¸ö Int ÊÇ·ñÊÇÅ¼Êý¡£
 
-æ‰€æœ‰çš„æ•´æ•°éƒ½å¯ä»¥ä½¿ç”¨ *even* æ–¹æ³•äº†ï¼Œè¿™è™½ç„¶è¾¾åˆ°äº†æˆ‘ä»¬çš„è¦æ±‚ä½†æ˜¯æœ‰ç‚¹å±é™©ã€‚
+ËùÓÐµÄÕûÊý¶¼¿ÉÒÔÊ¹ÓÃ *even* ·½·¨ÁË£¬ÕâËäÈ»´ïµ½ÁËÎÒÃÇµÄÒªÇóµ«ÊÇÓÐµãÎ£ÏÕ¡£
 
 
-##  æˆ‘é‚ªæ¶äº†
+##  ÎÒÐ°¶ñÁË
 
-æˆ‘ä»¬æ¥æ‰©å…… [Cool ç±»åž‹](http://docs.perl6.org/type/Cool)ä»¥æ¶µç›–æ‰€æœ‰çš„è¥¿æ–‡æŽ’ç‰ˆè¡Œé•¿å•ä½ï¼š
+ÎÒÃÇÀ´À©³ä [Cool ÀàÐÍ](http://docs.perl6.org/type/Cool)ÒÔº­¸ÇËùÓÐµÄÎ÷ÎÄÅÅ°æÐÐ³¤µ¥Î»£º
 
 ```perl6
 use MONKEY-TYPING;
@@ -151,14 +151,14 @@ augment class Cool {
     method even { self %% 2 }
 }
 
-.say for 72.even, '72'.even, pi.even, Â½.even;
+.say for 72.even, '72'.even, pi.even, ?.even;
 
 # OUTPUT:
 # Method 'even' not found for invocant of class 'Int'
 # in block <unit> at test.p6 line 8
 ```
 
-ç³Ÿç³•ï¼Œç¨‹åºå¥”æºƒäº†ï¼åŽŸå› æ˜¯åœ¨æˆ‘ä»¬æ‰©å…… **Cool** ç±»åž‹çš„æ—¶å€™ï¼Œæ´¾ç”Ÿè‡ª **Cool** çš„æ‰€æœ‰ç±»åž‹å·²ç»æˆåž‹äº†(composed)ã€‚æ‰€ä»¥ä¸ºäº†è®©å®ƒèƒ½å·¥ä½œï¼Œæˆ‘ä»¬å¿…é¡»ä½¿ç”¨ `.^compose` å…ƒå¯¹è±¡åè®®æ–¹æ³•æ¥é‡æ–°æž„æˆå®ƒä»¬ï¼š
+Ôã¸â£¬³ÌÐò±¼À£ÁË£¡Ô­ÒòÊÇÔÚÎÒÃÇÀ©³ä **Cool** ÀàÐÍµÄÊ±ºò£¬ÅÉÉú×Ô **Cool** µÄËùÓÐÀàÐÍÒÑ¾­³ÉÐÍÁË(composed)¡£ËùÒÔÎªÁËÈÃËüÄÜ¹¤×÷£¬ÎÒÃÇ±ØÐëÊ¹ÓÃ `.^compose` Ôª¶ÔÏóÐ­Òé·½·¨À´ÖØÐÂ¹¹³ÉËüÃÇ£º
 
 ```perl6
 use MONKEY-TYPING;
@@ -168,7 +168,7 @@ augment class Cool {
 
 .^compose for Int, Num, Rat, Str, IntStr, NumStr, RatStr;
 
-.say for 72.even, '72'.even, pi.even, Â½.even;
+.say for 72.even, '72'.even, pi.even, ?.even;
 
 # OUTPUT:
 # True
@@ -177,47 +177,15 @@ augment class Cool {
 # False
 ```
 
-å®ƒçŽ°åœ¨èƒ½å·¥ä½œäº†ï¼Int, Num, Rat, Str, IntStr, NumStr, RatStr ç±»åž‹æ‹¥æœ‰äº† `.even` æ–¹æ³•(æ³¨æ„ï¼šè¿™äº›ä¸æ˜¯ç»§æ‰¿è‡ª Cool çš„ä»…æœ‰çš„ç±»åž‹)! è¿™æ—¢é‚ªæ¶åˆè®©äººåƒæƒŠã€‚
+ËüÏÖÔÚÄÜ¹¤×÷ÁË£¡Int, Num, Rat, Str, IntStr, NumStr, RatStr ÀàÐÍÓµÓÐÁË `.even` ·½·¨(×¢Òâ£ºÕâÐ©²»ÊÇ¼Ì³Ð×Ô Cool µÄ½öÓÐµÄÀàÐÍ)! Õâ¼ÈÐ°¶ñÓÖÈÃÈË³Ô¾ª¡£
 
-## ç»“è®º
+## ½áÂÛ
 
-å½“æ‰©å…… Perl 6 çš„æ ¸å¿ƒç±»åž‹æˆ–å…¶å®ƒä»»æ„ç±»çš„åŠŸèƒ½æ—¶ï¼Œä½ æœ‰å‡ ç§é€‰æ‹©ã€‚
+µ±À©³ä Perl 6 µÄºËÐÄÀàÐÍ»òÆäËüÈÎÒâÀàµÄ¹¦ÄÜÊ±£¬ÄãÓÐ¼¸ÖÖÑ¡Ôñ¡£
 
-- ä½¿ç”¨ **is Class** å­ç±»
-- ä½¿ç”¨ **but Role** æ··åˆä¸€ä¸ªè§’è‰²
-- ä½¿ç”¨ `$objec.&sub` è°ƒç”¨å­ä¾‹ç¨‹ä½œä¸ºæ–¹æ³•ä½¿ç”¨
-- ä½¿ç”¨  augmentï¼ˆæ³¨æ„å®‰å…¨ï¼‰
+- Ê¹ÓÃ **is Class** ×ÓÀà
+- Ê¹ÓÃ **but Role** »ìºÏÒ»¸ö½ÇÉ«
+- Ê¹ÓÃ `$objec.&sub` µ÷ÓÃ×ÓÀý³Ì×÷Îª·½·¨Ê¹ÓÃ
+- Ê¹ÓÃ  augment£¨×¢Òâ°²È«£©
 
-[Perl 6 â€” There Is More Than One Way To Extend it](http://blogs.perl.org/users/zoffix_znet/2016/04/extra-typical-perl-6.html).
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+[Perl 6 ¡ª There Is More Than One Way To Extend it](http://blogs.perl.org/users/zoffix_znet/2016/04/extra-typical-perl-6.html).
