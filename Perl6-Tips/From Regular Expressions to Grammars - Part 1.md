@@ -1,14 +1,3 @@
-title:  From Regular Expressions to Grammars - Part 1
-
-date: 2016-02-20
-
-tags: Perl6
-
-categories: Perl 6
-
----
-
-<blockquote class='blockquote-center'>原来！</blockquote>
 
 [原文](http://theperlfisher.blogspot.jp/2016/02/from-regular-expressions-to-grammars-pt.html)
 
