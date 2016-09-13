@@ -1,14 +1,4 @@
-title:  :D 在 Perl 6中是什么意思
 
-date: 2016-01-29
-
-tags: Perl6
-
-categories: Perl 6
-
----
-
-<blockquote class='blockquote-center'>现在是00:46, 我听见窗外好像下雪了。</blockquote>
 
 一个裸的 **:D**、**:U**、**:T** 或 **:_** 是限制默认类型为定义、未定义、类型对象或任何对象的类型约束。所以
 
