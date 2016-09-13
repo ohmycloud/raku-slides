@@ -1,14 +1,3 @@
-title:  IO::Path
-
-date: 2015-08-20T23:19:13Z
-
-tags: Perl6
-
-categories: Perl 6
-
-------
-
-<blockquote class="blockquote-center">谁说不能让我此生唯一自传 如同诗一般  — 五月天</blockquote>
 
 ### 批量插入文本
 
