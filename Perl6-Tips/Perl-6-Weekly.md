@@ -1,12 +1,3 @@
-title: Perl 6 Weekly 0816
-date: 2015-08-17 16:21:03
-tags: Perl6
-categories: Perl 6
----
-
-<blockquote class="blockquote-center">你你我我随缘曾邂逅 笑笑喊喊想起总荒缪 进进退退如何能永久 冷冷暖暖都必须承受
-— 随缘·温兆伦
-</blockquote>
 
 1、[在 Perl 6 中怎样检查文件的时间戳属性？](http://stackoverflow.com/questions/30264548/how-do-i-check-file-timestamp-attributes-in-perl-6)
 
