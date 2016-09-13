@@ -1,11 +1,5 @@
 # Perl 6 入门指南
 
-标签（空格分隔）： Perl6
-
----
-
-[toc]
-
 ## exit，warn，die
 exit
 ```perl6
