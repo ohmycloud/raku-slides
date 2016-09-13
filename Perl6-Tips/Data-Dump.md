@@ -1,16 +1,3 @@
-title: 'Data::Dump'
-
-date: 2015-08-05 13:46:11
-
-tags: Perl6
-
-categories: Perl 6
-
-------
-
-<blockquote class="blockquote-center">每一颗眼泪 是一万道光 最昏暗的地方也变得明亮
-— 一万次悲伤·逃跑计划
-</blockquote>
 
 ## for Perl 6
 
