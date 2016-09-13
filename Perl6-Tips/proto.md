@@ -1,14 +1,3 @@
-title:  proto
-
-date: 2015-12-17
-
-tags: Perl6
-
-categories: Perl 6
-
----
-
-<blockquote class='blockquote-center'> 我们之间都没有错, 只是走到了分叉路口。</blockquote>
 
 ## proto
 
