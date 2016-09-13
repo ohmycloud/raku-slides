@@ -1,12 +1,3 @@
-title: Quoting Constructs
-date: 2015-07-16 13:42:14
-tags: Perl6
-categories: Perl 6
----
-
-<blockquote class="blockquote-center">我宁愿 留在你方圆几里 我的心 要不回就送你 因为我爱你 和你没关系
-— 方圆几里·薛之谦
-</blockquote>
 
 ## The Q Lang
 
