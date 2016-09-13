@@ -1,16 +1,5 @@
-title:  A Mutable Grammar For Perl 6
 
-date: 2015-12-18
-
-tags: Perl6
-
-categories: Perl 6
-
----
-
-<blockquote class='blockquote-center'>对不起, 我爱你。</blockquote>
-
-## A Mutable Grammar For Perl 6
+## A Mutable Grammar For Perl 6
 
 ###  Rules
 
