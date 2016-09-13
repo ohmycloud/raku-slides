@@ -1,14 +1,4 @@
-title:  适当的使用 proto
 
-date: 2016-02-18
-
-tags: Perl6
-
-categories: Perl 6
-
----
-
-<blockquote class='blockquote-center'>去年的家书两行, 读来又热泪盈眶！</blockquote>
 
 原文在此[Apropos proto: Perl6.c multi thoughts](http://blogs.perl.org/users/yary/2016/02/apropos-proto-perl6c-multi-thoughts.html)
 
