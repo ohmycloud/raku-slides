@@ -1,14 +1,4 @@
-title:  学习Perl 6的一些网站
 
-date: 2015-08-30
-
-tags: Perl6
-
-categories: Perl 6
-
-------
-
-<blockquote class='blockquote-center'>天空阴阴的, 刚下过一场雨！</blockquote>
 
 目前关于学习 Perl 6 的网站很少, 国内几乎没有。收集一些国外的网站:  
 
@@ -35,7 +25,9 @@ categories: Perl 6
 [Death by Perl6](http://ugexe.com)  
 
 [jnthn](http://jnthn.net)
-
+[perl6.party](http://perl6.party)
+[glot.io](https://glot.io)
+[Perl 6 != Perl 5+ 1](https://gfldex.wordpress.com)
 
 
 # 官方网站
