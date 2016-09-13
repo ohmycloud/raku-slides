@@ -1,18 +1,4 @@
-title: Perl 6 FAQ
 
-date: 2015-08-06 17:42:13
-
-tags: Perl6
-
-categories: Perl 6
-
----
-
-<blockquote class="blockquote-center">我想你是爱我的 我猜你也舍不得 但是怎么说总觉得 我们之间留了太多空白格
-
-— 空白格·杨宗纬
-
-</blockquote>
 
 源文件可以在 [github](https://github.com/perl6/faq)上找到.
 
