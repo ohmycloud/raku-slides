@@ -1,14 +1,3 @@
-title:  Actions和抽象语法树
-
-date: 2016-01-02
-
-tags: Perl6
-
-categories: Perl 6
-
----
-
-<blockquote class='blockquote-center'>这是河冻着了么? 恩，它感冒了, 所以闭门谢客.</blockquote>
 
 有一段结构化的文本, 写一个 Grammar 来解析它：
 
@@ -33,7 +22,7 @@ cuteness = 99
 
 
 
-``` perl
+``` perl6
 use v6;
 #use Grammar::Debugger;
 grammar INIFile::Grammar {
@@ -110,7 +99,7 @@ for %sections -> $sec {
 
 `make` 是一个函数, 接收单个参数, `make` 的作用是, 对于每一个 `method` 中对应的 `$_` , 存储生成的抽象语法树(AST)(片段)到 `$/` 中。 `.ast` 用于从已保存的 AST 抽象语法树中检索提取 AST (片段), `»` 相当于一个循环, 即检索每一个 `$<entry>` 之类的语法树。
 
-``` perl
+``` perl6
 use v6;
 
 grammar INIFile::Grammar {
