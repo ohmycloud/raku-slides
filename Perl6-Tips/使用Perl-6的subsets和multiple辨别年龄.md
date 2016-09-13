@@ -1,9 +1,5 @@
-title:  使用 Perl 6 的 subsets 和 multiple 辨别年龄
-date: 2015-07-14 00:31:39
-tags: Perl6
-categories: Perl 6
----
-<blockquote class="blockquote-center">Perl 6 is Powerful</blockquote>
+## 使用 Perl 6 的 subsets 和 multiple 辨别年龄
+
 
 举个例子, 假设 person 有一个 age 属性. 我能写一个 `multimethod`, 让它接收一个 person 作为参数, 并返回这样的结果吗:
 
