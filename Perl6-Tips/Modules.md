@@ -1,12 +1,4 @@
-title: Modules
 
-date: 2015-10-31
-
-tags: Perl6
-
-categories: Perl 6
-
----
 
 # Modules
 
