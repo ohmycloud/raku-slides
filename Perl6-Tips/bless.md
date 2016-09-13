@@ -1,14 +1,3 @@
-title:  bless
-
-date: 2016-01-22
-
-tags: Perl6
-
-categories: Perl 6
-
----
-
-<blockquote class='blockquote-center'>流星划过黑夜不再恐惧, 总有遗憾所以美丽。</blockquote>
 
 ## bless 方法
 
