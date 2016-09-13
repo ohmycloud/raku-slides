@@ -1,14 +1,3 @@
-title:  From Regular Expressions to Grammars - Part 2
-
-date: 2016-02-20
-
-tags: Perl6
-
-categories: Perl 6
-
----
-
-<blockquote class='blockquote-center'>原来！</blockquote>
 
 省略啰嗦的一堆。
 
