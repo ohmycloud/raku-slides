@@ -1,9 +1,4 @@
-title: Perl 6 圣诞月历
-date: 2015-07-03 16:20:39
-tags: Perl6
-categories: Perl 6
----
-<blockquote class="blockquote-center">凡是你抗拒的，都会持续</blockquote>
+
 # 2009
 ## 有用的和有意思的循环
 
