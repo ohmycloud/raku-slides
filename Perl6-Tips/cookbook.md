@@ -1,14 +1,4 @@
-title:  cookbook
 
-date: 2015-09-08
-
-tags: Perl6
-
-categories: Perl 6
-
----
-
-<blockquote class='blockquote-center'>扫文小院</blockquote>
 
 # 字符串处理
 
