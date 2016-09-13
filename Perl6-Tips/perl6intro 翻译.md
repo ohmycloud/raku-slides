@@ -1,11 +1,3 @@
-title:  perl6intro 翻译
-date: 2016-02-25
-tags: Perl6
-categories: Perl 6
-
----
-
-<blockquote class='blockquote-center'>曾经拥有过误闯过彼此的梦, 为彼此挥霍！</blockquote>
 
 ## 函数式编程
 
