@@ -1,14 +1,3 @@
-title:  given-when
-
-date: 2016-02-02
-
-tags: Perl6
-
-categories: Perl 6
-
----
-
-<blockquote class='blockquote-center'> 梦想天空分外蓝！</blockquote>
 
 given-when 有两个小的改变, 并且这俩改变都是开启新行为的, 而不是限制已存在的行为。
 
