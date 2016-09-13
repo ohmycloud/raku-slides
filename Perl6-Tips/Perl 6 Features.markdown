@@ -1,12 +1,5 @@
-Perl 6 Features
 
 # Perl 6 Features
-
-标签（空格分隔）： Features Perl6
-
----
-
-[TOC]
 
 ## Basics
 ### Array
