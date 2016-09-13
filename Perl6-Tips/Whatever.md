@@ -1,12 +1,3 @@
-title: Whatever
-date: 2015-07-16 00:56:22
-tags: Perl6
-categories: Perl 6
----
-
-<blockquote class="blockquote-center">不再相信相信什么道理 人们已是如此冷漠 不再回忆回忆什么过去 现在不是从前的我
-— 无地自容·周晓鸥
-</blockquote>
 
 ## Whatever 是什么?
 
