@@ -1,9 +1,4 @@
-title: Perl 6 features
-date: 2015-07-03 16:21:03
-tags: Perl6
-categories: Perl 6
----
-<blockquote class="blockquote-center">如果你不出去走走，你就会以为这就是世界</blockquote>
+
 ## Basics
 ### Array
 
