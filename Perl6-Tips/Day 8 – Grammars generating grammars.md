@@ -1,14 +1,4 @@
-title:  Day 8 – Grammars generating grammars
 
-date: 2016-02-02
-
-tags: Perl6
-
-categories: Perl 6
-
----
-
-<blockquote class='blockquote-center'>冬天的太阳很温暖！</blockquote>
 
 现在你可能已经习惯了 Perl 6 中到处出现的前缀"meta"。**Metaclasses**, **Metaobjects**, **Metaoperators**, 还有迷一般的 Meta-Object 协议。听起来一点也不可怕, 你都见过了不是吗？今天, 在 Perl 6 Advent Calendar 上, 我们将进行完全的 **meta** 化(full meta)。我们将拥有能解析 grammars 的 grammars, 然后生成将用于解析 grammars 的 grammars。
 
