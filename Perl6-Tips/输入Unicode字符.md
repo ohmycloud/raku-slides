@@ -1,10 +1,3 @@
-title: 输入 Unicode 字符
-date: 2015-08-03 10:51:38
-tags: Perl6
-categories: Perl 6
----
-
-<blockquote class="blockquote-center">我有病啊? 总是想翻译, 这是病啊!</blockquote>
 
 
 # 输入 Unicode 字符
