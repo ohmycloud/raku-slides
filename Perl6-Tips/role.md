@@ -2,13 +2,6 @@ title:  role
 
 date: 2016-01-10
 
-tags: Perl6
-
-categories: Perl 6
-
----
-
-<blockquote class='blockquote-center'>原来！</blockquote>
 
 - Composition and mix-ins
 - Sigils
