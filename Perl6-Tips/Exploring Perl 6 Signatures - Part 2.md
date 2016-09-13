@@ -1,14 +1,3 @@
-title:  Exploring Perl 6 - Signatures, Part 2
-
-date: 2016-02-19
-
-tags: Perl6
-
-categories: Perl 6
-
----
-
-<blockquote class='blockquote-center'> 时间都去哪了！</blockquote>
 
 在我们探索 Perl 6 签名的[第一部分](http://friedo.com/blog/2016/01/exploring-perl-6-signatures-part-1)中, 我们了解了怎么使用 Perl 6 强大而灵活的类型系统来约束具名参数和位置参数是如何被传递给子例程和方法的。我们还涉及了怎么使用 *slurp* 签名来创建能接收任意具名和位置参数列表的可变函数。
 
