@@ -1,14 +1,5 @@
-title:  reddit-Random Bag System
+## reddit-Random Bag System
 
-date: 2016-01-28
-
-tags: Perl6
-
-categories: Perl 6
-
----
-
-<blockquote class='blockquote-center'>原来！</blockquote>
 
 #### 描述
 
