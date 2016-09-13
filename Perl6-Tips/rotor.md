@@ -1,10 +1,4 @@
-title: rotor
-date: 2015-07-15 12:59:26
-tags: Perl6
-categories: Perl 6
----
-
-<blockquote class="blockquote-center">左眼没有见过右眼一面。不懂安慰，只懂陪它落泪</blockquote>
+## rotor
 
 ```perl
 method rotor(*@cycle, Bool() :$partial)
