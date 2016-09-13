@@ -1,14 +1,4 @@
-title:  S12-Objects
 
-date: 2016-01-07
-
-tags: Perl6
-
-categories: Perl 6
-
----
-
-<blockquote class='blockquote-center'>她是真的很好. -- 胡歌</blockquote>
 
 ## 标题
 
