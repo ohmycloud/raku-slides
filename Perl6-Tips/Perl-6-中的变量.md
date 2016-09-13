@@ -1,10 +1,3 @@
-title: Perl 6 中的变量
-date: 2015-07-15 13:30:46
-tags: Perl6
-categories: Perl 6
----
-
-<blockquote class="blockquote-center">走到途中才忽然发现，我只剩下一副模糊的面目，和一条不能回头的路</blockquote>
 
 
 变量名以一个叫做魔符 sigil 的特殊字符开头, 后面跟着一个可选的第二个叫做 `twigil` 的特殊字符, 然后是一个标识符.
