@@ -1,18 +1,3 @@
-title: S03-Operator
-
-date: 2015-08-14 12:59:26
-
-tags: Perl6
-
-categories: Perl 6
-
----
-
-<blockquote class="blockquote-center">但我知道 都是我不好 你越不计较 越显得我渺小
-
-— 我知道你都知道·薛之谦
-
-</blockquote>
 
 #### 操作符优先级
 
