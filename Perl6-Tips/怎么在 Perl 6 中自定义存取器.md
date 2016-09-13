@@ -1,14 +1,3 @@
-title:  怎么在 Perl 6 中自定义存取器?
-
-date: 2016-01-13
-
-tags: Perl6
-
-categories: Perl 6
-
----
-
-<blockquote class='blockquote-center'>后来, 终于在眼泪中明白, 有些人, 一旦错过就不在！</blockquote>
 
 ## How does one write custom accessor methods in Perl6?
 
