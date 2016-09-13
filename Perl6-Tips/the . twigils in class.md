@@ -1,16 +1,6 @@
-title:  the . twigils in class
 
-date: 2016-01-13
 
-tags: Perl6
-
-categories: Perl 6
-
----
-
-<blockquote class='blockquote-center'>什么是勇气, 就是知道了生活的真相然后依然热爱生活！</blockquote>
-
-\## Perl 6中的 `.` 和 `!` **twigil** 是什么？
+## Perl 6 中的 `.` 和 `!` **twigil** 是什么？
 
 `.` **twigil** 的意思是"这是类公用的",  `!` **twigil** 的意思是“这是类私有的”, 只能用在类的内部。
 
