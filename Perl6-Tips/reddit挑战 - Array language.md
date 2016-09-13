@@ -1,14 +1,3 @@
-title:  reddit挑战 - Array language
-
-date: 2016-01-24
-
-tags: Perl6
-
-categories: Perl 6
-
----
-
-<blockquote class='blockquote-center'>原来！</blockquote>
 
 [[2015-12-09\] Challenge #244 [Easy]er - Array language (part 3) - J Forks](https://www.reddit.com/r/dailyprogrammer/comments/3wdm0w/20151209_challenge_244_easyer_array_language_part/)
 
