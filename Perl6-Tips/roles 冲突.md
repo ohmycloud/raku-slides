@@ -1,14 +1,5 @@
-title:  roles 冲突
+##  roles 冲突
 
-date: 2016-01-29
-
-tags: Perl6
-
-categories: Perl 6
-
----
-
-<blockquote class='blockquote-center'> See you again！</blockquote>
 
 学会了怎么创建类, 我们继续用它来构建我们的中心内容:
 
