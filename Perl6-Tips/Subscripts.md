@@ -1,13 +1,3 @@
-title: Subscripts
-date: 2015-08-13 12:59:26
-tags: Perl6
-categories: Perl 6
----
-
-<blockquote class="blockquote-center">千年后会有人从传说里 借月光是谁在哭泣 哦 雨停了雷鸣后原来是你 我化成传说守护你
-— 传说·薛之谦
-</blockquote>
-
 
 # TITLE
 
