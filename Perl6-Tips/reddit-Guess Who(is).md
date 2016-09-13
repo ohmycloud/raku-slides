@@ -1,14 +1,3 @@
-title:  reddit-Guess Who(is)
-
-date: 2016-01-28
-
-tags: Perl6
-
-categories: Perl 6
-
----
-
-<blockquote class='blockquote-center'>原来！</blockquote>
 
 你是一个刚成立的小公司里的一名软件工程师, 有天晚上你收到了一封来自CEO 的电子邮件:
 
