@@ -1,17 +1,3 @@
-title: Perl 6 - From Wikipedia
-
-date: 2015-08-09 14:07
-
-tags: Perl6
-
-categories: Perl 6
-
-------
-
-<blockquote class="blockquote-center">我终于知道曲终人散的寂寞　只有伤心人才有
-— 曲终人散·张宇
-</blockquote>
-
 
 
 Perl 6 是 Perl 编程语言家族中的一员. 它仍旧在开发中, 几个解释器和编译器在同时进行. 它引入了很多现代和历史语言的元素. Perl 6 打算有很多实现. 和 Perl 5 兼容不是它的目标, 尽管兼容模式是它的计划书的一部分. Perl 6 的设计程序是从 2000 年开始的. 2015 年 9 月 预期会发布候选版, 并在 12 月 发布最终版.
