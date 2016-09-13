@@ -1,3 +1,5 @@
+
+
 ```perl6
 #`(
 给定一个输入的字符串和一个包含各种单词的字典，用空格将字符串分割成一系列字典中存在的单词。
@@ -22,7 +24,10 @@ Toshufflethenumbersbetween100and200
 ["sentence", "select", "sentences", "elect"]
 ["To", "shuffle", "the", "numbers", "between", "100", "and", "200"]
 )
+```
 
+
+```perl6
 use v6;
 my $str = "Toshufflethenumbersbetween100and200";
 $str ~~ m:ex/(\w+)/;
