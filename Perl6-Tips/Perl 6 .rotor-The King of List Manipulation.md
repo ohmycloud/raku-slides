@@ -1,14 +1,4 @@
-title:  Perl 6 rotor - The King of List Manipulation
 
-date: 2016-01-31
-
-tags: Perl6
-
-categories: Perl 6
-
----
-
-<blockquote class='blockquote-center'>别来无恙, 你在心上！</blockquote>
 
 对于 Perl 6 程序员, `.rotor`是一个强大的列表操作工具。
 
