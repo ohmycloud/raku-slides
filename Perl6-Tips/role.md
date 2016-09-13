@@ -1,7 +1,3 @@
-title:  role
-
-date: 2016-01-10
-
 
 - Composition and mix-ins
 - Sigils
