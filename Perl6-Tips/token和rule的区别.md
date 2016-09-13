@@ -1,16 +1,3 @@
-title:  token 和 rule 的区别
-
-date: 2015-12-28
-
-tags: Perl6
-
-categories: Perl 6
-
-------
-
-<blockquote class='blockquote-center'> 从开始到现在, 爱一直还在。</blockquote>
-
-
 
 在 grammar 中, 有两个 regex 的变体, `rule` 和 `token`。rule 默认不会回溯.  rule 与 token 的一个重要区别就是, `rule` 这样的正则采取了 `:sigspace` 修饰符。 `rule` 实际上是
 
