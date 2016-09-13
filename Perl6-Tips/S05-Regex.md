@@ -1,10 +1,3 @@
-title: S05-Regex
-date: 2015-08-01 18:59:10
-tags: Perl6
-categories: Perl 6
----
-<blockquote class="blockquote-center">这特么谁翻译的, 简直是屎, 简直不忍卒读</blockquote>
-
 
 
 # 标题
