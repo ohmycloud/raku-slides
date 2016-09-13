@@ -1,14 +1,4 @@
-title:  Day 15 - 2015 The Year of The Great List Refactor
 
-date: 2016-02-04
-
-tags: Perl6
-
-categories: Perl 6
-
----
-
-<blockquote class='blockquote-center'>原来！</blockquote>
 
 Perl 6 最近(2015.9)经历的最大的变化就是 Great List Refactor(GLR), 俗称大列表重构。
 
