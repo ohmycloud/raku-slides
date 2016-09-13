@@ -1,11 +1,4 @@
-title:  Anonymous State Variables And How They Work
-date: 2016-02-24
-tags: Perl6
-categories: Perl 6
 
----
-
-<blockquote class='blockquote-center'> 以苦为乐才是理所当然！</blockquote>
 
 ## Anonymous State Variables And How They Work
 
@@ -82,7 +75,7 @@ for ^10 { $++ }
 
 你可能不会立即看到它, 但是那儿有一个可疑的声明: `$ANON_VAR__1`。现在我们有了一个搜索字符串并想得到更多相关的结果, 用 [ack](http://beyondgrep.com/) 这样的工具搜索源代码, 我们会找到 `src/Perl6/Actions.nqp`这个文件。让我们深入进去!
 
-```perl
+```perl6
 # taken from rakudo@85d20f3
 sub declare_variable($/, $past, $sigil, $twigil, $desigilname, $trait_list, $shape?, :@post) {
     ...
@@ -103,7 +96,7 @@ sub declare_variable($/, $past, $sigil, $twigil, $desigilname, $trait_list, $sha
 
 那很好, 但是我们怎么从 grammar 中到达那里? 这种情况下我使用的小技巧就是抛出一个异常并查看回溯发生在哪?
 
-```perl
+```perl6
 sub declare_variable($/, $past, $sigil, $twigil, $desigilname, $trait_list, $shape?, :@post) {
     ...
     elsif $desigilname eq '' {
@@ -128,7 +121,7 @@ $ ROB_DEBUG=1 perl6 --ll-exception -e 'for ^10 { $++ }'
 
 我不会临时包含这个堆栈跟踪, 但是你可以自己生成它如果你愿意追随的话。通过查看出现在提到 `Actions.nqp:3160`（我插入异常的地方） 后面提到 `Grammar.nqp` 的第一个堆栈跟踪项, 我们来到 `Grammar.nqp`中的 `token variable`:
 
-```perl
+```perl6
 # also taken from rakudo@85d20f3
 token variable {
     :my $*IN_META := '';
@@ -175,7 +168,7 @@ for ^3 {
 
 所以, 对于匿名状态变量你只能执行非常简单的操作。记住你也可以使用匿名数组或匿名散列变量来处理东西:
 
-```perl
+```perl6
 for ^10 {
     say((@).push($_));
 }
