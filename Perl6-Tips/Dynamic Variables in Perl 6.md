@@ -1,14 +1,4 @@
-title:  Dynamic Variables in Perl 6
 
-date: 2016-01-23
-
-tags: Perl6
-
-categories: Perl 6
-
----
-
-<blockquote class='blockquote-center'>如果时间, 忘记了转, 忘了带走什么。</blockquote>
 
 Perl 6 中的[动态变量](http://qiita.com/B73W56H84/items/18053bf37de8bb2bb808#err)
 
