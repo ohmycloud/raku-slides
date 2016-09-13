@@ -1,18 +1,3 @@
-title: Perl 5 to Perl 6
-
-date: 2015-07-03 13:48:57
-
-tags: Perl6
-
-categories: Perl 6
-
----
-
-<blockquote class="blockquote-center">They playing our song, Nowhere else that I belong
-
-Than here with you, Than here with you --- Here With You·Asher Book
-
-</blockquote>
 
 ## 字符串、数组、散列
 
