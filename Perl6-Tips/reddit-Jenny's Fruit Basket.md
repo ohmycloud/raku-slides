@@ -1,14 +1,3 @@
-title:  reddit-Jenny's Fruit Basket
-
-date: 2016-01-24
-
-tags: Perl6
-
-categories: Perl 6
-
----
-
-<blockquote class='blockquote-center'>原来！</blockquote>
 
 #### 问题描述
 
