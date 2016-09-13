@@ -1,4 +1,4 @@
-[TOC]
+
 
 # Perl 5 to Perl 6
 
