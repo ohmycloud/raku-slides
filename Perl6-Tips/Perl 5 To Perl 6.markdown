@@ -1,10 +1,6 @@
-# Perl 5 to Perl 6
-
-标签（空格分隔）： Perl6
-
----
-
 [TOC]
+
+# Perl 5 to Perl 6
 
 ##     00  介绍
 
