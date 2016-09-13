@@ -1,14 +1,4 @@
-title:  S07-Lists
 
-date: 2016-01-23
-
-tags: Perl6
-
-categories: Perl 6
-
----
-
-<blockquote class='blockquote-center'>但是怎么说, 总觉得, 我们之间留了太多空白格！</blockquote>
 
 **push** 和 **append** 的表现不同, **push** 一次只添加单个参数到列表末端, **append** 一次可以添加多个参数。
 
