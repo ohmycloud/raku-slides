@@ -1,14 +1,3 @@
-title:  Fallout Hacking Game
-
-date: 2016-01-24
-
-tags: Perl6
-
-categories: Perl 6
-
----
-
-<blockquote class='blockquote-center'>原来！</blockquote>
 
 流行游戏辐射3: New Vegas 有一台计算机, 玩家必须正确地从同样长度的单词列表中猜出正确的密码。你的挑战是你自己实现这个游戏。
 
