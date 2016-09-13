@@ -1,14 +1,4 @@
-title:  How do you add a method to an existing class in Perl 6?
 
-date: 2016-01-13
-
-tags: Perl6
-
-categories: Perl 6
-
----
-
-<blockquote class='blockquote-center'>鸿雁, 向苍天, 对对排成行！</blockquote>
 
 ## How do you add a method to an existing class in Perl 6?
 
