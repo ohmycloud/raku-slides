@@ -1,15 +1,14 @@
-# Using  Perl 6 ÖĞÎÄ·­Òë
+# Using  Perl 6 ä¸­æ–‡ç¿»è¯‘
 
-> Author:ÑÉÖª·ÇÓã
+> Author:ç„‰çŸ¥éé±¼
 
 > Comeplete:0.75
 
-> I hate Java , fuck!
 
 TODO:
 
-* µÚÎåÕÂ Class and Objects
+* ç¬¬äº”ç«  Class and Objects
 
-* µÚÁùÕÂ Multis
+* ç¬¬å…­ç«  Multis
 
-* µÚÆßÕÂ Roles
+* ç¬¬ä¸ƒç«  Roles
