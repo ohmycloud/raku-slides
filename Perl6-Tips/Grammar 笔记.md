@@ -1,14 +1,3 @@
-title:  Grammar 笔记
-
-date: 2015-11-18
-
-tags: Perl6
-
-categories: Perl 6
-
----
-
-<blockquote class='blockquote-center'>We are all in the rules, but please keep moving on, bcause finally you will find that you are the exception.</blockquote>
 
 一个 Grammar 调了4个小时, 先分解下：
 
