@@ -1,9 +1,4 @@
-title: Perl 6 入门指南
-date: 2015-07-03 16:20:15
-tags: Perl6
-categories: Perl 6
----
-<blockquote class="blockquote-center">真正的朋友能读懂你眼神中的伤痛，而其他人却相信你脸上的微笑</blockquote>
+
 ## exit，warn，die
 exit
 
